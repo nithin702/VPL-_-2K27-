@@ -1,12 +1,13 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-const playerPhoto = document.getElementById("playerPhoto").files[0];
-
-if (!playerPhoto) {
-  alert("Please select a player photo.");
-  return;
-}
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyBdEQU9fNNjzfo-OGV5o9p_CiS_PA_NJNw",
   authDomain: "vpl-2k27.firebaseapp.com",
