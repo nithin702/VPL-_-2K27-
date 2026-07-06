@@ -56,7 +56,7 @@ const uploadResponse = await fetch(
 );
 
 const uploadData = await uploadResponse.json();
-
+console.log(uploadData);
 if (!uploadData.secure_url) {
   throw new Error("Photo upload failed.");
 }
