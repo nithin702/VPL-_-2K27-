@@ -35,6 +35,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const transactionId = form.querySelector('input[placeholder="Transaction ID"]').value;
 
     try {
+      // Upload Player Photo to Cloudinary
+const formData = new FormData();
+formData.append("file", playerPhoto);
+formData.append("upload_preset", "vpl_players");
+
+const uploadResponse = await fetch(
+  "https://api.cloudinary.com/v1_1/sicmc4e6/image/upload",
+  {
+    method: "POST",
+    body: formData,
+  }
+);
+
+const uploadData = await uploadResponse.json();
+
+if (!uploadData.secure_url) {
+  throw new Error("Photo upload failed.");
+}
+
+const photoUrl = uploadData.secure_url;
 
       await addDoc(collection(db, "registrations"), {
         playerName,
