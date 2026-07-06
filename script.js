@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const village = form.querySelector('input[placeholder="Village"]').value;
     const mobile = form.querySelector('input[placeholder="Mobile Number"]').value;
     const transactionId = form.querySelector('input[placeholder="Transaction ID"]').value;
+    
 
     try {
       // Upload Player Photo to Cloudinary
@@ -62,6 +63,7 @@ const photoUrl = uploadData.secure_url;
         village,
         mobile,
         transactionId,
+        photoUrl,
         createdAt: new Date()
       });
 
