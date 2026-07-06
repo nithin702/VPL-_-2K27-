@@ -44,6 +44,9 @@ if (!playerPhoto) {
     try {
       // Upload Player Photo to Cloudinary
 const formData = new FormData();
+      console.log(playerPhoto);
+console.log(playerPhoto instanceof File);
+console.log(document.getElementById("playerPhoto"));
 formData.append("file", playerPhoto);
 formData.append("upload_preset", "vpl_players");
 
