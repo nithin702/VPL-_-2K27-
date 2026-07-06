@@ -33,6 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const village = form.querySelector('input[placeholder="Village"]').value;
     const mobile = form.querySelector('input[placeholder="Mobile Number"]').value;
     const transactionId = form.querySelector('input[placeholder="Transaction ID"]').value;
+    const playerPhoto = document.getElementById("playerPhoto").files[0];
+
+if (!playerPhoto) {
+  alert("Please select a player photo.");
+  return;
+}
     
 
     try {
