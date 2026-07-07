@@ -57,11 +57,11 @@ const uploadResponse = await fetch(
     body: formData,
   }
 );
-console.log(uploadResponse.status);
-console.log(uploadResponse.statusText);
+console.log("Status:"uploadResponse.status);
+console.log("Status Text:",uploadResponse.statusText);
 
 const uploadData = await uploadResponse.json();
-console.log(uploadData);
+console.log("Cloudinary Response:",uploadData);
 const uploadData = await uploadResponse.json();
 console.log(uploadData);
 if (!uploadData.secure_url) {
