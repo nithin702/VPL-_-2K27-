@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const photoUrl = uploadData.secure_url;
+      console.log("Photo URL:", photoUrl);
 
       // Save Registration
       await addDoc(collection(db, "registrations"), {
