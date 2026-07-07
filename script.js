@@ -57,7 +57,11 @@ const uploadResponse = await fetch(
     body: formData,
   }
 );
+console.log(uploadResponse.status);
+console.log(uploadResponse.statusText);
 
+const uploadData = await uploadResponse.json();
+console.log(uploadData);
 const uploadData = await uploadResponse.json();
 console.log(uploadData);
 if (!uploadData.secure_url) {
