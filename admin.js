@@ -35,8 +35,8 @@ async function loadPlayers() {
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${player.photoUrl}" width="120" style="border-radius:10px;"><br><br>
-
+      
+<img src="${player.photoUrl.replace('/upload/', '/upload/f_auto,q_auto/')}" width="120" style="width:120px;height:120px;object-fit:cover;border-radius:10px;">
       <b>Name:</b> ${player.playerName}<br>
       <b>Age:</b> ${player.age}<br>
       <b>Village:</b> ${player.village}<br>
