@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPL 2K27 Admin Panel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPL 2K27 Admin Panel</title>
 
-    <style>
-        body{
-            font-family:Arial,sans-serif;
-            background:#111;
-            color:white;
-            margin:0;
-            padding:20px;
-        }
-        h1{
-            color:gold;
-            text-align:center;
-        }
-        #players{
-            margin-top:20px;
-        }
-        .card{
-            background:#222;
-            padding:15px;
-            margin-bottom:10px;
-            border-left:5px solid gold;
-            border-radius:8px;
-        }
-    </style>
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#111;
+    color:white;
+    margin:0;
+    padding:20px;
+}
+
+h1{
+    color:gold;
+    text-align:center;
+}
+
+#players{
+    margin-top:20px;
+}
+
+.card{
+    background:#222;
+    padding:15px;
+    margin-bottom:10px;
+    border-left:5px solid gold;
+    border-radius:8px;
+}
+</style>
+
 </head>
+
 <body>
 
 <h1>🏏 VPL 2K27 Admin Panel</h1>
-    <button id="logoutBtn"
+
+<button id="logoutBtn"
 style="float:right;
 background:red;
 color:white;
@@ -41,13 +47,17 @@ border:none;
 border-radius:8px;
 cursor:pointer;">
 🚪 Logout
-    </button>
+</button>
+
 <p id="totalPlayers">Total Players: 0</p>
 
 <input
-  type="text"
-  id="searchBox"
-    <button id="downloadExcel"
+type="text"
+id="searchBox"
+placeholder="Search by Name / Mobile / Village"
+style="width:100%;padding:10px;margin:15px 0;border-radius:8px;border:none;font-size:16px;">
+
+<button id="downloadExcel"
 style="background:green;
 color:white;
 padding:10px 20px;
@@ -57,12 +67,13 @@ cursor:pointer;
 margin:10px 0;">
 📥 Download Excel
 </button>
-  placeholder="Search by Name / Mobile / Village"
-  style="width:100%;padding:10px;margin:15px 0;border-radius:8px;border:none;font-size:16px;">
+
 <div id="players">
-    <p>Loading registrations...</p>
+<p>Loading registrations...</p>
 </div>
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <script type="module" src="admin.js"></script>
+
 </body>
 </html>
