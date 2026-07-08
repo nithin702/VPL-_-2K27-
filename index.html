@@ -2,13 +2,16 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>VPL 2K27 Registration</title>
+<meta charset="UTF-8">
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VPL 2K27 Registration</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -26,7 +29,7 @@
 
 <h2>Player Registration</h2>
 
-<p>Registration Fee : <b>₹200</b></p>
+<p><b>Registration Fee : ₹200</b></p>
 
 </section>
 
@@ -34,52 +37,113 @@
 
 <h2>Register Now</h2>
 
-<form>
+<form id="registrationForm">
 
-<input type="text" placeholder="Player Name" required>
+<input
+type="text"
+id="playerName"
+placeholder="Player Name"
+required>
 
-<input type="file" id="playerPhoto" accept=".jpg,.jpeg,.png" required>
+<input
+type="file"
+id="playerPhoto"
+accept=".jpg,.jpeg,.png,.heic"
+required>
 
-<input type="number" placeholder="Age" required>
+<input
+type="number"
+id="age"
+placeholder="Age"
+required>
 
-<input type="text" placeholder="Village" required>
+<input
+type="text"
+id="village"
+placeholder="Village"
+required>
 
-<input type="tel" placeholder="Mobile Number" required>
+<input
+type="tel"
+id="mobile"
+placeholder="Mobile Number"
+required>
 
-<select required>
+<select id="battingStyle" required>
+
 <option value="">Batting Style</option>
+
 <option>Right Hand</option>
+
 <option>Left Hand</option>
+
 </select>
 
-<select required>
+<select id="bowlingStyle" required>
+
 <option value="">Bowling Style</option>
+
 <option>Fast</option>
+
 <option>Medium Pace</option>
+
 <option>Spin</option>
+
 </select>
 
-<select required>
+<select id="playerRole" required>
+
 <option value="">Player Role</option>
+
 <option>Batsman</option>
+
 <option>Bowler</option>
+
 <option>All Rounder</option>
+
 <option>Wicket Keeper</option>
+
 </select>
 
 <div class="payment">
 
-<h3>Registration Fee : ₹200</h3>
+<h3>💰 Registration Fee : ₹200</h3>
 
-<p>UPI ID : <b>Editable Later</b></p>
+<p><b>UPI ID</b></p>
 
-<input type="text" placeholder="Transaction ID" required>
+<p style="font-size:18px;color:#ffd700;font-weight:bold;">
+gundekayala.praveenkumar@ybl
+</p>
 
-</div>
+<a
+href="upi://pay?pa=gundekayala.praveenkumar@ybl&pn=G%20PRAVEEN%20KUMAR&am=200&cu=INR"
+style="display:inline-block;background:#28a745;color:white;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;">
+💳 Pay ₹200 Now
+</a>
 
+<br><br>
 
+<p><b>Scan QR Code</b></p>
 
-<button type="submit">Register Player</button>
+<img
+src="images/upi-qr.jpg"
+alt="UPI QR"
+style="width:250px;max-width:100%;border-radius:10px;">
+
+<br><br>
+
+<input
+type="text"
+id="transactionId"
+placeholder="Enter Transaction ID"
+required>
+
+<p style="color:#ffcc00;font-size:14px;">
+⚠️ Pay ₹200 using the above UPI ID or QR Code and then enter the Transaction ID.
+  </p>
+  </div>
+
+<button type="submit">🏏 Register Player</button>
 
 </form>
 
@@ -87,11 +151,11 @@
 
 <footer>
 
-<h3>Vallivedu Youth</h3>
+<h3>🏆 Vallivedu Premier League 2K27</h3>
 
 <p>WhatsApp : 9603958781</p>
 
-<p>© 2027 Vallivedu Premier League</p>
+<p>© 2027 Vallivedu Premier League. All Rights Reserved.</p>
 
 </footer>
 
