@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getFirestore,
@@ -35,13 +34,20 @@ async function loadPlayers() {
 
   allPlayers = [];
 
-  snapshot.forEach((doc) => {
-    allPlayers.push(doc.data());
+  snapshot.forEach((document) => {
+
+    const player = document.data();
+
+    player.id = document.id;
+
+    allPlayers.push(player);
+
   });
 
   totalPlayers.innerHTML = `Total Players: ${allPlayers.length}`;
 
   displayPlayers(allPlayers);
+
 }
 
 function displayPlayers(players) {
@@ -51,6 +57,7 @@ function displayPlayers(players) {
   players.forEach((player) => {
 
     const card = document.createElement("div");
+
     card.className = "card";
 
     card.innerHTML = `
@@ -61,7 +68,12 @@ function displayPlayers(players) {
       <b>Age:</b> ${player.age}<br>
       <b>Village:</b> ${player.village}<br>
       <b>Mobile:</b> ${player.mobile}<br>
-      <b>Transaction ID:</b> ${player.transactionId}
+      <b>Transaction ID:</b> ${player.transactionId}<br><br>
+
+      <button onclick="deletePlayer('${player.id}')"
+      style="background:red;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;">
+      🗑 Delete Player
+      </button>
     `;
 
     playersDiv.appendChild(card);
@@ -69,7 +81,6 @@ function displayPlayers(players) {
   });
 
 }
-
 searchBox.addEventListener("keyup", () => {
 
   const value = searchBox.value.toLowerCase();
@@ -83,5 +94,29 @@ searchBox.addEventListener("keyup", () => {
   displayPlayers(filtered);
 
 });
+
+window.deletePlayer = async function(id) {
+
+  const confirmDelete = confirm("Are you sure you want to delete this player?");
+
+  if (!confirmDelete) return;
+
+  try {
+
+    await deleteDoc(doc(db, "registrations", id));
+
+    alert("Player deleted successfully.");
+
+    loadPlayers();
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Error deleting player.");
+
+  }
+
+};
 
 loadPlayers();
