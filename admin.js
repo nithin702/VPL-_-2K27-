@@ -186,3 +186,36 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   }
 
 });
+// Logout
+document.getElementById("logoutBtn").addEventListener("click", () => {
+
+  if(confirm("Are you sure you want to logout?")){
+
+    localStorage.removeItem("adminLogin");
+
+    window.location.href="login.html";
+
+  }
+
+});
+
+// Excel Download
+document.getElementById("downloadExcel").addEventListener("click", () => {
+
+  const data = allPlayers.map(player => ({
+    Name: player.playerName,
+    Age: player.age,
+    Village: player.village,
+    Mobile: player.mobile,
+    Batting: player.battingStyle,
+    Bowling: player.bowlingStyle,
+    Role: player.playerRole,
+    TransactionID: player.transactionId
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Players");
+  XLSX.writeFile(workbook, "VPL_2K27_Players.xlsx");
+
+});
