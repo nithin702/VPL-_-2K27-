@@ -175,3 +175,14 @@ window.editPlayer = async function(id) {
 
 // ================= Load =================
 loadPlayers();
+document.getElementById("logoutBtn").addEventListener("click", () => {
+
+  if(confirm("Are you sure you want to logout?")){
+
+    localStorage.removeItem("adminLogin");
+
+    window.location.href="login.html";
+
+  }
+
+});
