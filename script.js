@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const age = form.querySelector('input[placeholder="Age"]').value.trim();
     const village = form.querySelector('input[placeholder="Village"]').value.trim();
     const mobile = form.querySelector('input[placeholder="Mobile Number"]').value.trim();
-    const transactionId = form.querySelector('input[placeholder="Transaction ID"]').value.trim();
+    const transactionId = document.getElementById("transactionId").value.trim();
 
     const battingStyle = form.querySelectorAll("select")[0].value;
     const bowlingStyle = form.querySelectorAll("select")[1].value;
