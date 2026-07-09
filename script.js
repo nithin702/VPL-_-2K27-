@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bowlingStyle,
         playerRole,
         photoUrl,
+        paymentStatus: "pending",
         createdAt: new Date()
       });
 
