@@ -1,5 +1,4 @@
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getFirestore,
@@ -45,7 +44,6 @@ async function loadPlayers() {
   snapshot.forEach((document) => {
 
     const player = document.data();
-
     player.id = document.id;
 
     allPlayers.push(player);
@@ -65,26 +63,47 @@ function displayPlayers(players) {
   players.forEach((player) => {
 
     const card = document.createElement("div");
+
     card.className = "card";
+
     card.innerHTML = `
-      <img src="${player.photoUrl.replace('/upload/','/upload/f_auto,q_auto/')}"
-      style="width:120px;height:120px;object-fit:cover;border-radius:10px;"><br><br>
 
-      <b>Name:</b> ${player.playerName}<br>
-      <b>Age:</b> ${player.age}<br>
-      <b>Village:</b> ${player.village}<br>
-      <b>Mobile:</b> ${player.mobile}<br>
-      <b>Transaction ID:</b> ${player.transactionId}<br><br>
+<img src="${player.photoUrl.replace('/upload/','/upload/f_auto,q_auto/')}"
+style="width:120px;height:120px;object-fit:cover;border-radius:10px;"><br><br>
 
+<b>Name:</b> ${player.playerName}<br>
+<b>Age:</b> ${player.age}<br>
+<b>Village:</b> ${player.village}<br>
+<b>Mobile:</b> ${player.mobile}<br>
+<b>Transaction ID:</b> ${player.transactionId}<br>
+
+<b>Payment Status:</b>
+<span style="color:${player.paymentStatus==="Verified"?"lime":"orange"};">
+${player.paymentStatus || "Pending"}
+</span>
+
+<br><br>
       <button onclick="editPlayer('${player.id}')"
-      style="background:#2196F3;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;margin-right:10px;">
+      style="background:#2196F3;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;margin-right:8px;">
       ✏️ Edit
       </button>
 
       <button onclick="deletePlayer('${player.id}')"
-      style="background:red;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;">
+      style="background:red;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;margin-right:8px;">
       🗑 Delete
       </button>
+
+      ${
+        player.paymentStatus === "Verified"
+        ? `<button style="background:green;color:white;border:none;padding:8px 15px;border-radius:6px;">
+        ✅ Verified
+        </button>`
+        : `<button onclick="verifyPayment('${player.id}')"
+        style="background:orange;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;">
+        💰 Verify Payment
+        </button>`
+      }
+
     `;
 
     playersDiv.appendChild(card);
@@ -109,24 +128,15 @@ searchBox.addEventListener("keyup", () => {
 // ================= Delete Player =================
 window.deletePlayer = async function(id) {
 
-  const confirmDelete = confirm("Are you sure you want to delete this player?");
-
-  if (!confirmDelete) return;
+  if (!confirm("Are you sure you want to delete this player?")) return;
 
   try {
-
     await deleteDoc(doc(db, "registrations", id));
-
     alert("Player deleted successfully.");
-
     loadPlayers();
-
   } catch (error) {
-
     console.error(error);
-
     alert("Error deleting player.");
-
   }
 
 };
@@ -160,46 +170,56 @@ window.editPlayer = async function(id) {
     });
 
     alert("Player updated successfully.");
-
     loadPlayers();
 
   } catch (error) {
 
     console.error(error);
-
     alert("Error updating player.");
 
   }
 
 };
 
-// ================= Load =================
+// ================= Verify Payment =================
+window.verifyPayment = async function(id) {
+
+  if (!confirm("Verify this player's payment?")) return;
+
+  try {
+
+    await updateDoc(doc(db, "registrations", id), {
+      paymentStatus: "Verified"
+    });
+
+    alert("Payment Verified Successfully!");
+    loadPlayers();
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Error verifying payment.");
+
+  }
+
+};
+
+// ================= Load Players =================
 loadPlayers();
+
+// ================= Logout =================
 document.getElementById("logoutBtn").addEventListener("click", () => {
 
   if(confirm("Are you sure you want to logout?")){
 
     localStorage.removeItem("adminLogin");
-
-    window.location.href="login.html";
-
-  }
-
-});
-// Logout
-document.getElementById("logoutBtn").addEventListener("click", () => {
-
-  if(confirm("Are you sure you want to logout?")){
-
-    localStorage.removeItem("adminLogin");
-
     window.location.href="login.html";
 
   }
 
 });
 
-// Excel Download
+// ================= Excel Download =================
 document.getElementById("downloadExcel").addEventListener("click", () => {
 
   const data = allPlayers.map(player => ({
@@ -210,7 +230,8 @@ document.getElementById("downloadExcel").addEventListener("click", () => {
     Batting: player.battingStyle,
     Bowling: player.bowlingStyle,
     Role: player.playerRole,
-    TransactionID: player.transactionId
+    TransactionID: player.transactionId,
+    PaymentStatus: player.paymentStatus || "Pending"
   }));
 
   const worksheet = XLSX.utils.json_to_sheet(data);
