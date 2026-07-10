@@ -1,1 +1,81 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VPL 2K27 Auction Panel</title>
+
+<link rel="stylesheet" href="auction.css">
+
+</head>
+
+<body>
+
+<h1>🏆 VPL 2K27 Auction Panel</h1>
+
+<button id="backBtn">
+⬅ Back to Admin
+</button>
+
+<hr>
+
+<h2>🔍 Unsold Players</h2>
+
+<input
+type="text"
+id="searchPlayer"
+placeholder="Search Player..."
+>
+
+<div id="playersList">
+
+<p>Loading Players...</p>
+
+</div>
+
+<hr>
+
+<h2>🏏 Auction</h2>
+
+<form id="auctionForm">
+
+<input
+type="hidden"
+id="selectedPlayerId">
+
+<p><b>Selected Player</b></p>
+
+<input
+type="text"
+id="selectedPlayer"
+readonly
+placeholder="Select a Player">
+
+<select id="teamSelect" required>
+
+<option value="">Select Team</option>
+
+</select>
+
+<input
+type="number"
+id="bidAmount"
+placeholder="Bid Amount (Coins)"
+required>
+
+<button type="submit">
+
+🏆 Sell Player
+
+</button>
+
+</form>
+
+<script type="module" src="auction.js"></script>
+
+</body>
+</html>
