@@ -1,1 +1,87 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VPL 2K27 Match Schedule</title>
+
+<link rel="stylesheet" href="schedule.css">
+
+</head>
+
+<body>
+
+<h1>🏏 Match Schedule Manager</h1>
+
+<button id="backBtn">
+⬅ Back to Admin
+</button>
+
+<hr>
+
+<h2>➕ Create Match</h2>
+
+<form id="matchForm">
+
+<input
+type="text"
+id="matchNumber"
+placeholder="Match Number (Example : Match 1)"
+required>
+
+<select id="team1" required>
+
+<option value="">Select Team 1</option>
+
+</select>
+
+<select id="team2" required>
+
+<option value="">Select Team 2</option>
+
+</select>
+
+<input
+type="text"
+id="ground"
+placeholder="Ground Name"
+required>
+
+<input
+type="date"
+id="matchDate"
+required>
+
+<input
+type="time"
+id="matchTime"
+required>
+
+<button type="submit">
+
+📅 Create Match
+
+</button>
+
+</form>
+
+<hr>
+
+<h2>📋 Scheduled Matches</h2>
+
+<div id="matchesList">
+
+<p>Loading Matches...</p>
+
+</div>
+
+<script type="module" src="schedule.js"></script>
+
+</body>
+
+</html>
