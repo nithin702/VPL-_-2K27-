@@ -1,1 +1,90 @@
 
+body{
+    margin:0;
+    padding:20px;
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+h1{
+    text-align:center;
+    color:gold;
+}
+
+#backBtn{
+    background:#2196F3;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+#searchHistory{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    margin-bottom:20px;
+    box-sizing:border-box;
+}
+
+#historyList{
+    margin-top:20px;
+}
+
+.history-card{
+    background:#222;
+    border-left:5px solid gold;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.history-card img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:50%;
+    border:2px solid gold;
+    display:block;
+    margin:auto;
+}
+
+.history-card h3{
+    color:#FFD700;
+    text-align:center;
+    margin:10px 0;
+}
+
+.history-card p{
+    margin:6px 0;
+    font-size:15px;
+}
+
+.price{
+    color:#00ff66;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.team{
+    color:#00bfff;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+
+body{
+    padding:12px;
+}
+
+.history-card img{
+    width:65px;
+    height:65px;
+}
+
+}
