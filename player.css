@@ -1,1 +1,101 @@
 
+body{
+    margin:0;
+    padding:20px;
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+h1{
+    text-align:center;
+    color:gold;
+}
+
+#backBtn{
+    background:#2196F3;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+#playerCard{
+    max-width:700px;
+    margin:auto;
+    background:#222;
+    border-left:5px solid gold;
+    border-radius:12px;
+    padding:20px;
+}
+
+#playerCard img{
+    display:block;
+    margin:auto;
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:50%;
+    border:4px solid gold;
+}
+
+#playerCard h2{
+    text-align:center;
+    color:gold;
+    margin-top:15px;
+}
+
+.info{
+    margin-top:20px;
+}
+
+.info p{
+    background:#333;
+    padding:12px;
+    border-radius:8px;
+    margin:10px 0;
+    font-size:16px;
+}
+
+.status-verified{
+    color:#00ff66;
+    font-weight:bold;
+}
+
+.status-pending{
+    color:orange;
+    font-weight:bold;
+}
+
+.sold{
+    color:#00bfff;
+    font-weight:bold;
+}
+
+.unsold{
+    color:#ff4444;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+
+body{
+    padding:12px;
+}
+
+#playerCard{
+    padding:15px;
+}
+
+#playerCard img{
+    width:120px;
+    height:120px;
+}
+
+.info p{
+    font-size:15px;
+}
+
+}
