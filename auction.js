@@ -254,7 +254,8 @@ await updateDoc(doc(db, "registrations", playerId), {
     await updateDoc(doc(db, "teams", teamId), {
 
       remainingPurse: team.remainingPurse - bidAmount,
-      playersBought: (team.playersBought || 0) + 1
+      playersBought: (team.playersBought || 0) + 1,
+      totalspent: (team.totalspent || 0) + bidAmount
 
     });
 
