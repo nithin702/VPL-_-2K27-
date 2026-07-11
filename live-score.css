@@ -1,1 +1,117 @@
 
+body{
+    margin:0;
+    padding:20px;
+    background:#111;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+h1,h2{
+    text-align:center;
+    color:gold;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+#backBtn{
+    background:#2196F3;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+#matchSelect{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+#scoreBoard{
+    background:#222;
+    border-left:5px solid gold;
+    border-radius:12px;
+    padding:20px;
+    text-align:center;
+}
+
+.score{
+    font-size:42px;
+    color:#00ff66;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+.overs{
+    font-size:24px;
+    color:#00BFFF;
+    margin-bottom:20px;
+}
+
+.btn-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.btn-grid button{
+    padding:15px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.runBtn{
+    background:#4CAF50;
+    color:white;
+}
+
+.wicketBtn{
+    background:#f44336;
+    color:white;
+}
+
+.extraBtn{
+    background:#FF9800;
+    color:white;
+}
+
+.finishBtn{
+    background:#673AB7;
+    color:white;
+    width:100%;
+    padding:15px;
+    margin-top:20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:18px;
+}
+
+@media(max-width:600px){
+
+.btn-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.score{
+
+font-size:34px;
+
+}
+
+}
