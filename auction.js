@@ -214,14 +214,42 @@ auctionForm.addEventListener("submit", async (e) => {
   try {
 
     // Update Player
-    await updateDoc(doc(db, "registrations", playerId), {
+    
+await updateDoc(doc(db, "registrations", playerId), {
 
-      sold: true,
-      soldTo: team.teamName,
-      soldPrice: bidAmount
+  sold: true,
 
-    });
+  soldStatus: "Sold",
 
+  soldTo: team.teamName,
+
+  teamName: team.teamName,
+
+  teamId: team.id,
+
+  soldPrice: bidAmount,
+
+  matches: 0,
+
+  runs: 0,
+
+  balls: 0,
+
+  fours: 0,
+
+  sixes: 0,
+
+  strikeRate: 0,
+
+  wickets: 0,
+
+  oversBowled: 0,
+
+  runsConceded: 0,
+
+  economy: 0
+
+});
     // Update Team
     await updateDoc(doc(db, "teams", teamId), {
 
