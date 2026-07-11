@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>VPL 2K27 Admin Panel</title>
 
@@ -22,44 +23,59 @@ padding:20px;
 h1{
 text-align:center;
 color:gold;
-margin-bottom:10px;
+margin-bottom:20px;
+}
+
+.stats{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.stats div{
+flex:1;
+min-width:180px;
+background:#222;
+padding:15px;
+border-radius:10px;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+color:gold;
 }
 
 #topButtons{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-justify-content:center;
-margin:20px 0;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:25px;
 }
 
 button{
-padding:10px 20px;
+padding:15px;
 border:none;
-border-radius:8px;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
 cursor:pointer;
-font-size:15px;
-}
-
-#logoutBtn{
-background:red;
+transition:.3s;
 color:white;
 }
 
-#downloadExcel{
-background:green;
-color:white;
+button:hover{
+transform:scale(1.05);
 }
 
-#manageTeamsBtn{
-background:#2196F3;
-color:white;
-}
-
-#auctionBtn{
-background:#ff9800;
-color:white;
-}
+#downloadExcel{background:#2e7d32;}
+#manageTeamsBtn{background:#1565c0;}
+#scheduleBtn{background:#8e24aa;}
+#auctionBtn{background:#ef6c00;}
+#liveScoreBtn{background:#d81b60;}
+#pointsBtn{background:#00897b;}
+#statsBtn{background:#6d4c41;}
+#logoutBtn{background:#c62828;}
 
 #searchBox{
 width:100%;
@@ -67,7 +83,7 @@ padding:12px;
 border:none;
 border-radius:8px;
 font-size:16px;
-margin:15px 0;
+margin-bottom:20px;
 box-sizing:border-box;
 }
 
@@ -83,23 +99,6 @@ border-radius:10px;
 margin-bottom:15px;
 }
 
-.stats{
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-background:#222;
-padding:15px;
-border-radius:10px;
-margin-bottom:20px;
-}
-
-.stats div{
-margin:5px 0;
-font-size:17px;
-font-weight:bold;
-color:#ffd700;
-}
-
 </style>
 
 </head>
@@ -107,6 +106,7 @@ color:#ffd700;
 <body>
 
 <h1>🏏 VPL 2K27 Admin Panel</h1>
+
 <div class="stats">
 
 <div id="totalPlayers">
@@ -124,37 +124,62 @@ color:#ffd700;
 </div>
 
 <div id="topButtons">
-
-<button id="downloadExcel">
+  <button id="downloadExcel">
 📥 Download Excel
 </button>
 
 <button
 id="manageTeamsBtn"
 onclick="window.location.href='teams.html'">
-🏏 Manage Teams
+
+👥 Manage Teams
+
+</button>
+
+<button
+id="scheduleBtn"
+onclick="window.location.href='schedule.html'">
+
+📅 Match Schedule
+
 </button>
 
 <button
 id="auctionBtn"
 onclick="window.location.href='auction.html'">
+
 🏆 Auction Panel
+
 </button>
-  
+
 <button
-  onclick="window.location.href='live-score.html'">
-  style="background:#e91e63;
-  color:white;
-  border:none;
-  padding:10px 18px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;">
-  🏏 Live Score
-  </button>
-  
+id="liveScoreBtn"
+onclick="window.location.href='live-score.html'">
+
+🏏 Live Score
+
+</button>
+
+<button
+id="pointsBtn"
+onclick="window.location.href='points.html'">
+
+📊 Points Table
+
+</button>
+
+<button
+id="statsBtn"
+onclick="window.location.href='player-stats.html'">
+
+📈 Player Statistics
+
+</button>
+
 <button id="logoutBtn">
+
 🚪 Logout
+
 </button>
 
 </div>
@@ -167,13 +192,17 @@ placeholder="🔍 Search by Name / Mobile / Village">
 <div id="players">
 
 <p style="text-align:center;">
+
 Loading registrations...
+
 </p>
 
 </div>
+
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 
 <script type="module" src="admin.js"></script>
 
 </body>
+
 </html>
