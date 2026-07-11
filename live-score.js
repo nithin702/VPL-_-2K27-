@@ -565,3 +565,66 @@ window.finishInnings = async function(){
 // ================= Initial Load =================
 
 loadMatches();
+// ================= Finish Innings =================
+
+window.finishInnings = async function () {
+
+    if (!confirm("🏁 Finish this innings?")) return;
+
+    try {
+
+        await updateDoc(doc(db, "matches", selectedMatch.id), {
+
+            liveRuns: runs,
+
+            liveWickets: wickets,
+
+            liveOvers: `${Math.floor(balls / 6)}.${balls % 6}`,
+
+            inningsCompleted: true,
+
+            battingTeam: selectedMatch.team1,
+
+            bowlingTeam: selectedMatch.team2,
+
+            lastUpdated: new Date().toISOString()
+
+        });
+
+        alert("🏏 Innings Finished Successfully!");
+
+        playerSelection.style.display = "none";
+
+        scoreBoard.innerHTML = `
+
+        <h2>✅ Innings Completed</h2>
+
+        <h3>${selectedMatch.team1}</h3>
+
+        <h1>${runs}/${wickets}</h1>
+
+        <h2>Overs : ${Math.floor(balls/6)}.${balls%6}</h2>
+
+        <br>
+
+        <button onclick="location.reload()">
+
+        🔄 Start Another Match
+
+        </button>
+
+        `;
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("❌ Error Saving Innings!");
+
+    }
+
+};
+
+// ================= Initial Load =================
+
+loadMatches();
