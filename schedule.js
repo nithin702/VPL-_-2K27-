@@ -59,18 +59,24 @@ async function loadTeams() {
 
     const snapshot = await getDocs(collection(db, "teams"));
 
-    snapshot.forEach((document) => {
+    console.log("Teams Count:", snapshot.size);
 
-        const team = document.data();
+    snapshot.forEach((docSnap) => {
+
+        const team = docSnap.data();
+
+        console.log(team);
+
+        if (!team.teamName) return;
 
         team1.innerHTML += `
         <option value="${team.teamName}">
-        ${team.teamName}
+            ${team.teamName}
         </option>`;
 
         team2.innerHTML += `
         <option value="${team.teamName}">
-        ${team.teamName}
+            ${team.teamName}
         </option>`;
 
     });
