@@ -10,7 +10,7 @@ import {
     updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ================= Firebase Config =================
+// ================= Firebase =================
 
 const firebaseConfig = {
     apiKey: "AIzaSyBdEQU9fNNjzfo-OGV5o9p_CiS_PA_NJNw",
@@ -22,12 +22,10 @@ const firebaseConfig = {
     measurementId: "G-YL6CQ36HV6"
 };
 
-// ================= Initialize Firebase =================
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ================= HTML Elements =================
+// ================= Elements =================
 
 const matchSelect = document.getElementById("matchSelect");
 const scoreBoard = document.getElementById("scoreBoard");
@@ -53,8 +51,6 @@ let currentStriker = null;
 let currentNonStriker = null;
 let currentBowler = null;
 
-// ================= Live Score Variables =================
-
 let runs = 0;
 let wickets = 0;
 let balls = 0;
@@ -62,20 +58,19 @@ let balls = 0;
 // ================= Back Button =================
 
 backBtn.onclick = () => {
-
     window.location.href = "admin.html";
-
 };
+
 // ================= Load Matches =================
 
 async function loadMatches() {
 
+    matchSelect.innerHTML =
+    `<option value="">-- Select Match --</option>`;
+
+    allMatches = [];
+
     try {
-
-        matchSelect.innerHTML = `
-        <option value="">-- Select Match --</option>`;
-
-        allMatches = [];
 
         const snapshot = await getDocs(collection(db, "matches"));
 
@@ -89,37 +84,37 @@ async function loadMatches() {
 
             matchSelect.innerHTML += `
             <option value="${match.id}">
-                ${match.matchNumber} | ${match.team1} 🆚 ${match.team2}
+            ${match.matchNumber} | ${match.team1} 🆚 ${match.team2}
             </option>`;
-
         });
+
+        console.log("Matches Loaded :", allMatches.length);
 
     } catch (error) {
 
-        console.error("Load Matches Error:", error);
+        console.error(error);
 
         alert("Unable to load matches.");
 
     }
 
 }
-
 // ================= Load Players =================
 
 async function loadPlayers(teamName) {
 
+    allPlayers = [];
+
+    striker.innerHTML =
+    `<option value="">Select Striker</option>`;
+
+    nonStriker.innerHTML =
+    `<option value="">Select Non-Striker</option>`;
+
+    bowler.innerHTML =
+    `<option value="">Select Bowler</option>`;
+
     try {
-
-        allPlayers = [];
-
-        striker.innerHTML =
-        `<option value="">Select Striker</option>`;
-
-        nonStriker.innerHTML =
-        `<option value="">Select Non-Striker</option>`;
-
-        bowler.innerHTML =
-        `<option value="">Select Bowler</option>`;
 
         const q = query(
             collection(db, "registrations"),
@@ -138,24 +133,26 @@ async function loadPlayers(teamName) {
 
             striker.innerHTML += `
             <option value="${player.id}">
-                ${player.playerName}
+            ${player.playerName}
             </option>`;
 
             nonStriker.innerHTML += `
             <option value="${player.id}">
-                ${player.playerName}
+            ${player.playerName}
             </option>`;
 
             bowler.innerHTML += `
             <option value="${player.id}">
-                ${player.playerName}
+            ${player.playerName}
             </option>`;
 
         });
 
+        console.log("Players Loaded :", allPlayers.length);
+
     } catch (error) {
 
-        console.error("Load Players Error:", error);
+        console.error(error);
 
         alert("Unable to load players.");
 
@@ -169,18 +166,20 @@ matchSelect.addEventListener("change", async () => {
 
     const id = matchSelect.value;
 
-    if (!id) {
+    if (id === "") {
 
         playerSelection.style.display = "none";
 
-        scoreBoard.innerHTML =
-        "<p>Select a match to start scoring...</p>";
+        scoreBoard.innerHTML = `
+        <p>Select a match to start scoring...</p>`;
 
         return;
 
     }
 
-    selectedMatch = allMatches.find(match => match.id === id);
+    selectedMatch = allMatches.find(
+        match => match.id === id
+    );
 
     runs = 0;
     wickets = 0;
@@ -192,11 +191,12 @@ matchSelect.addEventListener("change", async () => {
 
     scoreBoard.innerHTML = `
     <p>
-    Select Striker, Non-Striker and Bowler,
+    Select Striker, Non-Striker & Bowler,
     then click <b>Start Scoring</b>.
     </p>`;
 
 });
+
 // ================= Start Scoring =================
 
 startScoring.addEventListener("click", () => {
@@ -207,7 +207,8 @@ startScoring.addEventListener("click", () => {
         bowler.value === ""
     ) {
 
-        alert("Please select Striker, Non-Striker and Bowler.");
+        alert("Please select all players.");
+
         return;
 
     }
@@ -215,28 +216,25 @@ startScoring.addEventListener("click", () => {
     if (striker.value === nonStriker.value) {
 
         alert("Striker and Non-Striker cannot be the same.");
+
         return;
 
     }
 
-    currentStriker = allPlayers.find(
-        player => player.id === striker.value
-    );
+    currentStriker =
+    allPlayers.find(player => player.id === striker.value);
 
-    currentNonStriker = allPlayers.find(
-        player => player.id === nonStriker.value
-    );
+    currentNonStriker =
+    allPlayers.find(player => player.id === nonStriker.value);
 
-    currentBowler = allPlayers.find(
-        player => player.id === bowler.value
-    );
+    currentBowler =
+    allPlayers.find(player => player.id === bowler.value);
 
     playerSelection.style.display = "none";
 
     showScoreBoard();
 
 });
-
 // ================= Show Scoreboard =================
 
 function showScoreBoard() {
@@ -252,44 +250,47 @@ function showScoreBoard() {
     </h3>
 
     <h4>
-    🎯 Bowler :
-    ${currentBowler.playerName}
+    🎯 Bowler : ${currentBowler.playerName}
     </h4>
 
     <div class="score">
-
         <span id="scoreText">
-
         ${runs}/${wickets}
-
         </span>
-
     </div>
 
     <div class="overs">
-
         Overs :
         <span id="oversText">
-
-        ${Math.floor(balls / 6)}.${balls % 6}
-
+        ${Math.floor(balls/6)}.${balls%6}
         </span>
-
     </div>
 
     <div class="btn-grid">
 
-        <button class="runBtn" onclick="addRuns(0)">0</button>
+        <button class="runBtn" onclick="addRuns(0)">
+        0
+        </button>
 
-        <button class="runBtn" onclick="addRuns(1)">1</button>
+        <button class="runBtn" onclick="addRuns(1)">
+        1
+        </button>
 
-        <button class="runBtn" onclick="addRuns(2)">2</button>
+        <button class="runBtn" onclick="addRuns(2)">
+        2
+        </button>
 
-        <button class="runBtn" onclick="addRuns(3)">3</button>
+        <button class="runBtn" onclick="addRuns(3)">
+        3
+        </button>
 
-        <button class="runBtn" onclick="addRuns(4)">4</button>
+        <button class="runBtn" onclick="addRuns(4)">
+        4
+        </button>
 
-        <button class="runBtn" onclick="addRuns(6)">6</button>
+        <button class="runBtn" onclick="addRuns(6)">
+        6
+        </button>
 
         <button class="extraBtn" onclick="wideBall()">
         Wide
@@ -310,32 +311,69 @@ function showScoreBoard() {
     <button
     class="finishBtn"
     onclick="finishInnings()">
+
+    🏁 Finish Innings
+
+    </button>
+
+    `;
+
+}
+
+// ================= Refresh Score =================
+
+function refreshScore() {
+
+    document.getElementById("scoreText").innerHTML =
+    `${runs}/${wickets}`;
+
+    document.getElementById("oversText").innerHTML =
+    `${Math.floor(balls/6)}.${balls%6}`;
+
+    checkOverComplete();
+
+}
 // ================= Update Batsman Stats =================
 
 async function updateBatsmanStats(playerId, runScored) {
 
-    const player = allPlayers.find(p => p.id === playerId);
+    const player = allPlayers.find(
+        p => p.id === playerId
+    );
 
     if (!player) return;
 
-    const totalRuns = (player.runs || 0) + runScored;
-    const totalBalls = (player.balls || 0) + 1;
-    const totalFours = (player.fours || 0) + (runScored === 4 ? 1 : 0);
-    const totalSixes = (player.sixes || 0) + (runScored === 6 ? 1 : 0);
+    const totalRuns =
+        (player.runs || 0) + runScored;
 
-    const strikeRate = totalBalls > 0
+    const totalBalls =
+        (player.balls || 0) + 1;
+
+    const totalFours =
+        (player.fours || 0) + (runScored === 4 ? 1 : 0);
+
+    const totalSixes =
+        (player.sixes || 0) + (runScored === 6 ? 1 : 0);
+
+    const strikeRate =
+        totalBalls > 0
         ? Number(((totalRuns / totalBalls) * 100).toFixed(2))
         : 0;
 
-    await updateDoc(doc(db, "registrations", playerId), {
+    await updateDoc(
+        doc(db, "registrations", playerId),
+        {
 
-        runs: totalRuns,
-        balls: totalBalls,
-        fours: totalFours,
-        sixes: totalSixes,
-        strikeRate: strikeRate
+            runs: totalRuns,
+            balls: totalBalls,
+            fours: totalFours,
+            sixes: totalSixes,
+            strikeRate: strikeRate
 
-    });
+        }
+    );
+
+    // Local Update
 
     player.runs = totalRuns;
     player.balls = totalBalls;
@@ -347,27 +385,40 @@ async function updateBatsmanStats(playerId, runScored) {
 
 // ================= Update Bowler Stats =================
 
-async function updateBowlerStats(playerId, isWicket = false, runsGiven = 0) {
+async function updateBowlerStats(
+    playerId,
+    isWicket = false,
+    runsGiven = 0
+) {
 
-    const player = allPlayers.find(p => p.id === playerId);
+    const player = allPlayers.find(
+        p => p.id === playerId
+    );
 
     if (!player) return;
 
     const totalWickets =
-        (player.wickets || 0) + (isWicket ? 1 : 0);
+        (player.wickets || 0) +
+        (isWicket ? 1 : 0);
 
-    const totalRunsGiven =
-        (player.runsConceded || 0) + runsGiven;
+    const totalRunsConceded =
+        (player.runsConceded || 0) +
+        runsGiven;
 
-    await updateDoc(doc(db, "registrations", playerId), {
+    await updateDoc(
+        doc(db, "registrations", playerId),
+        {
 
-        wickets: totalWickets,
-        runsConceded: totalRunsGiven
+            wickets: totalWickets,
+            runsConceded: totalRunsConceded
 
-    });
+        }
+    );
+
+    // Local Update
 
     player.wickets = totalWickets;
-    player.runsConceded = totalRunsGiven;
+    player.runsConceded = totalRunsConceded;
 
 }
 // ================= Add Runs =================
@@ -377,11 +428,18 @@ window.addRuns = async function(run) {
     runs += run;
     balls++;
 
-    // Update Batsman
-    await updateBatsmanStats(currentStriker.id, run);
+    // Update Batsman Stats
+    await updateBatsmanStats(
+        currentStriker.id,
+        run
+    );
 
-    // Update Bowler
-    await updateBowlerStats(currentBowler.id, false, run);
+    // Update Bowler Stats
+    await updateBowlerStats(
+        currentBowler.id,
+        false,
+        run
+    );
 
     // Strike Change on Odd Runs
     if (run === 1 || run === 3) {
@@ -415,7 +473,7 @@ window.addWicket = async function() {
 
     refreshScore();
 
-    alert("🏏 Wicket!\nSelect the next batsman.");
+    alert("🏏 Wicket!\nPlease select the next batsman.");
 
 };
 
@@ -424,6 +482,8 @@ window.addWicket = async function() {
 window.wideBall = async function() {
 
     runs++;
+
+    // Wide doesn't count as a ball
 
     await updateBowlerStats(
         currentBowler.id,
@@ -441,6 +501,8 @@ window.noBall = async function() {
 
     runs++;
 
+    // No Ball doesn't count as a ball
+
     await updateBowlerStats(
         currentBowler.id,
         false,
@@ -457,11 +519,14 @@ function checkOverComplete() {
     if (balls > 0 && balls % 6 === 0) {
 
         // Change Strike
+
         let temp = currentStriker;
         currentStriker = currentNonStriker;
         currentNonStriker = temp;
 
         alert("🏏 Over Completed!\nPlease select a new bowler.");
+
+        // Reset Bowler
 
         bowler.value = "";
 
@@ -471,63 +536,66 @@ function checkOverComplete() {
 
         <h2>🏏 Over Completed</h2>
 
-        <p>
+        <h3>
+        Score : ${runs}/${wickets}
+        </h3>
 
-        Please select the next bowler and click
+        <h3>
+        Overs : ${Math.floor(balls/6)}.${balls%6}
+        </h3>
 
-        <b>Start Scoring</b>
+        <br>
 
-        </p>
+        <label>Select Next Bowler</label><br><br>
+
+        ${bowler.outerHTML}
+
+        <br><br>
+
+        <button id="continueBtn">
+
+        ▶ Continue Innings
+
+        </button>
 
         `;
 
-    }
+        const newBowler =
+        document.getElementById("bowler");
 
-}
+        document
+        .getElementById("continueBtn")
+        .addEventListener("click", () => {
 
-// ================= Refresh Score =================
+            if (newBowler.value === "") {
 
-function refreshScore() {
+                alert("Please select a bowler.");
 
-    document.getElementById("scoreText").innerHTML =
-        `${runs}/${wickets}`;
+                return;
 
-    document.getElementById("oversText").innerHTML =
-        `${Math.floor(balls / 6)}.${balls % 6}`;
+            }
 
-    checkOverComplete();
+            currentBowler = allPlayers.find(
+                p => p.id === newBowler.value
+            );
 
-}
+            playerSelection.style.display = "none";
 
-// ================= Continue Scoring =================
+            showScoreBoard();
 
-startScoring.addEventListener("click", () => {
-
-    if (currentStriker && currentNonStriker) {
-
-        if (bowler.value === "") {
-
-            alert("Please select a bowler.");
-
-            return;
-
-        }
-
-        currentBowler = allPlayers.find(
-            p => p.id === bowler.value
-        );
-
-        playerSelection.style.display = "none";
-
-        showScoreBoard();
+        });
 
     }
 
-});
-
+}
 // ================= Finish Innings =================
 
 window.finishInnings = async function () {
+
+    if (!selectedMatch) {
+        alert("No Match Selected!");
+        return;
+    }
 
     if (!confirm("🏁 Finish this innings?")) return;
 
@@ -539,11 +607,10 @@ window.finishInnings = async function () {
             liveWickets: wickets,
             liveOvers: `${Math.floor(balls / 6)}.${balls % 6}`,
 
-            inningsCompleted: true,
-
             battingTeam: selectedMatch.team1,
             bowlingTeam: selectedMatch.team2,
 
+            inningsCompleted: true,
             status: "Completed",
 
             lastUpdated: new Date().toISOString()
@@ -562,7 +629,7 @@ window.finishInnings = async function () {
 
         <h1>${runs}/${wickets}</h1>
 
-        <h3>Overs : ${Math.floor(balls / 6)}.${balls % 6}</h3>
+        <h3>Overs : ${Math.floor(balls/6)}.${balls%6}</h3>
 
         <br>
 
@@ -578,12 +645,13 @@ window.finishInnings = async function () {
 
         console.error(error);
 
-        alert("❌ Error saving match!");
+        alert("❌ Error Saving Match!");
 
     }
 
 };
-// ================= Reset Match =================
+
+// ================= Reset Score =================
 
 function resetScore() {
 
@@ -603,13 +671,13 @@ async function reloadMatches() {
 
     resetScore();
 
+    matchSelect.value = "";
+
     playerSelection.style.display = "none";
 
     scoreBoard.innerHTML = `
     <p>Select a match to start scoring...</p>
     `;
-
-    matchSelect.value = "";
 
     await loadMatches();
 
@@ -617,7 +685,6 @@ async function reloadMatches() {
 
 // ================= Auto Refresh =================
 
-// Reload match list every 30 seconds
 setInterval(async () => {
 
     try {
@@ -626,13 +693,13 @@ setInterval(async () => {
 
     } catch (error) {
 
-        console.error("Auto Refresh Error :", error);
+        console.error(error);
 
     }
 
 }, 30000);
 
-// ================= Initial Load =================
+// ================= Initialize =================
 
 async function initializePage() {
 
@@ -640,18 +707,16 @@ async function initializePage() {
 
         await loadMatches();
 
-        console.log("✅ Live Score Module Loaded Successfully");
+        console.log("✅ Live Score Loaded Successfully");
 
     } catch (error) {
 
-        console.error("Initialization Error :", error);
+        console.error(error);
 
-        alert("Failed to load Live Score.");
+        alert("Unable to load Live Score.");
 
     }
 
 }
 
 initializePage();
-
-   
