@@ -1,1 +1,214 @@
+/* ==================================
+   VPL 2K27 RESULT PAGE
+================================== */
 
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+}
+
+body{
+
+font-family:Arial,sans-serif;
+
+background:#0d1117;
+
+color:white;
+
+padding:20px;
+
+}
+
+.container{
+
+max-width:900px;
+
+margin:auto;
+
+}
+
+/* ==================================
+   Header
+================================== */
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.header h1{
+
+color:#FFD700;
+
+font-size:32px;
+
+}
+
+.completed-badge{
+
+background:#00c853;
+
+color:white;
+
+padding:8px 16px;
+
+border-radius:30px;
+
+font-weight:bold;
+
+}
+
+/* ==================================
+   Cards
+================================== */
+
+.match-card,
+
+.score-card,
+
+.winner-card,
+
+.mom-card,
+
+.scorecard,
+
+.summary-card{
+
+background:#161b22;
+
+border:1px solid #30363d;
+
+border-radius:12px;
+
+padding:18px;
+
+margin-bottom:18px;
+
+box-shadow:0 4px 10px rgba(0,0,0,.4);
+
+}
+
+/* ==================================
+   Match Details
+================================== */
+
+.match-card{
+
+text-align:center;
+
+}
+
+.match-card h2{
+
+color:#58a6ff;
+
+margin-bottom:10px;
+
+}
+
+.match-card p{
+
+color:#c9d1d9;
+
+margin-top:5px;
+
+}
+
+/* ==================================
+/* ==================================
+   Winner Card
+================================== */
+
+.winner-card{
+
+text-align:center;
+
+}
+
+.winner-card h2{
+
+color:#FFD700;
+
+font-size:30px;
+
+margin-bottom:10px;
+
+}
+
+.winner-card p{
+
+font-size:20px;
+
+color:#00e676;
+
+font-weight:bold;
+
+}
+
+/* ==================================
+   Man of the Match
+================================== */
+
+.mom-card{
+
+text-align:center;
+
+}
+
+.mom-card h2{
+
+color:#ff9800;
+
+margin-bottom:15px;
+
+}
+
+.mom-box{
+
+background:#21262d;
+
+padding:20px;
+
+border-radius:10px;
+
+border:1px solid #30363d;
+
+}
+
+.mom-box h3{
+
+font-size:28px;
+
+color:#FFD700;
+
+margin-bottom:10px;
+
+}
+
+.mom-box p{
+
+font-size:18px;
+
+color:#c9d1d9;
+
+}
+
+/* ==================================
+   Scorecards
+================================== */
+
+.scorecard h2{
+
+color:#58a6ff
