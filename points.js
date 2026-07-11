@@ -61,3 +61,109 @@ async function loadTeams(){
     });
 
 }
+// ================= Display Points Table =================
+
+function displayTable() {
+
+    tableBody.innerHTML = "";
+
+    // Highest points first
+    allTeams.sort((a, b) => (b.points || 0) - (a.points || 0));
+
+    allTeams.forEach((team, index) => {
+
+        const row = document.createElement("tr");
+
+        let positionClass = "";
+
+        if (index === 0) positionClass = "first";
+        else if (index === 1) positionClass = "second";
+        else if (index === 2) positionClass = "third";
+
+        row.innerHTML = `
+
+        <td class="${positionClass}">
+        ${index + 1}
+        </td>
+
+        <td>
+        ${team.teamName}
+        </td>
+
+        <td>
+        ${team.played || 0}
+        </td>
+
+        <td>
+        ${team.wins || 0}
+        </td>
+
+        <td>
+        ${team.losses || 0}
+        </td>
+
+        <td style="font-weight:bold;color:gold;">
+        ${team.points || 0}
+        </td>
+
+        `;
+
+        tableBody.appendChild(row);
+
+    });
+
+}
+
+// ================= Initial Load =================
+
+async function init() {
+
+    await loadTeams();
+
+    displayTable();
+
+}
+
+init();
+// ================= Update Team Points =================
+
+import {
+  updateDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// Winner Team Update
+export async function updateWinner(teamId){
+
+    const team = allTeams.find(t => t.id === teamId);
+
+    if(!team) return;
+
+    await updateDoc(doc(db,"teams",teamId),{
+
+        played : (team.played || 0) + 1,
+
+        wins : (team.wins || 0) + 1,
+
+        points : (team.points || 0) + 2
+
+    });
+
+}
+
+// Loser Team Update
+export async function updateLoser(teamId){
+
+    const team = allTeams.find(t => t.id === teamId);
+
+    if(!team) return;
+
+    await updateDoc(doc(db,"teams",teamId),{
+
+        played : (team.played || 0) + 1,
+
+        losses : (team.losses || 0) + 1
+
+    });
+
+}
