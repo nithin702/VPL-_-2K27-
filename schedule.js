@@ -1,25 +1,25 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  updateDoc,
-  doc
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    deleteDoc,
+    updateDoc,
+    doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ================= Firebase Config =================
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBdEQU9fNNjzfo-OGV5o9p_CiS_PA_NJNw",
-  authDomain: "vpl-2k27.firebaseapp.com",
-  projectId: "vpl-2k27",
-  storageBucket: "vpl-2k27.firebasestorage.app",
-  messagingSenderId: "919265368604",
-  appId: "1:919265368604:web:41587c7dd08f4c5d991dd9",
-  measurementId: "G-YL6CQ36HV6"
+    apiKey: "AIzaSyBdEQU9fNNjzfo-OGV5o9p_CiS_PA_NJNw",
+    authDomain: "vpl-2k27.firebaseapp.com",
+    projectId: "vpl-2k27",
+    storageBucket: "vpl-2k27.firebasestorage.app",
+    messagingSenderId: "919265368604",
+    appId: "1:919265368604:web:41587c7dd08f4c5d991dd9",
+    measurementId: "G-YL6CQ36HV6"
 };
 
 // ================= Initialize Firebase =================
@@ -30,56 +30,68 @@ const db = getFirestore(app);
 // ================= HTML Elements =================
 
 const matchForm = document.getElementById("matchForm");
-
 const matchesList = document.getElementById("matchesList");
 
 const team1 = document.getElementById("team1");
-
 const team2 = document.getElementById("team2");
 
 const searchMatch = document.getElementById("searchMatch");
 
+const backBtn = document.getElementById("backBtn");
+
 // ================= Variables =================
 
 let allMatches = [];
+let allTeams = [];
 
 // ================= Back Button =================
 
-document.getElementById("backBtn").onclick = () => {
-
+backBtn.onclick = () => {
     window.location.href = "admin.html";
-
 };
 // ================= Load Teams =================
 
 async function loadTeams() {
 
-    team1.innerHTML = `<option value="">Select Team 1</option>`;
-    team2.innerHTML = `<option value="">Select Team 2</option>`;
+    try {
 
-    const snapshot = await getDocs(collection(db, "teams"));
+        team1.innerHTML = `
+        <option value="">Select Team 1</option>`;
 
-    console.log("Teams Count:", snapshot.size);
+        team2.innerHTML = `
+        <option value="">Select Team 2</option>`;
 
-    snapshot.forEach((docSnap) => {
+        allTeams = [];
 
-        const team = docSnap.data();
+        const snapshot = await getDocs(collection(db, "teams"));
 
-        console.log(team);
+        snapshot.forEach((docSnap) => {
 
-        if (!team.teamName) return;
+            const team = docSnap.data();
 
-        team1.innerHTML += `
-        <option value="${team.teamName}">
-            ${team.teamName}
-        </option>`;
+            team.id = docSnap.id;
 
-        team2.innerHTML += `
-        <option value="${team.teamName}">
-            ${team.teamName}
-        </option>`;
+            allTeams.push(team);
 
-    });
+            team1.innerHTML += `
+            <option value="${team.teamName}">
+                ${team.teamName}
+            </option>`;
+
+            team2.innerHTML += `
+            <option value="${team.teamName}">
+                ${team.teamName}
+            </option>`;
+
+        });
+
+    } catch (error) {
+
+        console.error("Load Teams Error :", error);
+
+        alert("Unable to load teams.");
+
+    }
 
 }
 
@@ -87,26 +99,37 @@ async function loadTeams() {
 
 async function loadMatches() {
 
-    matchesList.innerHTML = "<p>Loading Matches...</p>";
+    try {
 
-    const snapshot = await getDocs(collection(db, "matches"));
+        matchesList.innerHTML =
+        "<p>Loading Matches...</p>";
 
-    allMatches = [];
+        allMatches = [];
 
-    snapshot.forEach((document) => {
+        const snapshot = await getDocs(collection(db, "matches"));
 
-        const match = document.data();
+        snapshot.forEach((docSnap) => {
 
-        match.id = document.id;
+            const match = docSnap.data();
 
-        allMatches.push(match);
+            match.id = docSnap.id;
 
-    });
+            allMatches.push(match);
 
-    displayMatches(allMatches);
+        });
+
+        displayMatches(allMatches);
+
+    } catch (error) {
+
+        console.error("Load Matches Error :", error);
+
+        matchesList.innerHTML =
+        "<p>Failed to load matches.</p>";
+
+    }
 
 }
-
 // ================= Display Matches =================
 
 function displayMatches(matches) {
@@ -121,35 +144,56 @@ function displayMatches(matches) {
         return;
 
     }
-      matches.forEach((match) => {
+
+    matches.forEach((match) => {
 
         const card = document.createElement("div");
 
         card.className = "match-card";
 
+        let statusColor = "orange";
+
+        if (match.status === "Live") {
+
+            statusColor = "red";
+
+        } else if (match.status === "Completed") {
+
+            statusColor = "limegreen";
+
+        }
+
         card.innerHTML = `
 
         <h3>${match.matchNumber}</h3>
 
-        <p><b>🏏 Teams :</b><br>
-        ${match.team1} 🆚 ${match.team2}</p>
+        <p>
+        <b>🏏 Teams :</b><br>
+        ${match.team1} 🆚 ${match.team2}
+        </p>
 
-        <p><b>📍 Ground :</b> ${match.ground}</p>
+        <p>
+        <b>📍 Ground :</b>
+        ${match.ground}
+        </p>
 
-        <p><b>📅 Date :</b> ${match.matchDate}</p>
+        <p>
+        <b>📅 Date :</b>
+        ${match.matchDate}
+        </p>
 
-        <p><b>🕘 Time :</b> ${match.matchTime}</p>
+        <p>
+        <b>🕒 Time :</b>
+        ${match.matchTime}
+        </p>
 
         <p>
 
         <b>Status :</b>
 
-        <span style="color:
-        ${match.status==="Live"
-        ?"red"
-        :match.status==="Completed"
-        ?"lime"
-        :"orange"};font-weight:bold;">
+        <span style="
+        color:${statusColor};
+        font-weight:bold;">
 
         ${match.status}
 
@@ -157,44 +201,43 @@ function displayMatches(matches) {
 
         </p>
 
+        <div style="margin-top:15px;">
+
         ${
-        match.status==="Not Started"
+            match.status === "Not Started"
 
-        ?
+            ?
 
-        `<button onclick="startMatch('${match.id}')"
-        style="background:green;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;margin-right:8px;">
-        ▶ Start Match
-        </button>`
+            `<button onclick="startMatch('${match.id}')">
+            ▶ Start Match
+            </button>`
 
-        :
+            :
 
-        match.status==="Live"
+            match.status === "Live"
 
-        ?
+            ?
 
-        `<button onclick="finishMatch('${match.id}')"
-        style="background:orange;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;margin-right:8px;">
-        🏁 Finish Match
-        </button>`
+            `<button onclick="finishMatch('${match.id}')">
+            🏁 Finish Match
+            </button>`
 
-        :
+            :
 
-        `<button
-        style="background:gray;color:white;border:none;padding:8px 15px;border-radius:6px;margin-right:8px;">
-        ✅ Completed
-        </button>`
+            `<button disabled>
+            ✅ Completed
+            </button>`
         }
 
-        <button onclick="editMatch('${match.id}')"
-        style="background:#2196F3;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;margin-right:8px;">
+        <button onclick="editMatch('${match.id}')">
         ✏ Edit
         </button>
 
-        <button onclick="deleteMatch('${match.id}')"
-        style="background:red;color:white;border:none;padding:8px 15px;border-radius:6px;cursor:pointer;">
+        <button onclick="deleteMatch('${match.id}')">
         🗑 Delete
         </button>
+
+        </div>
 
         `;
 
@@ -209,142 +252,242 @@ matchForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    if (team1.value === team2.value) {
-        alert("❌ Team 1 and Team 2 cannot be the same.");
+    const matchNumber = document.getElementById("matchNumber").value.trim();
+    const ground = document.getElementById("ground").value.trim();
+    const matchDate = document.getElementById("matchDate").value;
+    const matchTime = document.getElementById("matchTime").value;
+
+    if (team1.value === "" || team2.value === "") {
+
+        alert("Please select both teams.");
         return;
+
     }
 
-    await addDoc(collection(db, "matches"), {
+    if (team1.value === team2.value) {
 
-        matchNumber: document.getElementById("matchNumber").value.trim(),
+        alert("❌ Team 1 and Team 2 cannot be the same.");
+        return;
 
-        team1: team1.value,
+    }
 
-        team2: team2.value,
+    try {
 
-        ground: document.getElementById("ground").value.trim(),
+        await addDoc(collection(db, "matches"), {
 
-        matchDate: document.getElementById("matchDate").value,
+            matchNumber: matchNumber,
 
-        matchTime: document.getElementById("matchTime").value,
+            team1: team1.value,
 
-        status: "Not Started",
+            team2: team2.value,
 
-        createdAt: new Date()
+            ground: ground,
 
-    });
+            matchDate: matchDate,
 
-    alert("🏏 Match Created Successfully!");
+            matchTime: matchTime,
 
-    matchForm.reset();
+            status: "Not Started",
 
-    loadMatches();
+            createdAt: new Date()
+
+        });
+
+        alert("🏏 Match Created Successfully!");
+
+        matchForm.reset();
+
+        team1.selectedIndex = 0;
+        team2.selectedIndex = 0;
+
+        await loadMatches();
+
+    } catch (error) {
+
+        console.error("Create Match Error:", error);
+
+        alert("Failed to create match.");
+
+    }
 
 });
-
 // ================= Start Match =================
 
-window.startMatch = async function(id){
+window.startMatch = async function(id) {
 
-    if(!confirm("Start this match?")) return;
+    if (!confirm("Start this match?")) return;
 
-    await updateDoc(doc(db,"matches",id),{
+    try {
 
-        status:"Live"
+        await updateDoc(doc(db, "matches", id), {
 
-    });
+            status: "Live"
 
-    alert("🔴 Match Started!");
+        });
 
-    loadMatches();
+        alert("🔴 Match Started Successfully!");
+
+        await loadMatches();
+
+    } catch (error) {
+
+        console.error("Start Match Error:", error);
+
+        alert("Unable to start match.");
+
+    }
 
 };
 
 // ================= Finish Match =================
 
-window.finishMatch = async function(id){
+window.finishMatch = async function(id) {
 
-    if(!confirm("Finish this match?")) return;
+    if (!confirm("Finish this match?")) return;
 
-    await updateDoc(doc(db,"matches",id),{
+    try {
 
-        status:"Completed"
+        await updateDoc(doc(db, "matches", id), {
 
-    });
+            status: "Completed"
 
-    alert("✅ Match Completed!");
+        });
 
-    loadMatches();
+        alert("🏁 Match Completed Successfully!");
+
+        await loadMatches();
+
+    } catch (error) {
+
+        console.error("Finish Match Error:", error);
+
+        alert("Unable to finish match.");
+
+    }
 
 };
+
 // ================= Delete Match =================
 
-window.deleteMatch = async function(id){
+window.deleteMatch = async function(id) {
 
-    if(!confirm("Delete this match?")) return;
+    if (!confirm("Delete this match?")) return;
 
-    await deleteDoc(doc(db,"matches",id));
+    try {
 
-    alert("🗑 Match Deleted Successfully!");
+        await deleteDoc(doc(db, "matches", id));
 
-    loadMatches();
+        alert("🗑 Match Deleted Successfully!");
+
+        await loadMatches();
+
+    } catch (error) {
+
+        console.error("Delete Match Error:", error);
+
+        alert("Unable to delete match.");
+
+    }
 
 };
 
 // ================= Edit Match =================
 
-window.editMatch = async function(id){
+window.editMatch = async function(id) {
 
     const match = allMatches.find(m => m.id === id);
 
-    if(!match) return;
+    if (!match) return;
 
-    const newGround = prompt("Ground Name", match.ground);
+    const newGround = prompt("Enter Ground Name", match.ground);
 
-    if(newGround === null) return;
+    if (newGround === null) return;
 
-    const newTime = prompt("Match Time", match.matchTime);
+    const newTime = prompt("Enter Match Time", match.matchTime);
 
-    if(newTime === null) return;
+    if (newTime === null) return;
 
-    await updateDoc(doc(db,"matches",id),{
+    try {
 
-        ground: newGround,
+        await updateDoc(doc(db, "matches", id), {
 
-        matchTime: newTime
+            ground: newGround.trim(),
+
+            matchTime: newTime.trim()
+
+        });
+
+        alert("✏️ Match Updated Successfully!");
+
+        await loadMatches();
+
+    } catch (error) {
+
+        console.error("Edit Match Error:", error);
+
+        alert("Unable to update match.");
+
+    }
+
+};
+// ================= Search Match =================
+
+if (searchMatch) {
+
+    searchMatch.addEventListener("keyup", () => {
+
+        const value = searchMatch.value.toLowerCase().trim();
+
+        if (value === "") {
+
+            displayMatches(allMatches);
+
+            return;
+
+        }
+
+        const filtered = allMatches.filter((match) => {
+
+            return (
+
+                match.matchNumber.toLowerCase().includes(value) ||
+
+                match.team1.toLowerCase().includes(value) ||
+
+                match.team2.toLowerCase().includes(value) ||
+
+                match.ground.toLowerCase().includes(value)
+
+            );
+
+        });
+
+        displayMatches(filtered);
 
     });
 
-    alert("✏ Match Updated Successfully!");
-
-    loadMatches();
-
-};
-
-// ================= Search Match =================
-
-searchMatch.addEventListener("keyup",()=>{
-
-    const value = searchMatch.value.toLowerCase();
-
-    const filtered = allMatches.filter(match =>
-
-        match.matchNumber.toLowerCase().includes(value) ||
-
-        match.team1.toLowerCase().includes(value) ||
-
-        match.team2.toLowerCase().includes(value)
-
-    );
-
-    displayMatches(filtered);
-
-});
+}
 
 // ================= Initial Load =================
 
-loadTeams();
+async function initializePage() {
 
-loadMatches();
+    try {
 
-  
+        await loadTeams();
+
+        await loadMatches();
+
+        console.log("✅ Schedule Module Loaded Successfully");
+
+    } catch (error) {
+
+        console.error("Initialization Error:", error);
+
+        alert("Failed to load Schedule Page.");
+
+    }
+
+}
+
+initializePage();
