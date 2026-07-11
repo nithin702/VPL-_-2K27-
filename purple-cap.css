@@ -1,1 +1,325 @@
+/* ==================================
+   VPL 2K27 Purple Cap
+================================== */
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:Arial,sans-serif;
+
+background:#0d1117;
+
+color:white;
+
+padding:20px;
+
+}
+
+.container{
+
+max-width:1100px;
+
+margin:auto;
+
+}
+
+/* ===============================
+   Heading
+================================ */
+
+h1{
+
+text-align:center;
+
+color:#9c27b0;
+
+margin-bottom:25px;
+
+font-size:34px;
+
+}
+
+/* ===============================
+   Leader Card
+================================ */
+
+.top-player{
+
+background:#161b22;
+
+border:2px solid #9c27b0;
+
+border-radius:15px;
+
+padding:20px;
+
+margin-bottom:25px;
+
+box-shadow:0 0 15px rgba(156,39,176,.35);
+
+}
+
+.top-player h2{
+
+text-align:center;
+
+color:#e1bee7;
+
+margin-bottom:20px;
+
+}
+
+#leaderCard{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+gap:20px;
+
+padding:15px;
+
+background:#21262d;
+
+border-radius:12px;
+
+}
+
+#leaderCard h3{
+
+font-size:30px;
+
+color:#d500f9;
+
+margin-bottom:10px;
+
+}
+
+#leaderCard p{
+
+font-size:18px;
+
+color:#ddd;
+
+line-height:1.8;
+
+}
+
+/* ===============================
+   Table Container
+================================ */
+
+.table-container{
+
+background:#161b22;
+
+border-radius:12px;
+
+padding:20px;
+
+overflow-x:auto;
+
+border:1px solid #30363d;
+
+}
+/* ==================================
+   Purple Cap Table
+================================== */
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:10px;
+
+}
+
+thead{
+
+background:#9c27b0;
+
+color:#fff;
+
+}
+
+th{
+
+padding:14px;
+
+text-align:center;
+
+font-size:16px;
+
+}
+
+td{
+
+padding:12px;
+
+text-align:center;
+
+border-bottom:1px solid #30363d;
+
+}
+
+tbody tr{
+
+background:#161b22;
+
+transition:.3s;
+
+}
+
+tbody tr:hover{
+
+background:#21262d;
+
+}
+
+/* ==================================
+   Rank Colors
+================================== */
+
+tbody tr:nth-child(1){
+
+background:#3b1d4d;
+
+font-weight:bold;
+
+}
+
+tbody tr:nth-child(2){
+
+background:#2f2f2f;
+
+}
+
+tbody tr:nth-child(3){
+
+background:#49304d;
+
+}
+
+/* ==================================
+   Summary Card
+================================== */
+
+.summary-card{
+
+margin-top:25px;
+
+background:#161b22;
+
+padding:20px;
+
+border-radius:12px;
+
+border:1px solid #30363d;
+
+}
+
+.summary-card h2{
+
+color:#d500f9;
+
+margin-bottom:15px;
+
+}
+
+.summary-card p{
+
+margin:10px 0;
+
+font-size:17px;
+
+}
+
+/* ==================================
+   Last Updated Card
+================================== */
+
+.update-card{
+
+margin-top:20px;
+
+background:#21262d;
+
+padding:15px;
+
+border-radius:10px;
+
+text-align:center;
+
+color:#c9d1d9;
+
+}
+
+/* ==================================
+   Footer
+================================== */
+
+.footer{
+
+margin-top:25px;
+
+text-align:center;
+
+color:#8b949e;
+
+font-size:15px;
+
+padding-bottom:20px;
+
+}
+
+/* ==================================
+   Mobile Responsive
+================================== */
+
+@media(max-width:768px){
+
+h1{
+
+font-size:26px;
+
+}
+
+#leaderCard{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+#leaderCard h3{
+
+font-size:24px;
+
+}
+
+th,
+td{
+
+font-size:13px;
+
+padding:10px;
+
+}
+
+.summary-card p{
+
+font-size:15px;
+
+}
+
+}
