@@ -1,1 +1,256 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>👑 VPL 2K27 Super Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="dashboard.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>👑 VPL 2K27 Super Admin Dashboard</h1>
+
+<p>Tournament Management System</p>
+
+</header>
+
+<div class="container">
+
+<!-- Statistics -->
+
+<section class="stats">
+
+<div class="card">
+
+<h2 id="totalPlayers">0</h2>
+
+<p>👤 Players</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="totalTeams">0</h2>
+
+<p>🏏 Teams</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="totalMatches">0</h2>
+
+<p>📅 Matches</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="liveMatches">0</h2>
+
+<p>🔴 Live Matches</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="completedMatches">0</h2>
+
+<p>🏆 Completed</p>
+
+</div>
+
+<div class="card">
+
+<h2 id="registeredToday">0</h2>
+
+<p>📝 Today's Registrations</p>
+
+</div>
+
+</section>
+
+<!-- Quick Actions -->
+
+<section class="quick-actions">
+
+<h2>⚡ Quick Actions</h2>
+
+<div class="action-grid">
+
+<a href="admin.html">👨‍💼 Admin Panel</a>
+
+<a href="auction.html">💰 Auction</a>
+
+<a href="live.html">🔴 Live Scoring</a>
+
+<a href="match-schedule.html">📅 Schedule</a>
+
+<a href="teams.html">🏏 Teams</a>
+
+<a href="gallery.html">📸 Gallery</a>
+
+<a href="news.html">📢 News</a>
+
+<a href="home.html">🏠 Home</a>
+
+</div>
+
+</section>
+<!-- ================= Tournament Analytics ================= -->
+
+<section class="analytics">
+
+<h2>📈 Tournament Analytics</h2>
+
+<div class="analytics-grid">
+
+<div class="analytics-card">
+
+<h3>🟠 Orange Cap</h3>
+
+<p id="orangeCapLeader">Loading...</p>
+
+</div>
+
+<div class="analytics-card">
+
+<h3>🟣 Purple Cap</h3>
+
+<p id="purpleCapLeader">Loading...</p>
+
+</div>
+
+<div class="analytics-card">
+
+<h3>🏆 Top Team</h3>
+
+<p id="topTeam">Loading...</p>
+
+</div>
+
+<div class="analytics-card">
+
+<h3>🔥 Current Live Match</h3>
+
+<p id="currentLiveMatch">No Live Match</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= Recent Registrations ================= -->
+
+<section class="recent-section">
+
+<h2>👤 Recent Registrations</h2>
+
+<div id="recentRegistrations">
+
+<p>Loading registrations...</p>
+
+</div>
+
+</section>
+
+<!-- ================= Backup & Restore ================= -->
+
+<section class="backup-section">
+
+<h2>💾 Backup & Restore</h2>
+
+<div class="backup-buttons">
+
+<button id="backupBtn">
+
+⬇️ Backup Data
+
+</button>
+
+<button id="restoreBtn">
+
+⬆️ Restore Data
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ================= Website Settings ================= -->
+
+<section class="settings-section">
+
+<h2>⚙️ Website Settings</h2>
+
+<div class="settings-grid">
+
+<button id="changeBanner">
+
+🖼 Change Banner
+
+</button>
+
+<button id="changeLogo">
+
+🏆 Change Logo
+
+</button>
+
+<button id="changeSeason">
+
+📅 Change Season
+
+</button>
+
+<button id="websiteStatus">
+
+🌐 Website Status
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ================= Footer ================= -->
+
+<footer>
+
+<h3>👑 VPL 2K27 Super Admin Dashboard</h3>
+
+<p>
+
+Tournament Management System
+
+</p>
+
+<p>
+
+© 2027 Vallivedu Premier League
+
+</p>
+
+</footer>
+
+</div>
+
+<script type="module" src="dashboard.js"></script>
+
+</body>
+
+</html>
