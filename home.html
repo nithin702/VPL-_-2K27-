@@ -5,12 +5,21 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#ff9800">
+
+<meta name="description" content="Official Website of Vallivedu Premier League 2K27">
 
 <title>🏏 VPL 2K27 | Official Website</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="home.css">
 
@@ -22,27 +31,59 @@ content="width=device-width, initial-scale=1.0">
 
 <header class="header">
 
+<div class="logo">
+
 <h1>🏆 VPL 2K27</h1>
 
 <p>Vallivedu Premier League 2027</p>
 
+</div>
+
+<nav class="navbar">
+
+<a href="home.html">🏠 Home</a>
+
+<a href="match-schedule.html">📅 Schedule</a>
+
+<a href="live.html">🔴 Live</a>
+
+<a href="points.html">📊 Points</a>
+
+<a href="gallery.html">📸 Gallery</a>
+
+<a href="news.html">📢 News</a>
+
+</nav>
+
 </header>
+
+<!-- ================= Breaking News ================= -->
+
+<section class="breaking-news">
+
+<marquee id="breakingTicker" behavior="scroll" direction="left">
+
+🏏 Welcome to Vallivedu Premier League 2K27 • Official Tournament Website
+
+</marquee>
+
+</section>
 
 <!-- ================= Hero Banner ================= -->
 
 <section class="hero">
 
-<h2>Welcome to VPL 2K27</h2>
+<h2>🏏 Welcome to VPL 2K27</h2>
 
 <p>
 
-One Village • One Passion • One Champion 🏏
+One Village • One Passion • One Champion
 
 </p>
 
 <a href="index.html" class="register-btn">
 
-🏏 Register Now
+📝 Register Player
 
 </a>
 
@@ -52,68 +93,10 @@ One Village • One Passion • One Champion 🏏
 
 <section class="live-card">
 
-<h2>🔴 LIVE MATCH</h2>
+<h2>🔴 Live Match</h2>
 
 <div id="liveMatch">
-
-<p>No Live Match Available</p>
-
-</div>
-
-</section>
-
-<!-- ================= Tournament Stats ================= -->
-
-<section class="stats">
-
-<div class="stat-box">
-
-<h3 id="teamsCount">0</h3>
-
-<p>Teams</p>
-
-</div>
-
-<div class="stat-box">
-
-<h3 id="playersCount">0</h3>
-
-<p>Players</p>
-
-</div>
-
-<div class="stat-box">
-
-<h3 id="matchesCount">0</h3>
-
-<p>Matches</p>
-
-</div>
-
-<div class="stat-box">
-
-<h3 id="completedCount">0</h3>
-
-<p>Completed</p>
-
-</div>
-
-</section>
-  <!-- ================= Upcoming Match ================= -->
-
-<section class="upcoming-card">
-
-<h2>📅 Upcoming Match</h2>
-
-<div id="upcomingMatch">
-
-<p>No Upcoming Match</p>
-
-</div>
-
-</section>
-
-<!-- ================= Tournament Leaders ================= -->
+  <!-- ================= Tournament Leaders ================= -->
 
 <section class="leaders">
 
@@ -143,7 +126,7 @@ One Village • One Passion • One Champion 🏏
 
 </section>
 
-<!-- ================= Latest Result ================= -->
+<!-- ================= Latest Match Result ================= -->
 
 <section class="result-card">
 
@@ -154,6 +137,12 @@ One Village • One Passion • One Champion 🏏
 <p>No Result Available</p>
 
 </div>
+
+<a href="result.html" class="view-btn">
+
+View All Results →
+
+</a>
 
 </section>
 
@@ -169,7 +158,7 @@ One Village • One Passion • One Champion 🏏
 
 <tr>
 
-<th>#</th>
+<th>Rank</th>
 
 <th>Team</th>
 
@@ -195,9 +184,19 @@ Loading...
 
 </table>
 
+<div style="text-align:center;margin-top:20px;">
+
+<a href="points.html" class="register-btn">
+
+📊 Full Points Table
+
+</a>
+
+</div>
+
 </section>
 
-<!-- ================= Quick Links ================= -->
+<!-- ================= Quick Access ================= -->
 
 <section class="quick-links">
 
@@ -219,66 +218,69 @@ Loading...
 
 <a href="player-stats.html">👤 Player Stats</a>
 
-<a href="teams.html">🏏 Teams</a>
-
-</div>
-
-</section>
-  <!-- ================= Gallery ================= -->
+<a href="teams.html
+  <!-- ================= Gallery Preview ================= -->
 
 <section class="gallery">
 
 <h2>📸 Tournament Gallery</h2>
 
-<div class="gallery-grid">
+<div class="gallery-grid" id="homeGallery">
 
-<img src="images/gallery1.jpg" alt="Gallery 1">
+<p>Loading Gallery...</p>
 
-<img src="images/gallery2.jpg" alt="Gallery 2">
+</div>
 
-<img src="images/gallery3.jpg" alt="Gallery 3">
+<div style="text-align:center;margin-top:20px;">
 
-<img src="images/gallery4.jpg" alt="Gallery 4">
+<a href="gallery.html" class="register-btn">
+
+📸 View Full Gallery
+
+</a>
 
 </div>
 
 </section>
 
-<!-- ================= Contact ================= -->
+<!-- ================= Latest News ================= -->
 
-<section class="contact">
+<section class="news-preview">
 
-<h2>📞 Contact Us</h2>
+<h2>📢 Latest Announcements</h2>
 
-<p>
+<div id="latestNews">
 
-📱 Organizer : Praveen Kumar
+<p>Loading Latest News...</p>
 
-</p>
+</div>
 
-<p>
+<div style="text-align:center;margin-top:20px;">
 
-☎️ Mobile : 9603958781
+<a href="news.html" class="register-btn">
 
-</p>
-
-<p>
-
-📍 Vallivedu, Pakala Mandal, Tirupati District
-
-</p>
-
-<a href="https://wa.me/919603958781" class="whatsapp-btn">
-
-💬 Chat on WhatsApp
+📢 View All News
 
 </a>
 
+</div>
+
 </section>
 
-<!-- ================= Footer ================= -->
+<!-- ================= Sponsors ================= -->
+
+<section class="sponsors">
+
+<h2>🤝 Our Sponsors</h2>
+
+<div class="sponsor-grid">
+
+<div class="s
+  <!-- ================= Footer ================= -->
 
 <footer>
+
+<div class="footer-content">
 
 <h3>🏆 Vallivedu Premier League 2K27</h3>
 
@@ -290,11 +292,61 @@ One Village • One Passion • One Champion 🏏
 
 <p>
 
-© 2027 VPL 2K27. All Rights Reserved.
+📍 Vallivedu, Pakala Mandal, Tirupati District
 
 </p>
 
+<p>
+
+📞 Contact : +91 9603958781
+
+</p>
+
+<p>
+
+📧 Email : vpl2k27@gmail.com
+
+</p>
+
+<p>
+
+© 2027 Vallivedu Premier League. All Rights Reserved.
+
+</p>
+
+</div>
+
 </footer>
+
+<!-- ================= Service Worker ================= -->
+
+<script>
+
+if("serviceWorker" in navigator){
+
+window.addEventListener("load",()=>{
+
+navigator.serviceWorker.register("./service-worker.js")
+
+.then((registration)=>{
+
+console.log("✅ Service Worker Registered");
+
+})
+
+.catch((error)=>{
+
+console.log("❌ Service Worker Registration Failed",error);
+
+});
+
+});
+
+}
+
+</script>
+
+<!-- ================= Main Script ================= -->
 
 <script type="module" src="home.js"></script>
 
