@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>📸 VPL 2K27 Gallery</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="gallery.css">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<h1>📸 Tournament Gallery</h1>
+
+<p>VPL 2K27 Official Gallery</p>
+
+</header>
+
+<div class="container">
+
+<div class="gallery-menu">
+
+<button class="active" id="photosBtn">
+
+📸 Photos
+
+</button>
+
+<button id="videosBtn">
+
+🎥 Videos
+
+</button>
+
+</div>
+
+<section>
+
+<h2>📸 Match Photos</h2>
+
+<div id="photosGrid" class="gallery-grid">
+
+<p>Loading Photos...</p>
+
+</div>
+
+</section>
+
+<section id="videosSection" style="display:none;">
+
+<h2>🎥 Match Videos</h2>
+
+<div id="videosGrid" class="gallery-grid">
+
+<p>Loading Videos...</p>
+
+</div>
+
+</section>
+  <!-- ================= Full Screen Image Modal ================= -->
+
+<div id="imageModal" class="modal">
+
+<span id="closeImage">&times;</span>
+
+<img id="modalImage" src="" alt="Gallery Image">
+
+</div>
+
+<!-- ================= Video Modal ================= -->
+
+<div id="videoModal" class="modal">
+
+<span id="closeVideo">&times;</span>
+
+<video id="modalVideo" controls>
+
+<source id="videoSource" src="" type="video/mp4">
+
+Your browser does not support video.
+
+</video>
+
+</div>
+
+<!-- ================= Quick Navigation ================= -->
+
+<section class="quick-links">
+
+<a href="home.html">
+
+🏠 Home
+
+</a>
+
+<a href="live.html">
+
+🔴 Live Score
+
+</a>
+
+<a href="result.html">
+
+🏆 Results
+
+</a>
+
+<a href="points.html">
+
+📊 Points Table
+
+</a>
+
+</section>
+
+<!-- ================= Footer ================= -->
+
+<footer>
+
+<h3>🏏 Vallivedu Premier League 2K27</h3>
+
+<p>
+
+📸 Official Tournament Gallery
+
+</p>
+
+<p>
+
+© 2027 VPL 2K27. All Rights Reserved.
+
+</p>
+
+</footer>
+
+</div>
+
+<script type="module" src="gallery.js"></script>
+
+</body>
+
+</html>
