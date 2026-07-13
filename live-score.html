@@ -4,10 +4,14 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>VPL 2K27 Live Score</title>
+<title>🏏 VPL 2K27 Live Score</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="live-score.css">
 
@@ -15,72 +19,594 @@
 
 <body>
 
-<h1>🏏 Live Score Panel</h1>
+<header class="top-header">
 
-<button id="backBtn">⬅ Back</button>
+<div class="logo">
+
+<h1>🏆 VPL 2K27</h1>
+
+<p>Professional Live Scoring System</p>
+
+</div>
+
+<button id="backBtn">
+
+⬅ Back
+
+</button>
+
+</header>
 
 <div class="container">
 
-<h2>Select Match</h2>
+<!-- ================= Match Setup ================= -->
+
+<section class="setup-card">
+
+<h2>🏏 Match Setup</h2>
+
+<div class="input-group">
+
+<label>Select Match</label>
 
 <select id="matchSelect">
 
-<option value="">-- Select Match --</option>
-
-</select>
-<!-- ================= Player Selection ================= -->
-
-<div id="playerSelection" style="display:none; margin:20px 0;">
-
-<h2>🏏 Select Players</h2>
-
-<label>Striker</label><br>
-
-<select id="striker">
-
-<option value="">Select Striker</option>
+<option value="">Select Match</option>
 
 </select>
 
-<br><br>
+</div>
 
-<label>Non-Striker</label><br>
+<div class="input-group">
 
-<select id="nonStriker">
+<label>Toss Winner</label>
 
-<option value="">Select Non-Striker</option>
+<select id="tossWinner">
 
-</select>
-
-<br><br>
-
-<label>Bowler</label><br>
-
-<select id="bowler">
-
-<option value="">Select Bowler</option>
+<option value="">Select Team</option>
 
 </select>
 
-<br><br>
+</div>
 
-<button id="startScoring">
+<div class="input-group">
 
-▶ Start Scoring
+<label>Toss Decision</label>
+
+<select id="tossDecision">
+
+<option value="bat">Bat First</option>
+
+<option value="bowl">Bowl First</option>
+
+</select>
+
+</div>
+
+<button id="startMatchBtn">
+
+▶ START MATCH
+
+</button>
+
+</section>
+
+<!-- ================= Live Score ================= -->
+
+<section class="live-score-card">
+
+<div class="match-title">
+
+<h2 id="battingTeam">
+
+Batting Team
+
+</h2>
+
+<span id="inningsText">
+
+1st Innings
+
+</span>
+
+</div>
+
+<h1 id="liveScore">
+
+0 / 0
+
+</h1>
+
+<p id="overs">
+
+Overs : 0.0 / 15
+
+</p>
+
+<div class="match-stats">
+
+<div class="stat-box">
+
+<h4>CRR</h4>
+
+<p id="crr">
+
+0.00
+
+</p>
+
+</div>
+
+<div class="stat-box">
+
+<h4>Target</h4>
+
+<p id="target">
+
+--
+
+</p>
+
+</div>
+
+<div class="stat-box">
+
+<h4>Need</h4>
+
+<p id="needRuns">
+
+--
+
+</p>
+
+</div>
+
+<div class="stat-box">
+
+<h4>RRR</h4>
+
+<p id="rrr">
+
+--
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🏏 VPL 2K27 Live Score</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="live-score.css">
+
+</head>
+
+<body>
+
+<header class="top-header">
+
+<div class="logo">
+
+<h1>🏆 VPL 2K27</h1>
+
+<p>Professional Live Scoring System</p>
+
+</div>
+
+<button id="backBtn">
+
+⬅ Back
+
+</button>
+
+</header>
+
+<div class="container">
+
+<!-- ================= Match Setup ================= -->
+
+<section class="setup-card">
+
+<h2>🏏 Match Setup</h2>
+
+<div class="input-group">
+
+<label>Select Match</label>
+
+<select id="matchSelect">
+
+<option value="">Select Match</option>
+
+</select>
+
+</div>
+
+<div class="input-group">
+
+<label>Toss Winner</label>
+
+<select id="tossWinner">
+
+<option value="">Select Team</option>
+
+</select>
+
+</div>
+
+<div class="input-group">
+
+<label>Toss Decision</label>
+
+<select id="tossDecision">
+
+<option value="bat">Bat First</option>
+
+<option value="bowl">Bowl First</option>
+
+</select>
+
+</div>
+
+<button id="startMatchBtn">
+
+▶ START MATCH
+
+</button>
+
+</section>
+
+<!-- ================= Live Score ================= -->
+
+<section class="live-score-card">
+
+<div class="match-title">
+
+<h2 id="battingTeam">
+
+Batting Team
+
+</h2>
+
+<span id="inningsText">
+
+1st Innings
+
+</span>
+
+</div>
+
+<h1 id="liveScore">
+
+0 / 0
+
+</h1>
+
+<p id="overs">
+
+Overs : 0.0 / 15
+
+</p>
+
+<div class="match-stats">
+
+<div class="stat-box">
+
+<h4>CRR</h4>
+
+<p id="crr">
+
+0.00
+
+</p>
+
+</div>
+
+<div class="stat-box">
+
+<h4>Target</h4>
+
+<p id="target">
+
+--
+
+</p>
+
+</div>
+
+<div class="stat-box">
+
+<h4>Need</h4>
+
+<p id="needRuns">
+
+--
+
+</p>
+
+</div>
+
+<div class="stat-box">
+
+<h4>RRR</h4>
+
+<p id="rrr">
+
+--
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+<!-- ================= Scoring Panel ================= -->
+
+<section class="scoring-panel">
+
+<h2>🏏 Scoring Panel</h2>
+
+<div class="score-grid">
+
+<button id="btn0" class="score-btn">0</button>
+
+<button id="btn1" class="score-btn">1</button>
+
+<button id="btn2" class="score-btn">2</button>
+
+<button id="btn3" class="score-btn">3</button>
+
+<button id="btn4" class="score-btn four">4️⃣</button>
+
+<button id="btn6" class="score-btn six">6️⃣</button>
+
+<button id="btnWide" class="extra-btn">WD</button>
+
+<button id="btnNoBall" class="extra-btn">NB</button>
+
+<button id="btnBye" class="extra-btn">BYE</button>
+
+<button id="btnLegBye" class="extra-btn">LB</button>
+
+<button id="btnWicket" class="wicket-btn">WICKET</button>
+
+<button id="btnUndo" class="undo-btn">↩ UNDO</button>
+
+</div>
+
+</section>
+
+<!-- ================= Match Controls ================= -->
+
+<section class="controls-section">
+
+<h2>🎮 Match Controls</h2>
+
+<div class="control-grid">
+
+<button id="changeBowlerBtn">
+
+🎯 Change Bowler
+
+</button>
+
+<button id="newBatsmanBtn">
+
+🏏 New Batsman
+
+</button>
+
+<button id="retiredBtn">
+
+🚶 Retired Hurt
+
+</button>
+
+<button id="finishInningsBtn">
+
+🏁 Finish Innings
+
+</button>
+
+<button id="startSecondInningsBtn">
+
+🔄 Start 2nd Innings
+
+</button>
+
+<button id="endMatchBtn">
+
+🏆 End Match
 
 </button>
 
 </div>
-<div id="scoreBoard">
 
-<p>Select a match to start scoring...</p>
+</section>
+
+<!-- ================= Match Summary ================= -->
+
+<section class="summary-section">
+
+<h2>📊 Match Summary</h2>
+
+<div class="summary-grid">
+
+<div class="summary-box">
+
+<h3>Total Runs</h3>
+
+<p id="summaryRuns">
+
+0
+
+</p>
+
+</div>
+
+<div class="summary-box">
+
+<h3>Wickets</h3>
+
+<p id="summaryWickets">
+
+0
+
+</p>
+
+</div>
+
+<div class="summary-box">
+
+<h3>Overs</h3>
+
+<p id="summaryOvers">
+
+0.0
+
+</p>
+
+</div>
+
+<div class="summary-box">
+
+<h3>Run Rate</h3>
+
+<p id="summaryRunRate">
+
+0.00
+
+</p>
 
 </div>
 
 </div>
+
+</section>
+<!-- ================= Player Selection Modal ================= -->
+
+<div id="playerModal" class="modal">
+
+<div class="modal-content">
+
+<h2>Select Players</h2>
+
+<div class="input-group">
+
+<label>Striker</label>
+
+<select id="strikerSelect">
+<option value="">Select Striker</option>
+</select>
+
+</div>
+
+<div class="input-group">
+
+<label>Non-Striker</label>
+
+<select id="nonStrikerSelect">
+<option value="">Select Non-Striker</option>
+</select>
+
+</div>
+
+<div class="input-group">
+
+<label>Bowler</label>
+
+<select id="bowlerSelect">
+<option value="">Select Bowler</option>
+</select>
+
+</div>
+
+<div class="modal-buttons">
+
+<button id="confirmPlayersBtn">
+
+✅ Confirm Players
+
+</button>
+
+<button id="cancelPlayersBtn">
+
+❌ Cancel
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= Innings Result ================= -->
+
+<section id="inningsResult" class="result-card">
+
+<h2>🏁 Innings Completed</h2>
+
+<h3 id="inningsScore">
+
+0/0 (0.0)
+
+</h3>
+
+<p id="inningsMessage">
+
+Waiting...
+
+</p>
+
+</section>
+
+<!-- ================= Match Result ================= -->
+
+<section id="matchResult" class="result-card">
+
+<h2>🏆 Match Result</h2>
+
+<h3 id="winnerText">
+
+Winner will appear here
+
+</h3>
+
+<p id="resultDescription">
+
+Match not finished
+
+</p>
+
+</section>
+
+<footer class="footer">
+
+<p>
+
+© 2027 VPL 2K27 Live Scoring System
+
+</p>
+
+</footer>
+</main>
 
 <script type="module" src="live-score.js"></script>
 
 </body>
-
 </html>
