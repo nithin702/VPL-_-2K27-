@@ -1,1 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🏏 VPL 2K27 Live Score V2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="live-score-v2.css">
+
+</head>
+
+<body>
+
+<header class="top-bar">
+
+<div class="logo">
+
+<h1>🏆 VPL 2K27</h1>
+
+<p>Professional Live Scoring System</p>
+
+</div>
+
+<button id="backBtn">
+
+⬅ Back to Admin
+
+</button>
+
+</header>
+
+<main class="container">
+
+<section class="match-setup">
+
+<h2>🏏 Match Setup</h2>
+
+<label>Select Match</label>
+
+<select id="matchSelect">
+
+<option value="">Select Match</option>
+
+</select>
+
+<label>Toss Winner</label>
+
+<select id="tossWinner">
+
+<option value="">Select Team</option>
+
+</select>
+
+<label>Toss Decision</label>
+
+<select id="tossDecision">
+
+<option value="bat">Bat First</option>
+
+<option value="bowl">Bowl First</option>
+
+</select>
+
+<button id="startMatchBtn">
+
+▶ Start Match
+
+</button>
+
+</section>
+
+<section class="live-score-card">
+
+<h2 id="battingTeam">
+
+Batting Team
+
+</h2>
+
+<h1 id="liveScore">
+
+0/0
+
+</h1>
+
+<p id="overs">
+
+Overs : 0.0
+
+</p>
+
+<div class="match-info">
+
+<div>
+
+<b>CRR</b>
+
+<p id="crr">0.00</p>
+
+</div>
+
+<div>
+
+<b>Target</b>
+
+<p id="target">--</p>
+
+</div>
+
+<div>
+
+<b>Need</b>
+
+<p id="needRuns">--</p>
+
+</div>
+
+<div>
+
+<b>RRR</b>
+
+<p id="rrr">--</p>
+
+</div>
+
+</div>
+
+</section>
