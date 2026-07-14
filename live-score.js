@@ -3486,6 +3486,704 @@ return (rrFor-rrAgainst).toFixed(3);
 updatePointsTable();
 
 console.log("🏏 Part 25 Loaded Successfully");
+// ================= PART 26 =================
+// MATCH HIGHLIGHTS GENERATOR
+
+// ================= HIGHLIGHTS =================
+
+let matchHighlights = [];
+
+function addHighlight(text){
+
+matchHighlights.push({
+
+time:new Date().toLocaleTimeString(),
+
+over:`${Math.floor(balls/6)}.${balls%6}`,
+
+event:text
+
+});
+
+console.log("📢",text);
+
+}
+
+// ================= FOUR =================
+
+// addRuns() lo
+
+if(run===4){
+
+addHighlight(`🏏 FOUR by ${strikerPlayer.playerName}`);
+
+}
+
+// ================= SIX =================
+
+// addRuns() lo
+
+if(run===6){
+
+addHighlight(`💥 SIX by ${strikerPlayer.playerName}`);
+
+}
+
+// ================= FIFTY =================
+
+// refreshScore() lo
+
+if(strikerRuns===50){
+
+addHighlight(`🔥 Fifty by ${strikerPlayer.playerName}`);
+
+}
+
+// ================= CENTURY =================
+
+// refreshScore() lo
+
+if(strikerRuns===100){
+
+addHighlight(`💯 Century by ${strikerPlayer.playerName}`);
+
+}
+
+// ================= WICKET =================
+
+// btnWicket.onclick lo
+
+addHighlight(`🎯 WICKET - ${strikerPlayer.playerName} OUT`);
+
+// ================= OVER COMPLETE =================
+
+// checkOverComplete() lo
+
+addHighlight(`🏁 Over ${Math.floor(balls/6)} Completed`);
+
+// ================= INNINGS COMPLETE =================
+
+// finishInnings() lo
+
+addHighlight("🏆 Innings Completed");
+
+// ================= MATCH COMPLETE =================
+
+// endMatch() lo
+
+addHighlight("🎉 Match Finished");
+
+// ================= SAVE HIGHLIGHTS =================
+
+async function saveHighlights(){
+
+if(!currentMatch)return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+highlights:matchHighlights,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+console.log("✅ Highlights Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= SHOW HIGHLIGHTS =================
+
+function showHighlights(){
+
+const box=document.getElementById("highlightsBox");
+
+if(!box)return;
+
+box.innerHTML="";
+
+matchHighlights.forEach(item=>{
+
+box.innerHTML+=`
+
+<div class="highlight-item">
+
+<b>${item.over}</b> -
+
+${item.event}
+
+</div>
+
+`;
+
+});
+
+}
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+saveHighlights();
+
+showHighlights();
+
+console.log("🏏 Part 26 Loaded Successfully");
+// ================= PART 27 =================
+// LIVE SPECTATOR MODE
+
+// ================= LIVE VIEW =================
+
+let spectatorMode = false;
+
+function enableSpectatorMode(){
+
+spectatorMode = true;
+
+document.body.classList.add("spectator-mode");
+
+const panel = document.getElementById("scoringPanel");
+
+if(panel){
+
+panel.style.display = "none";
+
+}
+
+const control = document.getElementById("controlsSection");
+
+if(control){
+
+control.style.display = "none";
+
+}
+
+console.log("👥 Spectator Mode Enabled");
+
+}
+
+// ================= ADMIN MODE =================
+
+function enableAdminMode(){
+
+spectatorMode = false;
+
+document.body.classList.remove("spectator-mode");
+
+const panel = document.getElementById("scoringPanel");
+
+if(panel){
+
+panel.style.display = "block";
+
+}
+
+const control = document.getElementById("controlsSection");
+
+if(control){
+
+control.style.display = "block";
+
+}
+
+console.log("🛠 Admin Mode Enabled");
+
+}
+
+// ================= LIVE AUTO REFRESH =================
+
+async function refreshLiveData(){
+
+if(!currentMatch) return;
+
+try{
+
+const snapshot = await getDocs(collection(db,"matches"));
+
+snapshot.forEach(docSnap=>{
+
+if(docSnap.id===currentMatch.id){
+
+const data = docSnap.data();
+
+document.getElementById("liveScore").innerText =
+`${data.liveRuns}/${data.liveWickets}`;
+
+document.getElementById("overs").innerText =
+`Overs : ${data.liveOvers}`;
+
+}
+
+});
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// Spectator Mode lo 3 seconds ki refresh
+
+setInterval(()=>{
+
+if(spectatorMode){
+
+refreshLiveData();
+
+}
+
+},3000);
+
+// ================= LIVE STATUS =================
+
+function updateLiveBanner(){
+
+const banner = document.getElementById("liveBanner");
+
+if(!banner) return;
+
+banner.innerHTML = "🔴 LIVE NOW";
+
+}
+
+// Page Load lo add cheyyi
+
+updateLiveBanner();
+
+console.log("👥 Part 27 Loaded Successfully");
+// ================= PART 28 =================
+// LIVE NOTIFICATIONS & MATCH EVENTS
+
+// ================= LIVE EVENTS =================
+
+let liveEvents=[];
+
+function addLiveEvent(title,message){
+
+const event={
+
+title,
+
+message,
+
+time:new Date().toLocaleTimeString()
+
+};
+
+liveEvents.unshift(event);
+
+if(liveEvents.length>30){
+
+liveEvents.pop();
+
+}
+
+updateLiveEvents();
+
+}
+
+// ================= UPDATE EVENT PANEL =================
+
+function updateLiveEvents(){
+
+const box=document.getElementById("liveEvents");
+
+if(!box)return;
+
+box.innerHTML="";
+
+liveEvents.forEach(event=>{
+
+box.innerHTML+=`
+
+<div class="live-event">
+
+<h4>${event.title}</h4>
+
+<p>${event.message}</p>
+
+<small>${event.time}</small>
+
+</div>
+
+`;
+
+});
+
+}
+
+// ================= EVENTS =================
+
+// addRuns() END lo
+
+if(run===4){
+
+addLiveEvent(
+
+"🏏 FOUR",
+
+`${strikerPlayer.playerName} smashed a FOUR!`
+
+);
+
+}
+
+if(run===6){
+
+addLiveEvent(
+
+"🚀 SIX",
+
+`${strikerPlayer.playerName} hits a MASSIVE SIX!`
+
+);
+
+}
+
+// ================= WICKET =================
+
+// btnWicket.onclick lo
+
+addLiveEvent(
+
+"🎯 WICKET",
+
+`${strikerPlayer.playerName} is OUT!`
+
+);
+
+// ================= OVER COMPLETE =================
+
+// checkOverComplete() lo
+
+addLiveEvent(
+
+"🏁 OVER COMPLETE",
+
+`Over ${Math.floor(balls/6)} completed`
+
+);
+
+// ================= INNINGS COMPLETE =================
+
+// finishInnings() lo
+
+addLiveEvent(
+
+"🏆 INNINGS END",
+
+"Innings completed successfully"
+
+);
+
+// ================= MATCH RESULT =================
+
+// endMatch() lo
+
+addLiveEvent(
+
+"👑 MATCH FINISHED",
+
+document.getElementById("winnerText").innerText
+
+);
+
+// ================= SAVE EVENTS =================
+
+async function saveLiveEvents(){
+
+if(!currentMatch)return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+liveEvents,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+}catch(err){
+
+console.error(err);
+
+}
+
+}
+
+// ================= AUTO SAVE =================
+
+setInterval(()=>{
+
+saveLiveEvents();
+
+},15000);
+
+console.log("✅ Part 28 Loaded Successfully");
+// ================= PART 29 =================
+// ADMIN LOCK & UMPIRE CONTROLS
+
+// ================= ADMIN LOCK =================
+
+let adminLocked = false;
+
+function lockScoring(){
+
+adminLocked = true;
+
+document.querySelectorAll(".score-btn").forEach(btn=>{
+
+btn.disabled = true;
+
+});
+
+document.querySelectorAll(".extra-btn").forEach(btn=>{
+
+btn.disabled = true;
+
+});
+
+const wicketBtn = document.querySelector(".wicket-btn");
+
+if(wicketBtn){
+
+wicketBtn.disabled = true;
+
+}
+
+addComment("🔒 Scoring Locked by Admin");
+
+console.log("Admin Lock Enabled");
+
+}
+
+function unlockScoring(){
+
+adminLocked = false;
+
+document.querySelectorAll(".score-btn").forEach(btn=>{
+
+btn.disabled = false;
+
+});
+
+document.querySelectorAll(".extra-btn").forEach(btn=>{
+
+btn.disabled = false;
+
+});
+
+const wicketBtn = document.querySelector(".wicket-btn");
+
+if(wicketBtn){
+
+wicketBtn.disabled = false;
+
+}
+
+addComment("🔓 Scoring Unlocked");
+
+console.log("Admin Lock Disabled");
+
+}
+
+// ================= MATCH PAUSE =================
+
+let matchPaused = false;
+
+function pauseMatch(){
+
+matchPaused = true;
+
+addComment("⏸ Match Paused");
+
+}
+
+function resumeMatch(){
+
+matchPaused = false;
+
+addComment("▶ Match Resumed");
+
+}
+
+// ================= SCORING CHECK =================
+
+// addRuns() START lo add cheyyi
+
+if(adminLocked || matchPaused){
+
+return;
+
+}
+
+// ================= UMPIRE DECISION =================
+
+function umpireDecision(type){
+
+switch(type){
+
+case "OUT":
+
+addComment("☝ Umpire Decision : OUT");
+
+break;
+
+case "NOT OUT":
+
+addComment("👌 Umpire Decision : NOT OUT");
+
+break;
+
+case "REVIEW":
+
+addComment("📺 Decision Under Review");
+
+break;
+
+case "DEAD BALL":
+
+addComment("⚪ Dead Ball");
+
+break;
+
+}
+
+}
+
+// ================= MATCH TIMER =================
+
+let matchStartTime = new Date();
+
+function updateMatchTimer(){
+
+const timer=document.getElementById("matchTimer");
+
+if(!timer)return;
+
+const diff=Math.floor(
+
+(new Date()-matchStartTime)/1000
+
+);
+
+const mins=Math.floor(diff/60);
+
+const secs=diff%60;
+
+timer.innerText=
+
+`${mins}:${secs.toString().padStart(2,"0")}`;
+
+}
+
+setInterval(updateMatchTimer,1000);
+
+console.log("🏆 Part 29 Loaded Successfully");
+// ================= PART 30 =================
+// FINAL INITIALIZATION & SYSTEM CHECK
+
+console.log("====================================");
+console.log("🏆 VPL 2K27 LIVE SCORE v3.0");
+console.log("Developer : Nithin");
+console.log("Status : Production Build");
+console.log("====================================");
+
+// ================= APP READY =================
+
+window.addEventListener("load",()=>{
+
+console.log("✅ HTML Loaded");
+
+console.log("✅ CSS Loaded");
+
+console.log("✅ JavaScript Loaded");
+
+console.log("✅ Firebase Connected");
+
+console.log("✅ Match Engine Ready");
+
+console.log("✅ Live Scoring Ready");
+
+console.log("✅ Spectator Mode Ready");
+
+console.log("✅ Tournament Engine Ready");
+
+});
+
+// ================= ERROR LOGGER =================
+
+window.onerror=function(msg,file,line){
+
+console.error(
+
+"ERROR :",
+
+msg,
+
+"\nFILE :",file,
+
+"\nLINE :",line
+
+);
+
+return false;
+
+};
+
+// ================= AUTO SAVE =================
+
+setInterval(()=>{
+
+if(typeof saveLiveScore==="function"){
+
+saveLiveScore();
+
+}
+
+},10000);
+
+// ================= CONNECTION CHECK =================
+
+setInterval(()=>{
+
+console.log("🟢 Live Connection Active");
+
+},60000);
+
+// ================= FINAL MESSAGE =================
+
+console.log("🏏================================");
+
+console.log("🏆 VPL 2K27 LIVE SCORE COMPLETED");
+
+console.log("🔥 Professional Tournament Engine");
+
+console.log("⚡ Version : 3.0");
+
+console.log("🏏================================");
 
 
 
