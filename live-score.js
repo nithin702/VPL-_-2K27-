@@ -74,18 +74,16 @@ allMatches=[];
 
 try{
 
-const q = query(
-    collection(db, "matches"),
-    where("status", "==", "Scheduled")
-);
+const snapshot = await getDocs(collection(db, "matches"));
 
-const snapshot = await getDocs(q);
+console.log("Total docs:", snapshot.size);
     console.log("Totale docs:",snapshot.size);
 
 snapshot.forEach(docSnap=>{
     console.log(docSnap.id,docSnap.data());
 
 const match=docSnap.data();
+    if (match.status !== "Not Started") return;
 
 match.id=docSnap.id;
 
