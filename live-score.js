@@ -2880,6 +2880,612 @@ console.log(LIVE_SCORE_VERSION);
 // ================= READY =================
 
 console.log("🏆 Live Score Engine Completed Successfully");
+// ================= PART 21 =================
+// FULL BATTING & BOWLING SCORECARD
+
+// ================= BATTING SCORECARD =================
+
+let battingScorecard = [];
+
+function saveBattingRecord(player){
+
+battingScorecard.push({
+
+name:player.playerName,
+
+runs:player.runs || strikerRuns,
+
+balls:player.balls || strikerBalls,
+
+fours:player.fours || strikerFours,
+
+sixes:player.sixes || strikerSixes,
+
+strikeRate:
+(player.balls||strikerBalls)==0
+?0
+:(((player.runs||strikerRuns)/(player.balls||strikerBalls))*100).toFixed(2)
+
+});
+
+}
+
+// ================= BOWLING SCORECARD =================
+
+let bowlingScorecard = [];
+
+function saveBowlingRecord(player){
+
+bowlingScorecard.push({
+
+name:player.playerName,
+
+overs:`${Math.floor(balls/6)}.${balls%6}`,
+
+runs:bowlerRuns,
+
+wickets:bowlerWickets,
+
+economy:
+balls==0
+?0
+:(bowlerRuns/(balls/6)).toFixed(2)
+
+});
+
+}
+
+// ================= SHOW SCORECARD =================
+
+function showScorecard(){
+
+const batting=document.getElementById("battingTable");
+
+const bowling=document.getElementById("bowlingTable");
+
+if(batting){
+
+batting.innerHTML="";
+
+battingScorecard.forEach(p=>{
+
+batting.innerHTML+=`
+
+<tr>
+
+<td>${p.name}</td>
+
+<td>${p.runs}</td>
+
+<td>${p.balls}</td>
+
+<td>${p.fours}</td>
+
+<td>${p.sixes}</td>
+
+<td>${p.strikeRate}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+if(bowling){
+
+bowling.innerHTML="";
+
+bowlingScorecard.forEach(p=>{
+
+bowling.innerHTML+=`
+
+<tr>
+
+<td>${p.name}</td>
+
+<td>${p.overs}</td>
+
+<td>${p.runs}</td>
+
+<td>${p.wickets}</td>
+
+<td>${p.economy}</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+}
+
+// ================= SAVE CURRENT PLAYERS =================
+
+// endMatch() START lo add cheyyi
+
+saveBattingRecord(strikerPlayer);
+
+saveBattingRecord(nonStrikerPlayer);
+
+saveBowlingRecord(bowlerPlayer);
+
+// ================= DISPLAY SCORECARD =================
+
+// endMatch() END lo add cheyyi
+
+showScorecard();
+
+console.log("✅ Part 21 Loaded Successfully");
+// ================= PART 22 =================
+// FIREBASE SCORECARD SAVE
+
+// ================= SAVE SCORECARD =================
+
+async function saveScorecard(){
+
+if(!currentMatch) return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+battingScorecard:battingScorecard,
+
+bowlingScorecard:bowlingScorecard,
+
+fallOfWickets:fallOfWickets,
+
+matchLog:matchLog,
+
+ballHistory:history,
+
+extras:totalExtras,
+
+fours:totalFours,
+
+sixes:totalSixes,
+
+highestPartnership:highestPartnership,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+console.log("✅ Scorecard Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= LOAD SCORECARD =================
+
+async function loadScorecard(matchId){
+
+try{
+
+const snapshot=await getDocs(collection(db,"matches"));
+
+snapshot.forEach(docSnap=>{
+
+if(docSnap.id===matchId){
+
+const data=docSnap.data();
+
+battingScorecard=data.battingScorecard||[];
+
+bowlingScorecard=data.bowlingScorecard||[];
+
+fallOfWickets=data.fallOfWickets||[];
+
+matchLog=data.matchLog||[];
+
+history=data.ballHistory||[];
+
+}
+
+});
+
+showScorecard();
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= AUTO SAVE =================
+
+setInterval(()=>{
+
+saveScorecard();
+
+},30000);
+
+// ================= END MATCH =================
+
+// endMatch() function END lo add cheyyi
+
+saveScorecard();
+
+console.log("🏆 Part 22 Loaded Successfully");
+// ================= PART 23 =================
+// ORANGE CAP AUTO UPDATE
+
+// ================= ORANGE CAP =================
+
+let orangeCap = {
+
+player: "",
+
+runs: 0,
+
+team: ""
+
+};
+
+function updateOrangeCap(player){
+
+if(!player) return;
+
+const playerRuns = player.runs || strikerRuns;
+
+if(playerRuns > orangeCap.runs){
+
+orangeCap.player = player.playerName;
+
+orangeCap.runs = playerRuns;
+
+orangeCap.team = player.soldTo || battingTeam.innerText;
+
+console.log("🟠 Orange Cap :", orangeCap.player);
+
+}
+
+const nameBox = document.getElementById("orangeCapName");
+
+const runsBox = document.getElementById("orangeCapRuns");
+
+if(nameBox){
+
+nameBox.innerText = orangeCap.player;
+
+}
+
+if(runsBox){
+
+runsBox.innerText = orangeCap.runs;
+
+}
+
+}
+
+// ================= SAVE TO FIREBASE =================
+
+async function saveOrangeCap(){
+
+try{
+
+await updateDoc(
+
+doc(db,"tournament","orangeCap"),
+
+{
+
+player: orangeCap.player,
+
+runs: orangeCap.runs,
+
+team: orangeCap.team,
+
+updatedAt: new Date().toISOString()
+
+}
+
+);
+
+console.log("🟠 Orange Cap Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= LOAD ORANGE CAP =================
+
+async function loadOrangeCap(){
+
+try{
+
+const snapshot = await getDocs(collection(db,"tournament"));
+
+snapshot.forEach(docSnap=>{
+
+if(docSnap.id==="orangeCap"){
+
+const data = docSnap.data();
+
+orangeCap = data;
+
+}
+
+});
+
+updateOrangeCap(strikerPlayer);
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= AUTO UPDATE =================
+
+// refreshScore() END lo add cheyyi
+
+updateOrangeCap(strikerPlayer);
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+saveOrangeCap();
+
+console.log("🟠 Part 23 Loaded Successfully");
+// ================= PART 24 =================
+// PURPLE CAP AUTO UPDATE
+
+// ================= PURPLE CAP =================
+
+let purpleCap = {
+
+player: "",
+
+wickets: 0,
+
+team: ""
+
+};
+
+function updatePurpleCap(player){
+
+if(!player) return;
+
+const playerWickets = player.wickets || bowlerWickets || 0;
+
+if(playerWickets > purpleCap.wickets){
+
+purpleCap.player = player.playerName;
+
+purpleCap.wickets = playerWickets;
+
+purpleCap.team = player.soldTo || bowlingTeam.innerText;
+
+console.log("🟣 Purple Cap :", purpleCap.player);
+
+}
+
+const nameBox = document.getElementById("purpleCapName");
+
+const wicketBox = document.getElementById("purpleCapWickets");
+
+if(nameBox){
+
+nameBox.innerText = purpleCap.player;
+
+}
+
+if(wicketBox){
+
+wicketBox.innerText = purpleCap.wickets;
+
+}
+
+}
+
+// ================= SAVE TO FIREBASE =================
+
+async function savePurpleCap(){
+
+try{
+
+await updateDoc(
+
+doc(db,"tournament","purpleCap"),
+
+{
+
+player: purpleCap.player,
+
+wickets: purpleCap.wickets,
+
+team: purpleCap.team,
+
+updatedAt: new Date().toISOString()
+
+}
+
+);
+
+console.log("🟣 Purple Cap Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= LOAD PURPLE CAP =================
+
+async function loadPurpleCap(){
+
+try{
+
+const snapshot = await getDocs(collection(db,"tournament"));
+
+snapshot.forEach(docSnap=>{
+
+if(docSnap.id==="purpleCap"){
+
+purpleCap = docSnap.data();
+
+}
+
+});
+
+updatePurpleCap(bowlerPlayer);
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= AUTO UPDATE =================
+
+// refreshScore() END lo add cheyyi
+
+updatePurpleCap(bowlerPlayer);
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+savePurpleCap();
+
+console.log("🟣 Part 24 Loaded Successfully");
+// ================= PART 25 =================
+// POINTS TABLE AUTO UPDATE
+
+// ================= POINTS TABLE =================
+
+async function updatePointsTable(){
+
+if(!currentMatch) return;
+
+let winner = "";
+
+if(firstInningsScore > secondInningsScore){
+
+winner = firstBattingTeam;
+
+}else if(secondInningsScore > firstInningsScore){
+
+winner = secondBattingTeam;
+
+}else{
+
+winner = "DRAW";
+
+}
+
+try{
+
+const snapshot = await getDocs(collection(db,"pointsTable"));
+
+snapshot.forEach(async(docSnap)=>{
+
+const data = docSnap.data();
+
+if(data.teamName===winner){
+
+await updateDoc(doc(db,"pointsTable",docSnap.id),{
+
+matches:(data.matches||0)+1,
+
+wins:(data.wins||0)+1,
+
+points:(data.points||0)+2,
+
+runsFor:(data.runsFor||0)+totalRuns,
+
+runsAgainst:(data.runsAgainst||0)+target,
+
+updatedAt:new Date().toISOString()
+
+});
+
+}
+
+else if(
+
+data.teamName===firstBattingTeam ||
+
+data.teamName===secondBattingTeam
+
+){
+
+await updateDoc(doc(db,"pointsTable",docSnap.id),{
+
+matches:(data.matches||0)+1,
+
+losses:(data.losses||0)+1,
+
+runsFor:(data.runsFor||0)+totalRuns,
+
+runsAgainst:(data.runsAgainst||0)+target,
+
+updatedAt:new Date().toISOString()
+
+});
+
+}
+
+});
+
+console.log("🏆 Points Table Updated");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= NET RUN RATE =================
+
+function calculateNRR(runsFor,oversFaced,runsAgainst,oversBowled){
+
+const rrFor = runsFor/oversFaced;
+
+const rrAgainst = runsAgainst/oversBowled;
+
+return (rrFor-rrAgainst).toFixed(3);
+
+}
+
+// ================= MATCH END =================
+
+// endMatch() function END lo add cheyyi
+
+updatePointsTable();
+
+console.log("🏏 Part 25 Loaded Successfully");
 
 
 
