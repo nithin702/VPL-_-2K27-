@@ -74,7 +74,12 @@ allMatches=[];
 
 try{
 
-const snapshot=await getDocs(collection(db,"matches"));
+const q = query(
+    collection(db, "matches"),
+    where("status", "==", "Scheduled")
+);
+
+const snapshot = await getDocs(q);
     console.log("Totale docs:",snapshot.size);
 
 snapshot.forEach(docSnap=>{
