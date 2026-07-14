@@ -1596,4 +1596,1038 @@ updateTournamentStats();
 // ================= VERSION =================
 
 console.log("🏆 VPL 2K27 Live Score v2.1 Final Build Ready");
+// ================= PART 11 =================
+// ADVANCED MATCH FEATURES
+
+// ================= MATCH LOG =================
+
+let matchLog = [];
+
+function addMatchLog(event){
+
+matchLog.push({
+
+time:new Date().toLocaleTimeString(),
+
+event:event,
+
+score:`${totalRuns}/${wickets}`,
+
+overs:`${Math.floor(balls/6)}.${balls%6}`
+
+});
+
+}
+
+// ================= MODIFY EVENTS =================
+
+// addRuns() END lo
+
+addMatchLog(`${run} Run(s)`);
+
+// btnWide.onclick END lo
+
+addMatchLog("Wide");
+
+// btnNoBall.onclick END lo
+
+addMatchLog("No Ball");
+
+// btnBye.onclick END lo
+
+addMatchLog("Bye");
+
+// btnLegBye.onclick END lo
+
+addMatchLog("Leg Bye");
+
+// btnWicket.onclick END lo
+
+addMatchLog("Wicket");
+
+// ================= LAST WICKET =================
+
+let lastWicket = "-";
+
+function updateLastWicket(){
+
+lastWicket=
+
+`${strikerPlayer.playerName} ${totalRuns}/${wickets}`;
+
+const box=document.getElementById("lastWicket");
+
+if(box){
+
+box.innerText=lastWicket;
+
+}
+
+}
+
+// btnWicket.onclick lo wickets++ tarvatha
+
+updateLastWicket();
+
+// ================= HIGHEST PARTNERSHIP =================
+
+let highestPartnership=0;
+
+function checkHighestPartnership(){
+
+if(partnershipRuns>highestPartnership){
+
+highestPartnership=partnershipRuns;
+
+}
+
+}
+
+// updatePartnership() END lo
+
+checkHighestPartnership();
+
+// ================= REQUIRED BALLS =================
+
+function updateNeedBalls(){
+
+if(innings!==2)return;
+
+const ballsLeft=90-balls;
+
+const need=document.getElementById("needBalls");
+
+if(need){
+
+need.innerText=ballsLeft;
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateNeedBalls();
+
+// ================= AUTO BACKUP =================
+
+async function autoBackup(){
+
+try{
+
+localStorage.setItem(
+
+"liveScoreBackup",
+
+JSON.stringify({
+
+runs:totalRuns,
+
+wickets,
+
+balls,
+
+history,
+
+target,
+
+innings
+
+})
+
+);
+
+}catch(e){
+
+console.log(e);
+
+}
+
+}
+
+setInterval(autoBackup,5000);
+
+// ================= RESTORE =================
+
+function restoreBackup(){
+
+const data=
+
+localStorage.getItem("liveScoreBackup");
+
+if(!data)return;
+
+const backup=JSON.parse(data);
+
+totalRuns=backup.runs||0;
+
+wickets=backup.wickets||0;
+
+balls=backup.balls||0;
+
+history=backup.history||[];
+
+target=backup.target||0;
+
+innings=backup.innings||1;
+
+refreshScore();
+
+}
+
+restoreBackup();
+
+console.log("✅ Part 11 Loaded");
+// ================= PART 12 =================
+// ADVANCED TOURNAMENT FEATURES
+
+// ================= AUTO MAN OF THE MATCH =================
+
+function autoManOfTheMatch(){
+
+let motm={
+name:strikerPlayer ? strikerPlayer.playerName : "-",
+runs:strikerRuns,
+balls:strikerBalls,
+fours:strikerFours,
+sixes:strikerSixes
+};
+
+document.getElementById("winnerText").innerHTML+=
+`<br><br>⭐ Player of the Match : ${motm.name}`;
+
+}
+
+// ================= MATCH ID =================
+
+function generateMatchID(){
+
+return "VPL-"+Date.now();
+
+}
+
+const liveMatchID=generateMatchID();
+
+// ================= SHARE SCORE =================
+
+function shareScore(){
+
+const text=
+
+`${battingTeam.innerText}
+
+${totalRuns}/${wickets}
+
+Overs ${Math.floor(balls/6)}.${balls%6}`;
+
+if(navigator.share){
+
+navigator.share({
+
+title:"VPL 2K27 Live Score",
+
+text:text
+
+});
+
+}
+
+}
+
+// ================= LIVE STATUS =================
+
+function updateLiveStatus(){
+
+const live=document.getElementById("matchStatus");
+
+if(!live)return;
+
+if(innings===1){
+
+live.innerText="🟢 LIVE • 1st Innings";
+
+}else{
+
+live.innerText="🟢 LIVE • 2nd Innings";
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateLiveStatus();
+
+// ================= REQUIRED MESSAGE =================
+
+function updateNeedMessage(){
+
+if(innings!==2)return;
+
+const need=target-totalRuns;
+
+const ballsLeft=90-balls;
+
+const msg=document.getElementById("resultDescription");
+
+if(msg){
+
+msg.innerText=
+
+`${need} Runs Needed from ${ballsLeft} Balls`;
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateNeedMessage();
+
+// ================= AUTO COMPLETE =================
+
+function autoCompleteMatch(){
+
+if(innings!==2)return;
+
+if(totalRuns>=target){
+
+endMatch();
+
+}
+
+}
+
+// refreshScore() END lo
+
+autoCompleteMatch();
+
+// ================= FINAL SAVE =================
+
+window.addEventListener("beforeunload",()=>{
+
+saveLiveScore();
+
+});
+
+// ================= LOAD COMPLETE =================
+
+console.log("🏏 VPL 2K27 Live Score Part 12 Loaded Successfully");
+// ================= PART 13 =================
+// PREMIUM LIVE SCORE FEATURES
+
+// ================= BATSMAN STRIKE RATE =================
+
+function updateStrikeRate(){
+
+const sr =
+strikerBalls === 0
+? 0
+: ((strikerRuns / strikerBalls) * 100).toFixed(2);
+
+const box=document.getElementById("strikerSR");
+
+if(box){
+
+box.innerText=sr;
+
+}
+
+}
+
+// ================= BOWLER ECONOMY =================
+
+function updateEconomy(){
+
+const oversBowled=balls/6;
+
+const eco=
+oversBowled===0
+?0
+:(bowlerRuns/oversBowled).toFixed(2);
+
+const box=document.getElementById("bowlerEco");
+
+if(box){
+
+box.innerText=eco;
+
+}
+
+}
+
+// ================= MATCH PROGRESS =================
+
+function updateProgress(){
+
+const percent=((balls/90)*100).toFixed(0);
+
+const bar=document.getElementById("matchProgress");
+
+if(bar){
+
+bar.style.width=percent+"%";
+
+}
+
+}
+
+// ================= AUTO REQUIRED RATE =================
+
+function updateRequiredRate(){
+
+if(innings!==2)return;
+
+const runsLeft=target-totalRuns;
+
+const oversLeft=(90-balls)/6;
+
+const rrr=
+oversLeft<=0
+?0
+:(runsLeft/oversLeft).toFixed(2);
+
+document.getElementById("rrr").innerText=rrr;
+
+}
+
+// ================= REFRESH =================
+
+// refreshScore() function END lo
+
+updateStrikeRate();
+
+updateEconomy();
+
+updateProgress();
+
+updateRequiredRate();
+
+// ================= LIVE ENGINE =================
+
+console.log("✅ Part 13 Loaded Successfully");
+// ================= PART 14 =================
+// LIVE DASHBOARD ENHANCEMENTS
+
+// ================= AUTO STRIKE CHANGE =================
+
+function changeStrike(){
+
+let temp = strikerPlayer;
+
+strikerPlayer = nonStrikerPlayer;
+
+nonStrikerPlayer = temp;
+
+document.getElementById("strikerName").innerText =
+strikerPlayer.playerName;
+
+document.getElementById("nonStrikerName").innerText =
+nonStrikerPlayer.playerName;
+
+}
+
+// ================= LAST BALL RESULT =================
+
+let lastBall="-";
+
+function updateLastBall(ball){
+
+lastBall=ball;
+
+const box=document.getElementById("lastBall");
+
+if(box){
+
+box.innerText=lastBall;
+
+}
+
+}
+
+// addHistory(text) END lo add cheyyi
+
+updateLastBall(text);
+
+// ================= LIVE TARGET BAR =================
+
+function updateTargetBar(){
+
+if(innings!==2)return;
+
+const percent=Math.min(
+
+(totalRuns/target)*100,
+
+100
+
+);
+
+const bar=document.getElementById("targetBar");
+
+if(bar){
+
+bar.style.width=percent+"%";
+
+}
+
+}
+
+// ================= TEAM LOGOS =================
+
+function loadTeamLogos(){
+
+const team1Logo=document.getElementById("team1Logo");
+
+const team2Logo=document.getElementById("team2Logo");
+
+if(team1Logo){
+
+team1Logo.src=`logos/${firstBattingTeam}.png`;
+
+}
+
+if(team2Logo){
+
+team2Logo.src=`logos/${firstBowlingTeam}.png`;
+
+}
+
+}
+
+// ================= AUTO SAVE EVERY BALL =================
+
+async function saveEveryBall(){
+
+await saveLiveScore();
+
+console.log("Ball Saved");
+
+}
+
+// addRuns() END lo
+
+saveEveryBall();
+
+// ================= CROWD MESSAGE =================
+
+function crowdReaction(run){
+
+if(run===4){
+
+addComment("👏 Crowd cheers for FOUR!");
+
+}
+
+if(run===6){
+
+addComment("🔥 Huge SIX!");
+
+}
+
+}
+
+// addRuns() END lo
+
+crowdReaction(run);
+
+// ================= DASHBOARD REFRESH =================
+
+// refreshScore() END lo
+
+updateTargetBar();
+
+console.log("✅ Part 14 Loaded");
+// ================= PART 15 =================
+// TOURNAMENT PREMIUM FEATURES
+
+// ================= LIVE MATCH INFO =================
+
+function updateMatchInfo(){
+
+const info=document.getElementById("matchInfo");
+
+if(!info) return;
+
+info.innerHTML=`
+${currentMatch.matchNumber}<br>
+${firstBattingTeam} 🆚 ${firstBowlingTeam}
+`;
+
+}
+
+// ================= CURRENT RUN RATE COLOR =================
+
+function updateCRRColor(){
+
+const crr=parseFloat(document.getElementById("crr").innerText);
+
+const box=document.getElementById("crr");
+
+if(crr>=10){
+
+box.style.color="#00ff66";
+
+}else if(crr>=7){
+
+box.style.color="#FFD700";
+
+}else{
+
+box.style.color="#ff4444";
+
+}
+
+}
+
+// ================= REQUIRED RATE COLOR =================
+
+function updateRRRColor(){
+
+const box=document.getElementById("rrr");
+
+if(!box)return;
+
+const rrr=parseFloat(box.innerText);
+
+if(rrr<=8){
+
+box.style.color="#00ff66";
+
+}else if(rrr<=12){
+
+box.style.color="#FFD700";
+
+}else{
+
+box.style.color="#ff3333";
+
+}
+
+}
+
+// ================= MATCH RESULT SOUND =================
+
+function playResultSound(){
+
+const audio=new Audio("sounds/win.mp3");
+
+audio.play().catch(()=>{});
+
+}
+
+// endMatch() END lo add cheyyi
+
+playResultSound();
+
+// ================= LIVE STATUS DOT =================
+
+function updateLiveDot(){
+
+const dot=document.getElementById("liveDot");
+
+if(dot){
+
+dot.style.background="red";
+
+dot.style.animation="blink 1s infinite";
+
+}
+
+}
+
+// ================= REFRESH =================
+
+// refreshScore() function END lo add cheyyi
+
+updateCRRColor();
+
+updateRRRColor();
+
+updateLiveDot();
+
+// ================= FINAL MESSAGE =================
+
+console.log("🏆 VPL 2K27 Live Score Part 15 Loaded Successfully");
+// ================= PART 16 =================
+// ADVANCED LIVE SCORE FEATURES
+
+// ================= WAGON WHEEL DATA =================
+
+let wagonWheel=[];
+
+function addShot(run){
+
+wagonWheel.push({
+
+run:run,
+
+ball:balls,
+
+time:new Date().toLocaleTimeString()
+
+});
+
+}
+
+// addRuns() END lo add cheyyi
+
+addShot(run);
+
+// ================= BOUNDARY COUNT =================
+
+let totalFours=0;
+let totalSixes=0;
+
+function updateBoundaryCount(run){
+
+if(run===4){
+
+totalFours++;
+
+}
+
+if(run===6){
+
+totalSixes++;
+
+}
+
+const fourBox=document.getElementById("totalFours");
+
+const sixBox=document.getElementById("totalSixes");
+
+if(fourBox){
+
+fourBox.innerText=totalFours;
+
+}
+
+if(sixBox){
+
+sixBox.innerText=totalSixes;
+
+}
+
+}
+
+// addRuns() END lo add cheyyi
+
+updateBoundaryCount(run);
+
+// ================= HIGHEST OVER =================
+
+let currentOverRuns=0;
+let highestOver=0;
+
+function updateOverRuns(run){
+
+currentOverRuns+=run;
+
+if(currentOverRuns>highestOver){
+
+highestOver=currentOverRuns;
+
+}
+
+if(balls>0 && balls%6===0){
+
+currentOverRuns=0;
+
+}
+
+}
+
+// addRuns() END lo add cheyyi
+
+updateOverRuns(run);
+
+// ================= LIVE PARTNERSHIP BAR =================
+
+function updatePartnershipBar(){
+
+const bar=document.getElementById("partnershipBar");
+
+if(!bar)return;
+
+bar.style.width=Math.min(partnershipRuns,100)+"%";
+
+}
+
+// refreshScore() END lo add cheyyi
+
+updatePartnershipBar();
+
+// ================= AUTO BACKUP FIREBASE =================
+
+setInterval(()=>{
+
+saveLiveScore();
+
+},10000);
+
+// ================= ENGINE VERSION =================
+
+console.log("🏏 VPL 2K27 Live Score Part 16 Loaded Successfully");
+// ================= PART 17 =================
+// MATCH ANALYTICS & RECORDS
+
+// ================= DOT BALLS =================
+
+let dotBalls = 0;
+
+function updateDotBalls(run){
+
+if(run===0){
+
+dotBalls++;
+
+}
+
+const box=document.getElementById("dotBalls");
+
+if(box){
+
+box.innerText=dotBalls;
+
+}
+
+}
+
+// addRuns() END lo add cheyyi
+
+updateDotBalls(run);
+
+// ================= TOTAL EXTRAS =================
+
+let totalExtras=0;
+
+function updateExtras(type){
+
+totalExtras++;
+
+const box=document.getElementById("extras");
+
+if(box){
+
+box.innerText=totalExtras;
+
+}
+
+addComment(`${type} Extra`);
+
+}
+
+// btnWide.onclick END lo
+
+updateExtras("Wide");
+
+// btnNoBall.onclick END lo
+
+updateExtras("No Ball");
+
+// btnBye.onclick END lo
+
+updateExtras("Bye");
+
+// btnLegBye.onclick END lo
+
+updateExtras("Leg Bye");
+
+// ================= BOUNDARY PERCENTAGE =================
+
+function updateBoundaryPercentage(){
+
+const boundaries=(totalFours*4)+(totalSixes*6);
+
+const percent=
+
+totalRuns===0
+
+?0
+
+:((boundaries/totalRuns)*100).toFixed(1);
+
+const box=document.getElementById("boundaryPercent");
+
+if(box){
+
+box.innerText=percent+"%";
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateBoundaryPercentage();
+
+// ================= MATCH RECORD =================
+
+function checkRecord(){
+
+if(totalRuns>=200){
+
+addComment("🏆 New Tournament Highest Score!");
+
+}
+
+if(strikerRuns>=100){
+
+addComment(`💯 Century by ${strikerPlayer.playerName}`);
+
+}
+
+if(strikerRuns>=50 && strikerRuns<100){
+
+addComment(`🔥 Fifty by ${strikerPlayer.playerName}`);
+
+}
+
+}
+
+// refreshScore() END lo
+
+checkRecord();
+
+// ================= LIVE ENGINE =================
+
+console.log("✅ Part 17 Loaded Successfully");
+// ================= PART 18 =================
+// ADVANCED MATCH INSIGHTS
+
+// ================= POWERPLAY TRACKER =================
+
+let powerplayRuns = 0;
+
+function updatePowerplay(run){
+
+if(balls < 36){
+
+powerplayRuns += run;
+
+const box = document.getElementById("powerplayRuns");
+
+if(box){
+
+box.innerText = powerplayRuns;
+
+}
+
+}
+
+}
+
+// addRuns() END lo add cheyyi
+
+updatePowerplay(run);
+
+// ================= WORM GRAPH DATA =================
+
+let wormData=[];
+
+function updateWorm(){
+
+wormData.push({
+
+over:Math.floor(balls/6)+(balls%6)/10,
+
+runs:totalRuns
+
+});
+
+}
+
+// refreshScore() END lo add cheyyi
+
+updateWorm();
+
+// ================= HIGHEST SCORER =================
+
+let highestScorer={
+
+name:"",
+runs:0
+
+};
+
+function updateHighestScorer(){
+
+if(strikerRuns>highestScorer.runs){
+
+highestScorer.name=strikerPlayer.playerName;
+
+highestScorer.runs=strikerRuns;
+
+}
+
+const box=document.getElementById("highestScorer");
+
+if(box){
+
+box.innerText=
+
+`${highestScorer.name} (${highestScorer.runs})`;
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateHighestScorer();
+
+// ================= BEST BOWLER =================
+
+function updateBestBowler(){
+
+const box=document.getElementById("bestBowler");
+
+if(box){
+
+box.innerText=
+
+`${bowlerPlayer.playerName} (${bowlerWickets}/${bowlerRuns})`;
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateBestBowler();
+
+// ================= LIVE REQUIRED BALLS =================
+
+function updateNeedPerBall(){
+
+if(innings!==2)return;
+
+const ballsLeft=90-balls;
+
+const runsLeft=Math.max(target-totalRuns,0);
+
+const box=document.getElementById("needPerBall");
+
+if(box){
+
+box.innerText=
+
+`${runsLeft} from ${ballsLeft}`;
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateNeedPerBall();
+
+// ================= MATCH ENGINE =================
+
+console.log("🏏 VPL 2K27 Live Score Part 18 Loaded Successfully");
+
+
+
+
 
