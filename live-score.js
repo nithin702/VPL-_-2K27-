@@ -2626,6 +2626,260 @@ updateNeedPerBall();
 // ================= MATCH ENGINE =================
 
 console.log("🏏 VPL 2K27 Live Score Part 18 Loaded Successfully");
+// ================= PART 19 =================
+// TOURNAMENT ANALYTICS & LIVE FEATURES
+
+// ================= FASTEST FIFTY =================
+
+let fastestFifty = null;
+
+function checkFastestFifty(){
+
+if(strikerRuns>=50 && fastestFifty===null){
+
+fastestFifty={
+
+name:strikerPlayer.playerName,
+
+balls:strikerBalls
+
+};
+
+addComment(
+`🔥 Fast Fifty by ${strikerPlayer.playerName} (${strikerBalls} balls)`
+);
+
+}
+
+}
+
+// refreshScore() END lo add cheyyi
+
+checkFastestFifty();
+
+// ================= FASTEST CENTURY =================
+
+let fastestCentury = null;
+
+function checkFastestCentury(){
+
+if(strikerRuns>=100 && fastestCentury===null){
+
+fastestCentury={
+
+name:strikerPlayer.playerName,
+
+balls:strikerBalls
+
+};
+
+addComment(
+`💯 Century by ${strikerPlayer.playerName} (${strikerBalls} balls)`
+);
+
+}
+
+}
+
+// refreshScore() END lo add cheyyi
+
+checkFastestCentury();
+
+// ================= LIVE PARTNERSHIP RECORD =================
+
+let bestPartnership = 0;
+
+function updateBestPartnership(){
+
+if(partnershipRuns>bestPartnership){
+
+bestPartnership=partnershipRuns;
+
+}
+
+const box=document.getElementById("bestPartnership");
+
+if(box){
+
+box.innerText=bestPartnership;
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateBestPartnership();
+
+// ================= RUNS PER OVER =================
+
+let overSummary=[];
+
+function saveOverSummary(){
+
+if(balls>0 && balls%6===0){
+
+overSummary.push(currentOverRuns);
+
+}
+
+}
+
+// checkOverComplete() START lo add cheyyi
+
+saveOverSummary();
+
+// ================= MATCH MOMENTUM =================
+
+function updateMomentum(){
+
+const box=document.getElementById("momentum");
+
+if(!box) return;
+
+if(totalRuns>=target && innings===2){
+
+box.innerText="🟢 Chasing Team Ahead";
+
+}else if(document.getElementById("crr").innerText>=10){
+
+box.innerText="🔥 Batting Dominating";
+
+}else{
+
+box.innerText="⚖ Balanced Match";
+
+}
+
+}
+
+// refreshScore() END lo
+
+updateMomentum();
+
+// ================= FINAL =================
+
+console.log("🏆 Part 19 Loaded Successfully");
+// ================= PART 20 =================
+// FINAL PREMIUM LIVE SCORE FEATURES
+
+// ================= MATCH SUMMARY JSON =================
+
+function generateSummary(){
+
+return{
+
+match:currentMatch ? currentMatch.matchNumber : "",
+
+battingTeam:battingTeam.innerText,
+
+runs:totalRuns,
+
+wickets:wickets,
+
+overs:`${Math.floor(balls/6)}.${balls%6}`,
+
+crr:document.getElementById("crr").innerText,
+
+target:target,
+
+winner:document.getElementById("winnerText").innerText,
+
+commentary:matchLog,
+
+ballHistory:history,
+
+fallOfWickets,
+
+highestPartnership,
+
+extras:totalExtras,
+
+fours:totalFours,
+
+sixes:totalSixes
+
+};
+
+}
+
+// ================= DOWNLOAD JSON =================
+
+function downloadSummary(){
+
+const data=
+
+JSON.stringify(generateSummary(),null,2);
+
+const blob=
+
+new Blob([data],{type:"application/json"});
+
+const a=document.createElement("a");
+
+a.href=URL.createObjectURL(blob);
+
+a.download="VPL_Match_Summary.json";
+
+a.click();
+
+}
+
+// ================= EXPORT CSV =================
+
+function exportCSV(){
+
+let csv=
+
+"Runs,Wickets,Overs\n";
+
+csv+=`${totalRuns},${wickets},${Math.floor(balls/6)}.${balls%6}`;
+
+const blob=
+
+new Blob([csv],{type:"text/csv"});
+
+const a=document.createElement("a");
+
+a.href=URL.createObjectURL(blob);
+
+a.download="MatchSummary.csv";
+
+a.click();
+
+}
+
+// ================= RESET MATCH =================
+
+function resetMatch(){
+
+totalRuns=0;
+
+wickets=0;
+
+balls=0;
+
+history=[];
+
+matchLog=[];
+
+fallOfWickets=[];
+
+undoStack=[];
+
+refreshScore();
+
+}
+
+// ================= VERSION =================
+
+const LIVE_SCORE_VERSION="VPL 2K27 Live Score v3.0";
+
+console.log(LIVE_SCORE_VERSION);
+
+// ================= READY =================
+
+console.log("🏆 Live Score Engine Completed Successfully");
 
 
 
