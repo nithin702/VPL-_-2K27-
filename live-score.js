@@ -77,6 +77,7 @@ try{
 const snapshot=await getDocs(collection(db,"matches"));
 
 snapshot.forEach(docSnap=>{
+    console.log(docSnap.id,docSnap.data());
 
 const match=docSnap.data();
 
