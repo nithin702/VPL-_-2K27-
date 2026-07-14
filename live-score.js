@@ -4184,8 +4184,1462 @@ console.log("🔥 Professional Tournament Engine");
 console.log("⚡ Version : 3.0");
 
 console.log("🏏================================");
+// ================= PART 31 =================
+// FINAL INTEGRATION CHECKLIST
+// (Last Part)
 
+// =========================================
+// STEP 1
+// Firebase Config
+// =========================================
+// initializeApp()
+// getFirestore()
+// Import statements OK
 
+// =========================================
+// STEP 2
+// HTML IDs Verification
+// =========================================
+// matchSelect
+// tossWinner
+// tossDecision
+// startMatchBtn
+// liveScore
+// overs
+// commentaryBox
+// ballHistory
+// strikerName
+// nonStrikerName
+// bowlerName
+// inningsResult
+// matchResult
+// All IDs must match exactly.
+
+// =========================================
+// STEP 3
+// Global Variables
+// =========================================
+// totalRuns
+// wickets
+// balls
+// currentMatch
+// strikerPlayer
+// nonStrikerPlayer
+// bowlerPlayer
+// target
+// innings
+// history
+// commentary
+// matchLog
+// undoStack
+// fallOfWickets
+
+// =========================================
+// STEP 4
+// Button Events
+// =========================================
+// btn0
+// btn1
+// btn2
+// btn3
+// btn4
+// btn6
+// btnWide
+// btnNoBall
+// btnBye
+// btnLegBye
+// btnWicket
+// btnUndo
+// changeBowlerBtn
+// newBatsmanBtn
+// finishInningsBtn
+// startSecondInningsBtn
+// endMatchBtn
+
+// =========================================
+// STEP 5
+// Firebase Collections
+// =========================================
+// matches
+// registrations
+// pointsTable
+// tournament
+
+// =========================================
+// STEP 6
+// Auto Functions
+// =========================================
+// loadMatches()
+// loadPlayers()
+// refreshScore()
+// saveLiveScore()
+// saveScorecard()
+// updateOrangeCap()
+// updatePurpleCap()
+// updatePointsTable()
+
+// =========================================
+// STEP 7
+// FINAL START
+// =========================================
+
+window.addEventListener("load",async()=>{
+
+console.log("🏆 VPL 2K27");
+
+console.log("Loading...");
+
+await loadMatches();
+
+console.log("✅ Ready");
+
+});
+
+// =========================================
+// BUILD COMPLETE
+// =========================================
+
+console.log("=================================");
+console.log("🏏 VPL 2K27");
+console.log("Live Score System");
+console.log("Version : 3.0");
+console.log("Status : BUILD COMPLETE");
+console.log("=================================");
+// ================= PART 32 =================
+// SUPER OVER SUPPORT
+
+// ================= VARIABLES =================
+
+let superOver = false;
+
+let superOverRuns = 0;
+
+let superOverWickets = 0;
+
+let superOverBalls = 0;
+
+// ================= START SUPER OVER =================
+
+function startSuperOver(){
+
+superOver = true;
+
+superOverRuns = 0;
+
+superOverWickets = 0;
+
+superOverBalls = 0;
+
+innings = 3;
+
+addComment("🔥 SUPER OVER STARTED");
+
+refreshScore();
+
+}
+
+// ================= SUPER OVER SCORE =================
+
+function updateSuperOver(run){
+
+if(!superOver)return;
+
+superOverRuns += run;
+
+superOverBalls++;
+
+document.getElementById("liveScore").innerText=
+
+`${superOverRuns}/${superOverWickets}`;
+
+document.getElementById("overs").innerText=
+
+`Overs : ${Math.floor(superOverBalls/6)}.${superOverBalls%6} / 1`;
+
+}
+
+// ================= SUPER OVER WICKET =================
+
+function superOverWicket(){
+
+if(!superOver)return;
+
+superOverWickets++;
+
+superOverBalls++;
+
+refreshScore();
+
+}
+
+// ================= SUPER OVER END =================
+
+function finishSuperOver(){
+
+superOver = false;
+
+addComment("🏆 SUPER OVER COMPLETED");
+
+document.getElementById("inningsResult").style.display="block";
+
+document.getElementById("inningsScore").innerText=
+
+`${superOverRuns}/${superOverWickets}`;
+
+}
+
+// ================= AUTO END =================
+
+function checkSuperOver(){
+
+if(superOverBalls>=6 || superOverWickets>=2){
+
+finishSuperOver();
+
+}
+
+}
+
+// updateSuperOver() END lo add cheyyi
+
+checkSuperOver();
+
+console.log("🔥 Part 32 Loaded Successfully");
+// ================= PART 33 =================
+// RAIN INTERRUPTION & DLS SUPPORT
+
+// ================= VARIABLES =================
+
+let rainInterrupted = false;
+
+let rainOvers = 15;
+
+let revisedTarget = 0;
+
+// ================= START RAIN =================
+
+function startRain(){
+
+rainInterrupted = true;
+
+addComment("🌧 Rain Interrupted Match");
+
+console.log("Rain Delay Started");
+
+}
+
+// ================= RESUME MATCH =================
+
+function resumeAfterRain(newOvers){
+
+rainInterrupted = false;
+
+rainOvers = newOvers;
+
+document.getElementById("overs").innerText =
+`Overs : ${Math.floor(balls/6)}.${balls%6} / ${rainOvers}`;
+
+addComment(`☀ Match Resumed (${rainOvers} Overs)`);
+
+}
+
+// ================= DLS TARGET =================
+
+function calculateDLSTarget(firstInningsRuns, oldOvers, newOvers){
+
+const rate = firstInningsRuns / oldOvers;
+
+revisedTarget = Math.ceil(rate * newOvers) + 1;
+
+target = revisedTarget;
+
+const targetBox = document.getElementById("target");
+
+if(targetBox){
+
+targetBox.innerText = revisedTarget;
+
+}
+
+addComment(`🎯 Revised Target : ${revisedTarget}`);
+
+return revisedTarget;
+
+}
+
+// ================= CHECK RESULT =================
+
+function checkDLSResult(){
+
+if(!rainInterrupted && innings===2){
+
+if(totalRuns >= revisedTarget){
+
+endMatch();
+
+}
+
+}
+
+}
+
+// ================= SAVE =================
+
+async function saveRainData(){
+
+if(!currentMatch) return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+rainInterrupted,
+
+rainOvers,
+
+revisedTarget,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+}catch(err){
+
+console.error(err);
+
+}
+
+}
+
+console.log("🌧 Part 33 Loaded Successfully");
+// ================= PART 34 =================
+// WAGON WHEEL SHOT ANALYSIS
+
+// ================= VARIABLES =================
+
+let wagonWheel = [];
+
+// ================= SAVE SHOT =================
+
+function addShot(run, area){
+
+wagonWheel.push({
+
+runs: run,
+
+area: area,
+
+over: `${Math.floor(balls/6)}.${balls%6}`,
+
+batsman: strikerPlayer ? strikerPlayer.playerName : ""
+
+});
+
+console.log("Shot Saved :", area);
+
+}
+
+// ================= PREDEFINED SHOTS =================
+
+function coverDrive(run){
+
+addShot(run,"Cover");
+
+}
+
+function point(run){
+
+addShot(run,"Point");
+
+}
+
+function squareLeg(run){
+
+addShot(run,"Square Leg");
+
+}
+
+function midWicket(run){
+
+addShot(run,"Mid Wicket");
+
+}
+
+function longOn(run){
+
+addShot(run,"Long On");
+
+}
+
+function longOff(run){
+
+addShot(run,"Long Off");
+
+}
+
+function fineLeg(run){
+
+addShot(run,"Fine Leg");
+
+}
+
+function thirdMan(run){
+
+addShot(run,"Third Man");
+
+}
+
+// ================= SHOW WAGON WHEEL =================
+
+function showWagonWheel(){
+
+const box = document.getElementById("wagonWheelBox");
+
+if(!box) return;
+
+box.innerHTML = "";
+
+wagonWheel.forEach(shot=>{
+
+box.innerHTML += `
+
+<div class="wagon-shot">
+
+🏏 ${shot.batsman}
+
+<br>
+
+${shot.area}
+
+<br>
+
+${shot.runs} Run(s)
+
+<br>
+
+Over ${shot.over}
+
+</div>
+
+`;
+
+});
+
+}
+
+// ================= SAVE FIREBASE =================
+
+async function saveWagonWheel(){
+
+if(!currentMatch) return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+wagonWheel,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+console.log("✅ Wagon Wheel Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+saveWagonWheel();
+
+showWagonWheel();
+
+console.log("🏏 Part 34 Loaded Successfully");
+// ================= PART 35 =================
+// MANHATTAN GRAPH DATA
+
+// ================= VARIABLES =================
+
+let manhattanData = [];
+
+let currentOverRuns = 0;
+
+// ================= RUN TRACKER =================
+
+// addRuns() END lo add cheyyi
+
+function updateManhattan(run){
+
+currentOverRuns += run;
+
+}
+
+// ================= OVER COMPLETE =================
+
+// checkOverComplete() lo add cheyyi
+
+function saveOverRuns(){
+
+manhattanData.push({
+
+over: manhattanData.length + 1,
+
+runs: currentOverRuns
+
+});
+
+currentOverRuns = 0;
+
+showManhattanGraph();
+
+}
+
+// ================= SHOW GRAPH =================
+
+function showManhattanGraph(){
+
+const graph=document.getElementById("manhattanGraph");
+
+if(!graph) return;
+
+graph.innerHTML="";
+
+manhattanData.forEach(item=>{
+
+graph.innerHTML += `
+
+<div class="graph-bar">
+
+<div
+class="bar"
+
+style="height:${item.runs*10}px">
+
+</div>
+
+<span>
+
+${item.over}
+
+</span>
+
+</div>
+
+`;
+
+});
+
+}
+
+// ================= HIGHEST OVER =================
+
+function highestScoringOver(){
+
+if(manhattanData.length===0) return;
+
+let highest=manhattanData[0];
+
+manhattanData.forEach(over=>{
+
+if(over.runs>highest.runs){
+
+highest=over;
+
+}
+
+});
+
+console.log(
+
+"🔥 Highest Over :",
+
+highest.over,
+
+"-",
+
+highest.runs,
+
+"Runs"
+
+);
+
+}
+
+// ================= SAVE =================
+
+async function saveManhattan(){
+
+if(!currentMatch) return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+manhattanData,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+console.log("📊 Manhattan Graph Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+highestScoringOver();
+
+saveManhattan();
+
+console.log("📊 Part 35 Loaded Successfully");
+// ================= PART 36 =================
+// WORM GRAPH DATA
+
+// ================= VARIABLES =================
+
+let wormGraph = [];
+
+// ================= UPDATE WORM GRAPH =================
+
+function updateWormGraph(){
+
+wormGraph.push({
+
+over: Number(`${Math.floor(balls/6)}.${balls%6}`),
+
+score: totalRuns
+
+});
+
+drawWormGraph();
+
+}
+
+// ================= DRAW GRAPH =================
+
+function drawWormGraph(){
+
+const graph=document.getElementById("wormGraph");
+
+if(!graph) return;
+
+graph.innerHTML="";
+
+wormGraph.forEach(point=>{
+
+graph.innerHTML+=`
+
+<div class="worm-point"
+
+style="left:${point.over*30}px;
+bottom:${point.score*2}px;">
+
+</div>
+
+`;
+
+});
+
+}
+
+// ================= REQUIRED RUN RATE =================
+
+function updateRequiredRate(){
+
+if(innings!==2) return;
+
+const ballsLeft=(totalOvers*6)-balls;
+
+const runsLeft=target-totalRuns;
+
+const rrr=ballsLeft>0
+
+?((runsLeft*6)/ballsLeft).toFixed(2)
+
+:0;
+
+const box=document.getElementById("rrr");
+
+if(box){
+
+box.innerText=rrr;
+
+}
+
+}
+
+// ================= SAVE =================
+
+async function saveWormGraph(){
+
+if(!currentMatch) return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+wormGraph,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+console.log("📈 Worm Graph Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= AUTO UPDATE =================
+
+// refreshScore() END lo add cheyyi
+
+updateWormGraph();
+
+updateRequiredRate();
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+saveWormGraph();
+
+console.log("📈 Part 36 Loaded Successfully");
+// ================= PART 37 =================
+// BALL BY BALL DATABASE
+
+// ================= VARIABLES =================
+
+let ballByBallData = [];
+
+// ================= SAVE BALL =================
+
+function saveBall(run, extra="", wicket=false){
+
+const ball={
+
+over:`${Math.floor(balls/6)}.${balls%6}`,
+
+batsman:strikerPlayer ? strikerPlayer.playerName : "",
+
+bowler:bowlerPlayer ? bowlerPlayer.playerName : "",
+
+runs:run,
+
+extra:extra,
+
+wicket:wicket,
+
+score:`${totalRuns}/${wickets}`,
+
+time:new Date().toLocaleTimeString()
+
+};
+
+ballByBallData.push(ball);
+
+showBallHistory();
+
+}
+
+// ================= SHOW HISTORY =================
+
+function showBallHistory(){
+
+const box=document.getElementById("ballHistory");
+
+if(!box) return;
+
+box.innerHTML="";
+
+ballByBallData.slice().reverse().forEach(ball=>{
+
+box.innerHTML+=`
+
+<div class="ball-item">
+
+<b>${ball.over}</b>
+
+| ${ball.batsman}
+
+vs
+
+${ball.bowler}
+
+|
+
+Runs : ${ball.runs}
+
+${ball.extra ? "| "+ball.extra : ""}
+
+${ball.wicket ? "| 🏏 WICKET" : ""}
+
+<br>
+
+<small>${ball.score}</small>
+
+</div>
+
+`;
+
+});
+
+}
+
+// ================= EVENTS =================
+
+// addRuns() END lo
+
+saveBall(run);
+
+// wideBall() END lo
+
+saveBall(1,"Wide");
+
+// noBall() END lo
+
+saveBall(1,"No Ball");
+
+// byeBall() END lo
+
+saveBall(byeRuns,"Bye");
+
+// legBye() END lo
+
+saveBall(legByeRuns,"Leg Bye");
+
+// addWicket() END lo
+
+saveBall(0,"",true);
+
+// ================= SAVE FIREBASE =================
+
+async function saveBallHistory(){
+
+if(!currentMatch) return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+ballByBallData,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+console.log("✅ Ball History Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+saveBallHistory();
+
+console.log("🏏 Part 37 Loaded Successfully");
+// ================= PART 38 =================
+// PLAYER OF THE MATCH (AUTO)
+
+// ================= VARIABLES =================
+
+let playerOfTheMatch = null;
+
+// ================= CALCULATE =================
+
+function calculatePlayerOfTheMatch(){
+
+let bestPlayer = null;
+
+let bestScore = -1;
+
+allPlayers.forEach(player=>{
+
+const battingPoints =
+(player.runs || 0) +
+((player.fours || 0) * 1) +
+((player.sixes || 0) * 2);
+
+const bowlingPoints =
+((player.wickets || 0) * 25) -
+(player.runsConceded || 0);
+
+const totalPoints =
+battingPoints + bowlingPoints;
+
+if(totalPoints > bestScore){
+
+bestScore = totalPoints;
+
+bestPlayer = player;
+
+}
+
+});
+
+playerOfTheMatch = bestPlayer;
+
+showPlayerOfTheMatch();
+
+}
+
+// ================= SHOW =================
+
+function showPlayerOfTheMatch(){
+
+if(!playerOfTheMatch) return;
+
+const box =
+document.getElementById("playerOfTheMatch");
+
+if(box){
+
+box.innerHTML = `
+
+🏆 <b>PLAYER OF THE MATCH</b>
+
+<br><br>
+
+👤 ${playerOfTheMatch.playerName}
+
+<br>
+
+🏏 Runs : ${playerOfTheMatch.runs || 0}
+
+<br>
+
+🎯 Wickets : ${playerOfTheMatch.wickets || 0}
+
+`;
+
+}
+
+}
+
+// ================= SAVE =================
+
+async function savePlayerOfTheMatch(){
+
+if(!currentMatch || !playerOfTheMatch) return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+playerOfTheMatch:{
+
+name:playerOfTheMatch.playerName,
+
+team:playerOfTheMatch.soldTo,
+
+runs:playerOfTheMatch.runs || 0,
+
+wickets:playerOfTheMatch.wickets || 0
+
+},
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+console.log("🏆 Player of the Match Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+calculatePlayerOfTheMatch();
+
+savePlayerOfTheMatch();
+
+console.log("🏆 Part 38 Loaded Successfully");
+// ================= PART 39 =================
+// TOURNAMENT STATISTICS DASHBOARD
+
+// ================= VARIABLES =================
+
+let tournamentStats={
+
+totalMatches:0,
+
+totalRuns:0,
+
+totalWickets:0,
+
+totalFours:0,
+
+totalSixes:0,
+
+highestScore:0,
+
+highestTeam:"",
+
+bestBowling:"",
+
+bestBowler:""
+
+};
+
+// ================= LOAD STATS =================
+
+async function loadTournamentStats(){
+
+try{
+
+const snapshot=await getDocs(collection(db,"matches"));
+
+snapshot.forEach(docSnap=>{
+
+const match=docSnap.data();
+
+tournamentStats.totalMatches++;
+
+tournamentStats.totalRuns+=(match.liveRuns||0);
+
+tournamentStats.totalWickets+=(match.liveWickets||0);
+
+tournamentStats.totalFours+=(match.fours||0);
+
+tournamentStats.totalSixes+=(match.sixes||0);
+
+if((match.liveRuns||0)>tournamentStats.highestScore){
+
+tournamentStats.highestScore=match.liveRuns||0;
+
+tournamentStats.highestTeam=match.battingTeam||"";
+
+}
+
+});
+
+showTournamentStats();
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= SHOW DASHBOARD =================
+
+function showTournamentStats(){
+
+const box=document.getElementById("tournamentStats");
+
+if(!box) return;
+
+box.innerHTML=`
+
+<h2>🏆 Tournament Statistics</h2>
+
+<p>📅 Matches : ${tournamentStats.totalMatches}</p>
+
+<p>🏏 Runs : ${tournamentStats.totalRuns}</p>
+
+<p>🎯 Wickets : ${tournamentStats.totalWickets}</p>
+
+<p>4️⃣ Fours : ${tournamentStats.totalFours}</p>
+
+<p>6️⃣ Sixes : ${tournamentStats.totalSixes}</p>
+
+<p>🔥 Highest Score : ${tournamentStats.highestScore}</p>
+
+<p>👑 Highest Team : ${tournamentStats.highestTeam}</p>
+
+`;
+
+}
+
+// ================= SAVE =================
+
+async function saveTournamentStats(){
+
+try{
+
+await updateDoc(
+
+doc(db,"tournament","statistics"),
+
+{
+
+...tournamentStats,
+
+updatedAt:new Date().toISOString()
+
+}
+
+);
+
+console.log("📊 Tournament Statistics Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= AUTO REFRESH =================
+
+setInterval(()=>{
+
+loadTournamentStats();
+
+},60000);
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+saveTournamentStats();
+
+console.log("📊 Part 39 Loaded Successfully");
+// ================= PART 40 =================
+// PDF MATCH REPORT EXPORT
+
+// ================= EXPORT PDF =================
+
+async function exportMatchReport(){
+
+if(!currentMatch){
+
+alert("No Match Found!");
+
+return;
+
+}
+
+const report={
+
+match:currentMatch.matchNumber,
+
+team1:currentMatch.team1,
+
+team2:currentMatch.team2,
+
+winner:document.getElementById("winnerText")?.innerText || "-",
+
+score:`${totalRuns}/${wickets}`,
+
+overs:`${Math.floor(balls/6)}.${balls%6}`,
+
+orangeCap:orangeCap.player,
+
+purpleCap:purpleCap.player,
+
+playerOfTheMatch:
+
+playerOfTheMatch ?
+
+playerOfTheMatch.playerName : "-",
+
+date:new Date().toLocaleDateString(),
+
+time:new Date().toLocaleTimeString()
+
+};
+
+console.table(report);
+
+alert("📄 Match Report Ready");
+
+console.log(report);
+
+}
+
+// ================= DOWNLOAD JSON REPORT =================
+
+function downloadMatchReport(){
+
+const report={
+
+match:currentMatch,
+
+scorecard:battingScorecard,
+
+bowling:bowlingScorecard,
+
+ballHistory:ballByBallData,
+
+highlights:matchHighlights,
+
+orangeCap,
+
+purpleCap,
+
+playerOfTheMatch,
+
+statistics:tournamentStats
+
+};
+
+const blob=new Blob(
+
+[JSON.stringify(report,null,2)],
+
+{type:"application/json"}
+
+);
+
+const link=document.createElement("a");
+
+link.href=URL.createObjectURL(blob);
+
+link.download=`Match_Report_${currentMatch.matchNumber}.json`;
+
+link.click();
+
+}
+
+// ================= SAVE FIREBASE =================
+
+async function saveMatchReport(){
+
+if(!currentMatch) return;
+
+try{
+
+await updateDoc(
+
+doc(db,"matches",currentMatch.id),
+
+{
+
+matchReport:{
+
+winner:document.getElementById("winnerText")?.innerText || "",
+
+playerOfTheMatch:
+
+playerOfTheMatch ?
+
+playerOfTheMatch.playerName : "",
+
+generatedAt:new Date().toISOString()
+
+}
+
+}
+
+);
+
+console.log("📄 Match Report Saved");
+
+}catch(error){
+
+console.error(error);
+
+}
+
+}
+
+// ================= MATCH END =================
+
+// endMatch() END lo add cheyyi
+
+saveMatchReport();
+
+console.log("📄 Part 40 Loaded Successfully");
+
+// ================= PART 41 =================
+// LIVE TV SCORE OVERLAY
+
+// ================= TV MODE =================
+
+let tvMode = false;
+
+function enableTVMode(){
+
+tvMode = true;
+
+document.body.classList.add("tv-mode");
+
+const overlay = document.getElementById("tvOverlay");
+
+if(overlay){
+
+overlay.style.display = "block";
+
+}
+
+updateTVOverlay();
+
+console.log("📺 TV Mode Enabled");
+
+}
+
+function disableTVMode(){
+
+tvMode = false;
+
+document.body.classList.remove("tv-mode");
+
+const overlay = document.getElementById("tvOverlay");
+
+if(overlay){
+
+overlay.style.display = "none";
+
+}
+
+console.log("📺 TV Mode Disabled");
+
+}
+
+// ================= UPDATE OVERLAY =================
+
+function updateTVOverlay(){
+
+if(!tvMode) return;
+
+const score = document.getElementById("tvScore");
+
+const over = document.getElementById("tvOvers");
+
+const striker = document.getElementById("tvStriker");
+
+const bowler = document.getElementById("tvBowler");
+
+if(score){
+
+score.innerText = `${totalRuns}/${wickets}`;
+
+}
+
+if(over){
+
+over.innerText = `${Math.floor(balls/6)}.${balls%6}`;
+
+}
+
+if(striker && strikerPlayer){
+
+striker.innerText = strikerPlayer.playerName;
+
+}
+
+if(bowler && bowlerPlayer){
+
+bowler.innerText = bowlerPlayer.playerName;
+
+}
+
+}
+
+// ================= REQUIRED RATE =================
+
+function updateTVRequiredRate(){
+
+if(innings!==2) return;
+
+const ballsLeft=(totalOvers*6)-balls;
+
+const runsLeft=target-totalRuns;
+
+const rrr=ballsLeft>0
+
+?((runsLeft*6)/ballsLeft).toFixed(2)
+
+:"0.00";
+
+const box=document.getElementById("tvRRR");
+
+if(box){
+
+box.innerText=`RRR : ${rrr}`;
+
+}
+
+}
+
+// ================= AUTO REFRESH =================
+
+setInterval(()=>{
+
+if(tvMode){
+
+updateTVOverlay();
+
+updateTVRequiredRate();
+
+}
+
+},1000);
+
+console.log("📺 Part 41 Loaded Successfully");
 
 
 
