@@ -75,6 +75,7 @@ allMatches=[];
 try{
 
 const snapshot=await getDocs(collection(db,"matches"));
+    console.log("Totale docs:",snapshot.size);
 
 snapshot.forEach(docSnap=>{
     console.log(docSnap.id,docSnap.data());
