@@ -22,24 +22,19 @@
 <header class="top-header">
 
 <div class="logo">
-
 <h1>🏆 VPL 2K27</h1>
-
 <p>Professional Live Scoring System</p>
-
 </div>
 
 <button id="backBtn">
-
 ⬅ Back
-
 </button>
 
 </header>
 
 <div class="container">
 
-<!-- ================= Match Setup ================= -->
+<!-- ================= MATCH SETUP ================= -->
 
 <section class="setup-card">
 
@@ -47,11 +42,11 @@
 
 <div class="input-group">
 
-<label>Select Match</label>
+<label for="matchSelect">Select Match</label>
 
 <select id="matchSelect">
 
-<option value="">Select Match</option>
+<option value="">-- Select Match --</option>
 
 </select>
 
@@ -59,7 +54,7 @@
 
 <div class="input-group">
 
-<label>Toss Winner</label>
+<label for="tossWinner">Toss Winner</label>
 
 <select id="tossWinner">
 
@@ -71,7 +66,7 @@
 
 <div class="input-group">
 
-<label>Toss Decision</label>
+<label for="tossDecision">Toss Decision</label>
 
 <select id="tossDecision">
 
@@ -91,17 +86,13 @@
 
 </section>
 
-<!-- ================= Live Score ================= -->
+<!-- ================= LIVE SCORE ================= -->
 
 <section class="live-score-card">
 
 <div class="match-title">
 
-<h2 id="battingTeam">
-
-Batting Team
-
-</h2>
+<h2 id="battingTeam">Batting Team</h2>
 
 <span id="inningsText">
 
@@ -129,11 +120,7 @@ Overs : 0.0 / 15
 
 <h4>CRR</h4>
 
-<p id="crr">
-
-0.00
-
-</p>
+<p id="crr">0.00</p>
 
 </div>
 
@@ -141,11 +128,7 @@ Overs : 0.0 / 15
 
 <h4>Target</h4>
 
-<p id="target">
-
---
-
-</p>
+<p id="target">--</p>
 
 </div>
 
@@ -153,11 +136,7 @@ Overs : 0.0 / 15
 
 <h4>Need</h4>
 
-<p id="needRuns">
-
---
-
-</p>
+<p id="needRuns">--</p>
 
 </div>
 
@@ -165,196 +144,14 @@ Overs : 0.0 / 15
 
 <h4>RRR</h4>
 
-<p id="rrr">
-
---
-
-</p>
+<p id="rrr">--</p>
 
 </div>
 
 </div>
 
 </section>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>🏏 VPL 2K27 Live Score</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="live-score.css">
-
-</head>
-
-<body>
-
-<header class="top-header">
-
-<div class="logo">
-
-<h1>🏆 VPL 2K27</h1>
-
-<p>Professional Live Scoring System</p>
-
-</div>
-
-<button id="backBtn">
-
-⬅ Back
-
-</button>
-
-</header>
-
-<div class="container">
-
-<!-- ================= Match Setup ================= -->
-
-<section class="setup-card">
-
-<h2>🏏 Match Setup</h2>
-
-<div class="input-group">
-
-<label>Select Match</label>
-
-<select id="matchSelect">
-
-<option value="">Select Match</option>
-
-</select>
-
-</div>
-
-<div class="input-group">
-
-<label>Toss Winner</label>
-
-<select id="tossWinner">
-
-<option value="">Select Team</option>
-
-</select>
-
-</div>
-
-<div class="input-group">
-
-<label>Toss Decision</label>
-
-<select id="tossDecision">
-
-<option value="bat">Bat First</option>
-
-<option value="bowl">Bowl First</option>
-
-</select>
-
-</div>
-
-<button id="startMatchBtn">
-
-▶ START MATCH
-
-</button>
-
-</section>
-
-<!-- ================= Live Score ================= -->
-
-<section class="live-score-card">
-
-<div class="match-title">
-
-<h2 id="battingTeam">
-
-Batting Team
-
-</h2>
-
-<span id="inningsText">
-
-1st Innings
-
-</span>
-
-</div>
-
-<h1 id="liveScore">
-
-0 / 0
-
-</h1>
-
-<p id="overs">
-
-Overs : 0.0 / 15
-
-</p>
-
-<div class="match-stats">
-
-<div class="stat-box">
-
-<h4>CRR</h4>
-
-<p id="crr">
-
-0.00
-
-</p>
-
-</div>
-
-<div class="stat-box">
-
-<h4>Target</h4>
-
-<p id="target">
-
---
-
-</p>
-
-</div>
-
-<div class="stat-box">
-
-<h4>Need</h4>
-
-<p id="needRuns">
-
---
-
-</p>
-
-</div>
-
-<div class="stat-box">
-
-<h4>RRR</h4>
-
-<p id="rrr">
-
---
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-<!-- ================= Scoring Panel ================= -->
+  <!-- ================= SCORING PANEL ================= -->
 
 <section class="scoring-panel">
 
@@ -390,7 +187,7 @@ Overs : 0.0 / 15
 
 </section>
 
-<!-- ================= Match Controls ================= -->
+<!-- ================= MATCH CONTROLS ================= -->
 
 <section class="controls-section">
 
@@ -438,7 +235,7 @@ Overs : 0.0 / 15
 
 </section>
 
-<!-- ================= Match Summary ================= -->
+<!-- ================= MATCH SUMMARY ================= -->
 
 <section class="summary-section">
 
@@ -450,11 +247,7 @@ Overs : 0.0 / 15
 
 <h3>Total Runs</h3>
 
-<p id="summaryRuns">
-
-0
-
-</p>
+<p id="summaryRuns">0</p>
 
 </div>
 
@@ -462,11 +255,7 @@ Overs : 0.0 / 15
 
 <h3>Wickets</h3>
 
-<p id="summaryWickets">
-
-0
-
-</p>
+<p id="summaryWickets">0</p>
 
 </div>
 
@@ -474,11 +263,7 @@ Overs : 0.0 / 15
 
 <h3>Overs</h3>
 
-<p id="summaryOvers">
-
-0.0
-
-</p>
+<p id="summaryOvers">0.0</p>
 
 </div>
 
@@ -486,18 +271,14 @@ Overs : 0.0 / 15
 
 <h3>Run Rate</h3>
 
-<p id="summaryRunRate">
-
-0.00
-
-</p>
+<p id="summaryRunRate">0.00</p>
 
 </div>
 
 </div>
 
 </section>
-<!-- ================= Player Selection Modal ================= -->
+  <!-- ================= PLAYER SELECTION MODAL ================= -->
 
 <div id="playerModal" class="modal">
 
@@ -510,7 +291,9 @@ Overs : 0.0 / 15
 <label>Striker</label>
 
 <select id="strikerSelect">
+
 <option value="">Select Striker</option>
+
 </select>
 
 </div>
@@ -520,7 +303,9 @@ Overs : 0.0 / 15
 <label>Non-Striker</label>
 
 <select id="nonStrikerSelect">
+
 <option value="">Select Non-Striker</option>
+
 </select>
 
 </div>
@@ -530,7 +315,9 @@ Overs : 0.0 / 15
 <label>Bowler</label>
 
 <select id="bowlerSelect">
+
 <option value="">Select Bowler</option>
+
 </select>
 
 </div>
@@ -555,7 +342,108 @@ Overs : 0.0 / 15
 
 </div>
 
-<!-- ================= Innings Result ================= -->
+<!-- ================= CURRENT PLAYERS ================= -->
+
+<section class="players-card">
+
+<h2>🏏 Current Players</h2>
+
+<div class="players-grid">
+
+<div class="player-box">
+
+<h4>Striker</h4>
+
+<p id="currentStriker">
+
+--
+
+</p>
+
+</div>
+
+<div class="player-box">
+
+<h4>Non-Striker</h4>
+
+<p id="currentNonStriker">
+
+--
+
+</p>
+
+</div>
+
+<div class="player-box">
+
+<h4>Bowler</h4>
+
+<p id="currentBowler">
+
+--
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ================= BALL HISTORY ================= -->
+
+<section class="ball-history-card">
+
+<h2>📋 Ball by Ball</h2>
+
+<div id="ballHistory">
+
+<p>No balls bowled yet.</p>
+
+</div>
+
+</section>
+  <!-- ================= COMMENTARY ================= -->
+
+<section class="commentary-card">
+
+<h2>🎙 Live Commentary</h2>
+
+<div id="commentaryBox">
+
+<p>Commentary will appear here...</p>
+
+</div>
+
+</section>
+
+<!-- ================= ORANGE & PURPLE CAP ================= -->
+
+<section class="awards-card">
+
+<div class="award-box orange">
+
+<h3>🟠 Orange Cap</h3>
+
+<p id="orangeCapName">--</p>
+
+<h4 id="orangeCapRuns">0 Runs</h4>
+
+</div>
+
+<div class="award-box purple">
+
+<h3>🟣 Purple Cap</h3>
+
+<p id="purpleCapName">--</p>
+
+<h4 id="purpleCapWickets">0 Wickets</h4>
+
+</div>
+
+</section>
+
+<!-- ================= MATCH RESULT ================= -->
 
 <section id="inningsResult" class="result-card">
 
@@ -575,8 +463,6 @@ Waiting...
 
 </section>
 
-<!-- ================= Match Result ================= -->
-
 <section id="matchResult" class="result-card">
 
 <h2>🏆 Match Result</h2>
@@ -594,19 +480,24 @@ Match not finished
 </p>
 
 </section>
+  <!-- ================= FOOTER ================= -->
 
 <footer class="footer">
 
 <p>
 
-© 2027 VPL 2K27 Live Scoring System
+© 2027 VPL 2K27 Professional Live Scoring System
 
 </p>
 
 </footer>
+
 </div>
+
+<!-- ================= JAVASCRIPT ================= -->
 
 <script type="module" src="live-score.js"></script>
 
 </body>
+
 </html>
