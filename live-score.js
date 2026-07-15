@@ -551,7 +551,6 @@ document.getElementById("strikerScore").innerText=
 
 // line mundu
 
-updateBatsman(run);
 
 // add cheyyi.
 
