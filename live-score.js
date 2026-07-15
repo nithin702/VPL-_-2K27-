@@ -623,7 +623,6 @@ document.getElementById("partnership").innerText=
 
 // line kinda
 
-updatePartnership(run);
 
 // add cheyyi.
 
