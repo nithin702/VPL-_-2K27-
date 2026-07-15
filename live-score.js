@@ -1114,13 +1114,12 @@ overBalls.join(" ");
 
 // ================= MODIFY addHistory() =================
 
-// addHistory(text);
+// NOTE:
+// addHistory(text) function lopala
+// updateLastOver(text);
+// call cheyyali.
 
-// line kinda
-
-updateLastOver(text);
-
-// add cheyyi.
+// Function bayata emi rayakandi.
 
 // ================= BOWLER FIGURES =================
 
