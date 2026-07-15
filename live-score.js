@@ -917,8 +917,6 @@ function updateBoundary(run) {
 
 // తర్వాత add చేయి
 
-updateBoundary(run);
-
 updatePlayerCard();
 
 // ================= MATCH SUMMARY =================
