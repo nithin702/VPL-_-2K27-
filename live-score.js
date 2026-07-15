@@ -101,6 +101,7 @@ console.log("Matches :",allMatches.length);
 }catch(err){
 
 console.error(err);
+    alert(err.message);
 
 alert("Unable to load matches.");
 
