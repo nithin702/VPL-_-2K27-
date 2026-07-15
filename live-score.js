@@ -874,20 +874,25 @@ setInterval(() => {
 
 // ================= PLAYER SCORE =================
 
+let strikerFours = 0;
+let strikerSixes = 0;
+
 function updatePlayerCard() {
 
-    document.getElementById("strikerScore").innerText =
-        `${strikerRuns} (${strikerBalls})`;
+    const striker = document.getElementById("strikerScore");
+    const nonStriker = document.getElementById("nonStrikerScore");
 
-    document.getElementById("nonStrikerScore").innerText =
-        `${nonStrikerRuns} (${nonStrikerBalls})`;
+    if (striker) {
+        striker.innerText = `${strikerRuns} (${strikerBalls})`;
+    }
+
+    if (nonStriker) {
+        nonStriker.innerText = `${nonStrikerRuns} (${nonStrikerBalls})`;
+    }
 
 }
 
 // ================= BOUNDARIES =================
-
-let strikerFours = 0;
-let strikerSixes = 0;
 
 function updateBoundary(run) {
 
@@ -895,8 +900,11 @@ function updateBoundary(run) {
 
         strikerFours++;
 
-        document.getElementById("strikerFours").innerText =
-            strikerFours;
+        const fours = document.getElementById("strikerFours");
+
+        if (fours) {
+            fours.innerText = strikerFours;
+        }
 
     }
 
@@ -904,20 +912,15 @@ function updateBoundary(run) {
 
         strikerSixes++;
 
-        document.getElementById("strikerSixes").innerText =
-            strikerSixes;
+        const sixes = document.getElementById("strikerSixes");
+
+        if (sixes) {
+            sixes.innerText = strikerSixes;
+        }
 
     }
 
 }
-
-// ================= MODIFY addRuns() =================
-
-// updateBatsman(run);
-
-// తర్వాత add చేయి
-
-updatePlayerCard();
 
 // ================= MATCH SUMMARY =================
 
