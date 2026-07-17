@@ -206,7 +206,8 @@ function startMatch() {
     console.log("Bowling :", bowlingTeamName);
 
     // Open Player Selection
-
+    
+    await loadPlayers();
     const modal = document.getElementById("playerModal");
 
     if (modal) {
