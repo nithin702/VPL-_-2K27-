@@ -389,5 +389,11 @@ function updateScoreBoard() {
     }
 
 }
+document.getElementById("btn0").onclick = () => {
+    alert("0 Button Working");
+};
 
+document.getElementById("btn4").onclick = () => {
+    alert("4 Button Working");
+};
 
