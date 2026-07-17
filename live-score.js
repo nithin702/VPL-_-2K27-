@@ -144,7 +144,7 @@ startMatchBtn.addEventListener("click", startMatch);
 
 // ================= START MATCH =================
 
-function startMatch() {
+async function startMatch() {
 
     if (!selectedMatch) {
         alert("Please select a match.");
@@ -217,10 +217,7 @@ function startMatch() {
     }
 
 }
-import {
-    query,
-    where
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 // ================= PLAYER DROPDOWNS =================
 
 const strikerSelect = document.getElementById("strikerSelect");
