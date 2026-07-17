@@ -45,6 +45,17 @@ const crr = document.getElementById("crr");
 const target = document.getElementById("target");
 const needRuns = document.getElementById("needRuns");
 const rrr = document.getElementById("rrr");
+const strikerScore =
+document.getElementById("strikerScore");
+
+const nonStrikerScore =
+document.getElementById("nonStrikerScore");
+
+const strikerBoundary =
+document.getElementById("strikerBoundary");
+
+const bowlerFigure =
+document.getElementById("bowlerFigure");
 
 // ================= VARIABLES =================
 
