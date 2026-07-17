@@ -9,7 +9,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
     getFirestore,
     collection,
-    getDocs
+    getDocs,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ================= FIREBASE =================
@@ -212,5 +214,70 @@ function startMatch() {
         modal.style.display = "flex";
 
     }
+
+}
+import {
+    query,
+    where
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// ================= PLAYER DROPDOWNS =================
+
+const strikerSelect = document.getElementById("strikerSelect");
+const nonStrikerSelect = document.getElementById("nonStrikerSelect");
+const bowlerSelect = document.getElementById("bowlerSelect");
+
+async function loadPlayers() {
+
+    strikerSelect.innerHTML =
+        '<option value="">Select Striker</option>';
+
+    nonStrikerSelect.innerHTML =
+        '<option value="">Select Non-Striker</option>';
+
+    bowlerSelect.innerHTML =
+        '<option value="">Select Bowler</option>';
+
+    // Batting Team Players
+
+    const battingQuery = query(
+        collection(db, "registrations"),
+        where("soldTo", "==", battingTeamName)
+    );
+
+    const battingSnap = await getDocs(battingQuery);
+
+    battingSnap.forEach((docSnap) => {
+
+        const p = docSnap.data();
+
+        strikerSelect.innerHTML +=
+            `<option value="${p.playerName}">
+                ${p.playerName}
+            </option>`;
+
+        nonStrikerSelect.innerHTML +=
+            `<option value="${p.playerName}">
+                ${p.playerName}
+            </option>`;
+    });
+
+    // Bowling Team Players
+
+    const bowlingQuery = query(
+        collection(db, "registrations"),
+        where("soldTo", "==", bowlingTeamName)
+    );
+
+    const bowlingSnap = await getDocs(bowlingQuery);
+
+    bowlingSnap.forEach((docSnap) => {
+
+        const p = docSnap.data();
+
+        bowlerSelect.innerHTML +=
+            `<option value="${p.playerName}">
+                ${p.playerName}
+            </option>`;
+    });
 
 }
