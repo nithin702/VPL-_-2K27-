@@ -31,6 +31,18 @@ const db = getFirestore(app);
 
 const matchSelect = document.getElementById("matchSelect");
 const tossWinner = document.getElementById("tossWinner");
+const tossDecision = document.getElementById("tossDecision");
+const startMatchBtn = document.getElementById("startMatchBtn");
+
+const battingTeam = document.getElementById("battingTeam");
+const inningsText = document.getElementById("inningsText");
+const liveScore = document.getElementById("liveScore");
+const overs = document.getElementById("overs");
+
+const crr = document.getElementById("crr");
+const target = document.getElementById("target");
+const needRuns = document.getElementById("needRuns");
+const rrr = document.getElementById("rrr");
 
 // ================= VARIABLES =================
 
@@ -124,7 +136,7 @@ console.log("✅ LIVE SCORE PART 1 LOADED");
 
 // Match Start Button
 
-document.getElementById("startMatchBtn").onclick = function () {
+startMatchBtn.onclick = function () {
     alert("Start Button Working");
 };
 
