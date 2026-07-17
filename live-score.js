@@ -535,3 +535,71 @@ function updatePlayerStats() {
         `${over}.${ball} - ${bowlerRuns}/${bowlerWickets}`;
 
 }
+// =====================================================
+// PART 6A
+// EXTRAS + WICKET
+// =====================================================
+
+document.getElementById("btnWide").onclick = addWide;
+document.getElementById("btnNoBall").onclick = addNoBall;
+document.getElementById("btnBye").onclick = addBye;
+document.getElementById("btnLegBye").onclick = addLegBye;
+document.getElementById("btnWicket").onclick = addWicket;
+
+function addWide() {
+
+    totalRuns++;
+    bowlerRuns++;
+
+    updateScoreBoard();
+    updatePlayerStats();
+
+}
+
+function addNoBall() {
+
+    totalRuns++;
+    bowlerRuns++;
+
+    updateScoreBoard();
+    updatePlayerStats();
+
+}
+
+function addBye() {
+
+    totalRuns++;
+    balls++;
+
+    updateScoreBoard();
+    updatePlayerStats();
+
+}
+
+function addLegBye() {
+
+    totalRuns++;
+    balls++;
+
+    updateScoreBoard();
+    updatePlayerStats();
+
+}
+
+function addWicket() {
+
+    wickets++;
+
+    balls++;
+
+    bowlerBalls++;
+    bowlerWickets++;
+
+    updateScoreBoard();
+    updatePlayerStats();
+
+    alert("Select New Batsman");
+
+    document.getElementById("playerModal").style.display = "flex";
+
+}
