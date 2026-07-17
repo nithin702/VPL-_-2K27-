@@ -64,6 +64,20 @@ let selectedMatch = null;
 let battingTeamName = "";
 let bowlingTeamName = "";
 
+let totalRuns = 0;
+let wickets = 0;
+let balls = 0;
+
+let strikerRuns = 0;
+let strikerBalls = 0;
+
+let strikerFours = 0;
+let strikerSixes = 0;
+
+let bowlerRuns = 0;
+let bowlerBalls = 0;
+let bowlerWickets = 0;
+
 // ================= LOAD MATCHES =================
 
 async function loadMatches() {
