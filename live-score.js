@@ -282,3 +282,54 @@ async function loadPlayers() {
     });
 
 }
+// =====================================================
+// PART 3B
+// Confirm Players
+// =====================================================
+
+const confirmPlayersBtn =
+document.getElementById("confirmPlayersBtn");
+
+const currentStriker =
+document.getElementById("currentStriker");
+
+const currentNonStriker =
+document.getElementById("currentNonStriker");
+
+const currentBowler =
+document.getElementById("currentBowler");
+
+let strikerName = "";
+let nonStrikerName = "";
+let bowlerName = "";
+
+confirmPlayersBtn.addEventListener("click", () => {
+
+    if (
+        strikerSelect.value === "" ||
+        nonStrikerSelect.value === "" ||
+        bowlerSelect.value === ""
+    ) {
+        alert("Please select all players.");
+        return;
+    }
+
+    if (strikerSelect.value === nonStrikerSelect.value) {
+        alert("Striker and Non-Striker cannot be same.");
+        return;
+    }
+
+    strikerName = strikerSelect.value;
+    nonStrikerName = nonStrikerSelect.value;
+    bowlerName = bowlerSelect.value;
+
+    currentStriker.innerText = strikerName;
+    currentNonStriker.innerText = nonStrikerName;
+    currentBowler.innerText = bowlerName;
+
+    document.getElementById("playerModal").style.display = "none";
+
+    alert("Players Selected Successfully ✅");
+
+});
+
