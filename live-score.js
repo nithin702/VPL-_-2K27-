@@ -117,3 +117,86 @@ matchSelect.addEventListener("change", () => {
 loadMatches();
 
 console.log("✅ LIVE SCORE PART 1 LOADED");
+// =====================================================
+// PART 2
+// Toss + Start Match
+// =====================================================
+
+// Match Start Button
+
+startMatchBtn.addEventListener("click", startMatch);
+
+// ================= START MATCH =================
+
+function startMatch() {
+
+    if (!selectedMatch) {
+        alert("Please select a match.");
+        return;
+    }
+
+    if (tossWinner.value === "") {
+        alert("Please select Toss Winner.");
+        return;
+    }
+
+    const tossWin = tossWinner.value;
+    const decision = tossDecision.value;
+
+    // Toss Logic
+
+    if (decision === "bat") {
+
+        battingTeamName = tossWin;
+
+        bowlingTeamName =
+            (tossWin === selectedMatch.team1)
+            ? selectedMatch.team2
+            : selectedMatch.team1;
+
+    } else {
+
+        bowlingTeamName = tossWin;
+
+        battingTeamName =
+            (tossWin === selectedMatch.team1)
+            ? selectedMatch.team2
+            : selectedMatch.team1;
+
+    }
+
+    // Update Screen
+
+    battingTeam.innerText = battingTeamName;
+
+    inningsText.innerText = "1st Innings";
+
+    liveScore.innerText = "0 / 0";
+
+    overs.innerText = "Overs : 0.0 / 15";
+
+    crr.innerText = "0.00";
+
+    target.innerText = "--";
+
+    needRuns.innerText = "--";
+
+    rrr.innerText = "--";
+
+    console.log("🏏 Match Started");
+
+    console.log("Batting :", battingTeamName);
+
+    console.log("Bowling :", bowlingTeamName);
+
+    // Open Player Selection
+
+    const modal = document.getElementById("playerModal");
+
+    if (modal) {
+
+        modal.style.display = "flex";
+
+    }
+
+}
