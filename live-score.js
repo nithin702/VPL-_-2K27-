@@ -64,19 +64,22 @@ let selectedMatch = null;
 let battingTeamName = "";
 let bowlingTeamName = "";
 
-let totalRuns = 0;
-let wickets = 0;
-let balls = 0;
+totalRuns = 0;
+wickets = 0;
+balls = 0;
 
-let strikerRuns = 0;
-let strikerBalls = 0;
+strikerRuns = 0;
+strikerBalls = 0;
 
-let strikerFours = 0;
-let strikerSixes = 0;
+nonStrikerRuns = 0;
+nonStrikerBalls = 0;
 
-let bowlerRuns = 0;
-let bowlerBalls = 0;
-let bowlerWickets = 0;
+strikerFours = 0;
+strikerSixes = 0;
+
+bowlerRuns = 0;
+bowlerBalls = 0;
+bowlerWickets = 0;
 
 // ================= LOAD MATCHES =================
 
@@ -345,6 +348,23 @@ confirmPlayersBtn.addEventListener("click", () => {
     nonStrikerName = nonStrikerSelect.value;
     bowlerName = bowlerSelect.value;
 
+    updatePlayerStats();
+
+    document.getElementById("playerModal").style.display = "none";
+
+    alert("Players Selected Successfully ✅");
+
+});
+
+    if (strikerSelect.value === nonStrikerSelect.value) {
+        alert("Striker and Non-Striker cannot be same.");
+        return;
+    }
+
+    strikerName = strikerSelect.value;
+    nonStrikerName = nonStrikerSelect.value;
+    bowlerName = bowlerSelect.value;
+
     currentStriker.innerText = strikerName;
     currentNonStriker.innerText = nonStrikerName;
     currentBowler.innerText = bowlerName;
@@ -421,4 +441,97 @@ document.getElementById("btn0").onclick = () => {
 document.getElementById("btn4").onclick = () => {
     alert("4 Button Working");
 };
+function addRuns(run) {
 
+    totalRuns += run;
+
+    strikerRuns += run;
+    strikerBalls++;
+
+    if (run === 4) strikerFours++;
+    if (run === 6) strikerSixes++;
+
+    bowlerRuns += run;
+    bowlerBalls++;
+
+    balls++;
+
+    // Strike Change
+    if (run === 1 || run === 3) {
+
+        let tempName = strikerName;
+        strikerName = nonStrikerName;
+        nonStrikerName = tempName;
+
+        let tempRuns = strikerRuns;
+        strikerRuns = nonStrikerRuns;
+        nonStrikerRuns = tempRuns;
+
+        let tempBalls = strikerBalls;
+        strikerBalls = nonStrikerBalls;
+        nonStrikerBalls = tempBalls;
+
+    }
+
+    // Over Complete
+    if (balls % 6 === 0) {
+
+        let tempName = strikerName;
+        strikerName = nonStrikerName;
+        nonStrikerName = tempName;
+
+        let tempRuns = strikerRuns;
+        strikerRuns = nonStrikerRuns;
+        nonStrikerRuns = tempRuns;
+
+        let tempBalls = strikerBalls;
+        strikerBalls = nonStrikerBalls;
+        nonStrikerBalls = tempBalls;
+
+        alert("Over Completed\nPlease Change Bowler");
+
+    }
+
+    updateScoreBoard();
+    updatePlayerStats();
+
+}
+// =====================================================
+// UPDATE PLAYER STATS
+// =====================================================
+
+function updatePlayerStats() {
+
+    // Current Player Names
+
+    currentStriker.innerText = strikerName;
+    currentNonStriker.innerText = nonStrikerName;
+    currentBowler.innerText = bowlerName;
+
+    // Striker Score
+
+    strikerScore.innerText =
+        `${strikerRuns} (${strikerBalls})`;
+
+    // Non Striker Score
+
+    nonStrikerScore.innerText =
+        `${nonStrikerRuns} (${nonStrikerBalls})`;
+
+    // Boundaries
+
+    strikerBoundary.innerText =
+        `4s : ${strikerFours} | 6s : ${strikerSixes}`;
+
+    // Bowler Figures
+
+    const over =
+        Math.floor(bowlerBalls / 6);
+
+    const ball =
+        bowlerBalls % 6;
+
+    bowlerFigure.innerText =
+        `${over}.${ball} - ${bowlerRuns}/${bowlerWickets}`;
+
+}
