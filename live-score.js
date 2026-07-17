@@ -132,3 +132,88 @@ matchSelect.addEventListener("change", () => {
 loadMatches();
 
 console.log("PART 1 LOADED");
+// =====================================================
+// PART 2
+// Start Match + Toss
+// =====================================================
+
+// HTML
+
+const currentStriker = document.getElementById("currentStriker");
+const currentNonStriker = document.getElementById("currentNonStriker");
+const currentBowler = document.getElementById("currentBowler");
+
+// Variables
+
+let strikerName = "";
+let nonStrikerName = "";
+let bowlerName = "";
+
+// Start Button
+
+startMatchBtn.addEventListener("click", startMatch);
+
+// ================= START MATCH =================
+
+function startMatch() {
+
+    if (!selectedMatch) {
+        alert("Select Match");
+        return;
+    }
+
+    if (tossWinner.value === "") {
+        alert("Select Toss Winner");
+        return;
+    }
+
+    const tossWin = tossWinner.value;
+    const decision = tossDecision.value;
+
+    if (decision === "bat") {
+
+        battingTeamName = tossWin;
+
+        bowlingTeamName =
+            tossWin === selectedMatch.team1
+            ? selectedMatch.team2
+            : selectedMatch.team1;
+
+    } else {
+
+        bowlingTeamName = tossWin;
+
+        battingTeamName =
+            tossWin === selectedMatch.team1
+            ? selectedMatch.team2
+            : selectedMatch.team1;
+
+    }
+
+    // Reset Score
+
+    totalRuns = 0;
+    wickets = 0;
+    balls = 0;
+
+    battingTeam.innerText = battingTeamName;
+    inningsText.innerText = "1st Innings";
+    liveScore.innerText = "0 / 0";
+    overs.innerText = "Overs : 0.0 / 15";
+
+    crr.innerText = "0.00";
+    target.innerText = "--";
+    needRuns.innerText = "--";
+    rrr.innerText = "--";
+
+    console.log("Match Started");
+    console.log("Batting :", battingTeamName);
+    console.log("Bowling :", bowlingTeamName);
+
+    // Player Selection Modal
+
+    document.getElementById("playerModal").style.display = "flex";
+
+    loadPlayers();
+
+}
