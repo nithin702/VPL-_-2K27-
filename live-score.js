@@ -124,7 +124,9 @@ console.log("✅ LIVE SCORE PART 1 LOADED");
 
 // Match Start Button
 
-startMatchBtn.addEventListener("click", startMatch);
+document.getElementById("startMatchBtn").onclick = function () {
+    alert("Start Button Working");
+};
 
 // ================= START MATCH =================
 
