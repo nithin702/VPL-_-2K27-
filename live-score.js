@@ -423,20 +423,6 @@ document.getElementById("btn0").onclick = () => {
 document.getElementById("btn4").onclick = () => {
     alert("4 Button Working");
 };
-function addRuns(run) {
-
-    totalRuns += run;
-
-    strikerRuns += run;
-    strikerBalls++;
-
-    if (run === 4) strikerFours++;
-    if (run === 6) strikerSixes++;
-
-    bowlerRuns += run;
-    bowlerBalls++;
-
-    balls++;
 
     // Strike Change
     if (run === 1 || run === 3) {
