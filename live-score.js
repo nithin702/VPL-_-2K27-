@@ -356,24 +356,6 @@ confirmPlayersBtn.addEventListener("click", () => {
 
 });
 
-    if (strikerSelect.value === nonStrikerSelect.value) {
-        alert("Striker and Non-Striker cannot be same.");
-        return;
-    }
-
-    strikerName = strikerSelect.value;
-    nonStrikerName = nonStrikerSelect.value;
-    bowlerName = bowlerSelect.value;
-
-    currentStriker.innerText = strikerName;
-    currentNonStriker.innerText = nonStrikerName;
-    currentBowler.innerText = bowlerName;
-
-    document.getElementById("playerModal").style.display = "none";
-
-    alert("Players Selected Successfully ✅");
-
-});
 // =====================================================
 // PART 4
 // SCORING
