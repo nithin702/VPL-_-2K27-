@@ -329,4 +329,65 @@ confirmPlayersBtn.addEventListener("click", () => {
     alert("Players Selected Successfully ✅");
 
 });
+// =====================================================
+// PART 4
+// SCORING
+// =====================================================
+
+let totalRuns = 0;
+let wickets = 0;
+let balls = 0;
+
+let strikerRuns = 0;
+let strikerBalls = 0;
+
+document.getElementById("btn0").onclick = () => addRuns(0);
+document.getElementById("btn1").onclick = () => addRuns(1);
+document.getElementById("btn2").onclick = () => addRuns(2);
+document.getElementById("btn3").onclick = () => addRuns(3);
+document.getElementById("btn4").onclick = () => addRuns(4);
+document.getElementById("btn6").onclick = () => addRuns(6);
+
+function addRuns(run) {
+
+    totalRuns += run;
+
+    strikerRuns += run;
+    strikerBalls++;
+
+    balls++;
+
+    updateScoreBoard();
+
+}
+function updateScoreBoard() {
+
+    liveScore.innerText =
+        `${totalRuns} / ${wickets}`;
+
+    let over =
+        Math.floor(balls / 6);
+
+    let ball =
+        balls % 6;
+
+    overs.innerText =
+        `Overs : ${over}.${ball} / 15`;
+
+    let completedOvers =
+        balls / 6;
+
+    if (completedOvers > 0) {
+
+        crr.innerText =
+            (totalRuns / completedOvers).toFixed(2);
+
+    } else {
+
+        crr.innerText = "0.00";
+
+    }
+
+}
+
 
