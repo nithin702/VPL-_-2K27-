@@ -48,6 +48,8 @@ const rrr = document.getElementById("rrr");
 
 let allMatches = [];
 let selectedMatch = null;
+let battingTeamName = "";
+let bowlingTeamName = "";
 
 // ================= LOAD MATCHES =================
 
