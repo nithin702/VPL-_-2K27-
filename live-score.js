@@ -10,7 +10,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getFirestore,
   collection,
-  getDocs
+  getDocs,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ================= FIREBASE =================
@@ -215,5 +217,210 @@ function startMatch() {
     document.getElementById("playerModal").style.display = "flex";
 
     loadPlayers();
+
+}
+// =====================================================
+// PART 3
+// Load Players
+// =====================================================
+
+// HTML
+
+const strikerSelect = document.getElementById("strikerSelect");
+const nonStrikerSelect = document.getElementById("nonStrikerSelect");
+const bowlerSelect = document.getElementById("bowlerSelect");
+
+const confirmPlayersBtn =
+document.getElementById("confirmPlayersBtn");
+
+// ================= LOAD PLAYERS =================
+
+async function loadPlayers() {
+
+    strikerSelect.innerHTML =
+    '<option value="">Select Striker</option>';
+
+    nonStrikerSelect.innerHTML =
+    '<option value="">Select Non-Striker</option>';
+
+    bowlerSelect.innerHTML =
+    '<option value="">Select Bowler</option>';
+
+    // Batting Team
+
+    const battingQuery = query(
+        collection(db, "registrations"),
+        where("soldTo", "==", battingTeamName)
+    );
+
+    const battingSnap = await getDocs(battingQuery);
+
+    battingSnap.forEach(docSnap => {
+
+        const p = docSnap.data();
+
+        strikerSelect.innerHTML += `
+            <option value="${p.playerName}">
+                ${p.playerName}
+            </option>
+        `;
+
+        nonStrikerSelect.innerHTML += `
+            <option value="${p.playerName}">
+                ${p.playerName}
+            </option>
+        `;
+
+    });
+
+    // Bowling Team
+
+    const bowlingQuery = query(
+        collection(db, "registrations"),
+        where("soldTo", "==", bowlingTeamName)
+    );
+
+    const bowlingSnap = await getDocs(bowlingQuery);
+
+    bowlingSnap.forEach(docSnap => {
+
+        const p = docSnap.data();
+
+        bowlerSelect.innerHTML += `
+            <option value="${p.playerName}">
+                ${p.playerName}
+            </option>
+        `;
+
+    });
+
+}
+
+// ================= CONFIRM PLAYERS =================
+
+confirmPlayersBtn.addEventListener("click", () => {
+
+    if (
+        strikerSelect.value === "" ||
+        nonStrikerSelect.value === "" ||
+        bowlerSelect.value === ""
+    ) {
+        alert("Select all players.");
+        return;
+    }
+
+    if (strikerSelect.value === nonStrikerSelect.value) {
+        alert("Striker & Non-Striker cannot be same.");
+        return;
+    }
+
+    strikerName = strikerSelect.value;
+    nonStrikerName = nonStrikerSelect.value;
+    bowlerName = bowlerSelect.value;
+
+    document.getElementById("currentStriker").innerText = strikerName;
+    document.getElementById("currentNonStriker").innerText = nonStrikerName;
+    document.getElementById("currentBowler").innerText = bowlerName;
+
+    document.getElementById("playerModal").style.display = "none";
+
+    alert("Players Selected Successfully ✅");
+
+});
+// =====================================================
+// PART 4
+// Basic Scoring
+// =====================================================
+
+// Score Buttons
+
+document.getElementById("btn0").onclick = () => addRuns(0);
+document.getElementById("btn1").onclick = () => addRuns(1);
+document.getElementById("btn2").onclick = () => addRuns(2);
+document.getElementById("btn3").onclick = () => addRuns(3);
+document.getElementById("btn4").onclick = () => addRuns(4);
+document.getElementById("btn6").onclick = () => addRuns(6);
+
+// Player Stats
+
+let strikerRuns = 0;
+let strikerBalls = 0;
+
+let nonStrikerRuns = 0;
+let nonStrikerBalls = 0;
+
+let strikerFours = 0;
+let strikerSixes = 0;
+
+// ================= ADD RUNS =================
+
+function addRuns(run) {
+
+    totalRuns += run;
+    balls++;
+
+    strikerRuns += run;
+    strikerBalls++;
+
+    if (run === 4) strikerFours++;
+    if (run === 6) strikerSixes++;
+
+    // Strike Change
+
+    if (run % 2 !== 0) {
+
+        [strikerName, nonStrikerName] =
+        [nonStrikerName, strikerName];
+
+        [strikerRuns, nonStrikerRuns] =
+        [nonStrikerRuns, strikerRuns];
+
+        [strikerBalls, nonStrikerBalls] =
+        [nonStrikerBalls, strikerBalls];
+
+    }
+
+    updateScoreBoard();
+    updatePlayerBoard();
+
+}
+
+// ================= SCOREBOARD =================
+
+function updateScoreBoard() {
+
+    liveScore.innerText =
+    `${totalRuns} / ${wickets}`;
+
+    const over =
+    Math.floor(balls / 6);
+
+    const ball =
+    balls % 6;
+
+    overs.innerText =
+    `Overs : ${over}.${ball} / 15`;
+
+    const played =
+    balls / 6;
+
+    const rate =
+    played === 0 ? 0 :
+    (totalRuns / played);
+
+    crr.innerText =
+    rate.toFixed(2);
+
+}
+
+// ================= PLAYER BOARD =================
+
+function updatePlayerBoard() {
+
+    currentStriker.innerText =
+    `${strikerName} (${strikerRuns})`;
+
+    currentNonStriker.innerText =
+    `${nonStrikerName} (${nonStrikerRuns})`;
 
 }
