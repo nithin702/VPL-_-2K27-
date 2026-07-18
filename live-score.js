@@ -424,3 +424,75 @@ function updatePlayerBoard() {
     `${nonStrikerName} (${nonStrikerRuns})`;
 
 }
+// =====================================================
+// PART 5
+// Extras + Wicket
+// =====================================================
+
+// Buttons
+
+document.getElementById("btnWide").onclick = addWide;
+document.getElementById("btnNoBall").onclick = addNoBall;
+document.getElementById("btnBye").onclick = addBye;
+document.getElementById("btnLegBye").onclick = addLegBye;
+document.getElementById("btnWicket").onclick = addWicket;
+
+// ================= WIDE =================
+
+function addWide() {
+
+    totalRuns++;
+
+    updateScoreBoard();
+
+}
+
+// ================= NO BALL =================
+
+function addNoBall() {
+
+    totalRuns++;
+
+    updateScoreBoard();
+
+}
+
+// ================= BYE =================
+
+function addBye() {
+
+    totalRuns++;
+    balls++;
+
+    updateScoreBoard();
+
+}
+
+// ================= LEG BYE =================
+
+function addLegBye() {
+
+    totalRuns++;
+    balls++;
+
+    updateScoreBoard();
+
+}
+
+// ================= WICKET =================
+
+function addWicket() {
+
+    wickets++;
+    balls++;
+
+    liveScore.innerText =
+    `${totalRuns} / ${wickets}`;
+
+    updateScoreBoard();
+
+    alert("Wicket!\nSelect New Batsman.");
+
+    document.getElementById("playerModal").style.display = "flex";
+
+}
