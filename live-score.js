@@ -363,6 +363,47 @@ let strikerSixes = 0;
 
 function addRuns(run) {
 
+  // ================= WIDE =================
+
+if (isWide) {
+
+    totalRuns += run;
+
+    bowlerRuns += run;
+
+    updateScoreBoard();
+
+    isWide = false;
+
+    return;
+
+}
+
+// ================= NO BALL =================
+
+if (isNoBall) {
+
+    totalRuns += run;
+
+    strikerRuns += run;
+
+    if(run==4) strikerFours++;
+
+    if(run==6) strikerSixes++;
+
+    bowlerRuns += run;
+
+    strikerBalls++;
+
+    updateScoreBoard();
+
+    updatePlayerBoard();
+
+    isNoBall = false;
+
+    return;
+
+}
     // Team Score
     totalRuns += run;
 
