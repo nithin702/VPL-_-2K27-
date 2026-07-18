@@ -283,3 +283,204 @@ function startMatch() {
     loadPlayers();
 
 }
+// ===
+    );
+
+    bowlingSnap.forEach(docSnap => {
+
+        const p = docSnap.data();
+
+        bowlerSelect.innerHTML += `
+        <option value="${p.playerName}">
+        ${p.playerName}
+        </option>`;
+
+    });
+
+}
+
+// =====================================================
+// PART 3A
+// PLAYER SELECTION
+// =====================================================
+
+// HTML
+
+const playerModal = document.getElementById("playerModal");
+
+const strikerSelect = document.getElementById("strikerSelect");
+const nonStrikerSelect = document.getElementById("nonStrikerSelect");
+const bowlerSelect = document.getElementById("bowlerSelect");
+
+const confirmPlayersBtn =
+document.getElementById("confirmPlayersBtn");
+
+// Current Players
+
+const currentStriker =
+document.getElementById("currentStriker");
+
+const currentNonStriker =
+document.getElementById("currentNonStriker");
+
+const currentBowler =
+document.getElementById("currentBowler");
+
+// Score Cards
+
+const strikerScore =
+document.getElementById("strikerScore");
+
+const nonStrikerScore =
+document.getElementById("nonStrikerScore");
+
+const strikerBoundary =
+document.getElementById("strikerBoundary");
+
+const bowlerFigure =
+document.getElementById("bowlerFigure");
+
+// =====================================================
+// LOAD PLAYERS
+// =====================================================
+
+async function loadPlayers() {
+
+    strikerSelect.innerHTML =
+    '<option value="">Select Striker</option>';
+
+    nonStrikerSelect.innerHTML =
+    '<option value="">Select Non-Striker</option>';
+
+    bowlerSelect.innerHTML =
+    '<option value="">Select Bowler</option>';
+
+    // ================= BATTING TEAM =================
+
+    const battingSnapshot = await getDocs(
+
+        query(
+
+            collection(db,"registrations"),
+
+            where("soldTo","==",battingTeamName)
+
+        )
+
+    );
+
+    battingSnapshot.forEach(docSnap=>{
+
+        const p = docSnap.data();
+
+        strikerSelect.innerHTML +=
+        `<option value="${p.playerName}">
+        ${p.playerName}
+        </option>`;
+
+        nonStrikerSelect.innerHTML +=
+        `<option value="${p.playerName}">
+        ${p.playerName}
+        </option>`;
+
+    });
+
+    // ================= BOWLING TEAM =================
+
+    const bowlingSnapshot = await getDocs(
+
+        query(
+
+            collection(db,"registrations"),
+
+            where("soldTo","==",bowlingTeamName)
+
+        )
+
+    );
+
+    bowlingSnapshot.forEach(docSnap=>{
+
+        const p = docSnap.data();
+
+        bowlerSelect.innerHTML +=
+        `<option value="${p.playerName}">
+        ${p.playerName}
+        </option>`;
+
+    });
+
+}
+
+// =====================================================
+// CONFIRM PLAYERS
+// =====================================================
+
+confirmPlayersBtn.onclick = () => {
+
+    if(
+        strikerSelect.value=="" ||
+        nonStrikerSelect.value=="" ||
+        bowlerSelect.value==""
+    ){
+
+        alert("Select All Players");
+
+        return;
+
+    }
+
+    if(strikerSelect.value==nonStrikerSelect.value){
+
+        alert("Striker & Non-Striker Cannot Be Same");
+
+        return;
+
+    }
+
+    // Names
+
+    strikerName = strikerSelect.value;
+
+    nonStrikerName = nonStrikerSelect.value;
+
+    bowlerName = bowlerSelect.value;
+
+    // Reset Stats
+
+    strikerRuns = 0;
+    strikerBalls = 0;
+
+    nonStrikerRuns = 0;
+    nonStrikerBalls = 0;
+
+    strikerFours = 0;
+    strikerSixes = 0;
+
+    bowlerRuns = 0;
+    bowlerBalls = 0;
+    bowlerWickets = 0;
+
+    // Update Screen
+
+    currentStriker.innerText = strikerName;
+
+    currentNonStriker.innerText = nonStrikerName;
+
+    currentBowler.innerText = bowlerName;
+
+    strikerScore.innerText = "0 (0)";
+
+    nonStrikerScore.innerText = "0 (0)";
+
+    strikerBoundary.innerText =
+    "4s : 0 | 6s : 0";
+
+    bowlerFigure.innerText =
+    "0-0 (0.0)";
+
+    playerModal.style.display = "none";
+
+    console.log("Players Selected");
+
+};
