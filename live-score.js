@@ -47,6 +47,10 @@ const target = document.getElementById("target");
 const needRuns = document.getElementById("needRuns");
 const rrr = document.getElementById("rrr");
 
+const bowlerModal = document.getElementById("bowlerModal");
+const newBowlerSelect = document.getElementById("newBowlerSelect");
+const confirmBowlerBtn = document.getElementById("confirmBowlerBtn");
+
 // ================= VARIABLES =================
 
 let matches = [];
