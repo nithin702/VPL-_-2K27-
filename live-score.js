@@ -356,18 +356,25 @@ let strikerSixes = 0;
 
 function addRuns(run) {
 
+    // Team Score
     totalRuns += run;
+
+    // Legal Ball
     balls++;
 
+    // Batsman
     strikerRuns += run;
     strikerBalls++;
 
     if (run === 4) strikerFours++;
     if (run === 6) strikerSixes++;
 
-    // Strike Change
+    // Bowler
+    bowlerRuns += run;
+    bowlerBalls++;
 
-    if (run % 2 !== 0) {
+    // Strike Rotate
+    if (run % 2 === 1) {
 
         [strikerName, nonStrikerName] =
         [nonStrikerName, strikerName];
@@ -382,6 +389,8 @@ function addRuns(run) {
 
     updateScoreBoard();
     updatePlayerBoard();
+
+    checkOverFinish();
 
 }
 
