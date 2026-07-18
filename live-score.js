@@ -63,6 +63,9 @@ let totalRuns = 0;
 let wickets = 0;
 let balls = 0;
 
+let isWide = false;
+let isNoBall = false;
+
 // ================= LOAD MATCHES =================
 
 async function loadMatches() {
@@ -454,7 +457,11 @@ document.getElementById("btnWicket").onclick = addWicket;
 
 function addWide() {
 
-    totalRuns++;
+   isWide = true;
+
+   totalRuns++;
+
+   bowlerRuns++;
 
     updateScoreBoard();
 
@@ -464,8 +471,12 @@ function addWide() {
 
 function addNoBall() {
 
-    totalRuns++;
+    isNoBall = true;
 
+    totalRuns++;
+  
+    bowlerRuns++;
+  
     updateScoreBoard();
 
 }
