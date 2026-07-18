@@ -279,119 +279,147 @@ Overs : 0.0 / 15
 
 </section>
   <!-- ================= PLAYER SELECTION MODAL ================= -->
-
 <div id="playerModal" class="modal">
 
-<div class="modal-content">
+    <div class="modal-content">
 
-<h2>Select Players</h2>
+        <h2>Select Players</h2>
 
-<div class="input-group">
+        <div class="input-group">
 
-<label>Striker</label>
+            <label>Striker</label>
 
-<select id="strikerSelect">
+            <select id="strikerSelect">
 
-<option value="">Select Striker</option>
+                <option value="">Select Striker</option>
 
-</select>
+            </select>
 
-</div>
+        </div>
 
-<div class="input-group">
+        <div class="input-group">
 
-<label>Non-Striker</label>
+            <label>Non-Striker</label>
 
-<select id="nonStrikerSelect">
+            <select id="nonStrikerSelect">
 
-<option value="">Select Non-Striker</option>
+                <option value="">Select Non-Striker</option>
 
-</select>
+            </select>
 
-</div>
+        </div>
 
-<div class="input-group">
+        <div class="input-group">
 
-<label>Bowler</label>
+            <label>Bowler</label>
 
-<select id="bowlerSelect">
+            <select id="bowlerSelect">
 
-<option value="">Select Bowler</option>
+                <option value="">Select Bowler</option>
 
-</select>
+            </select>
 
-</div>
+        </div>
 
-<div class="modal-buttons">
+        <div class="modal-buttons">
 
-<button id="confirmPlayersBtn">
+            <button id="confirmPlayersBtn">
+                ✅ Confirm Players
+            </button>
 
-✅ Confirm Players
+            <button id="cancelPlayersBtn">
+                ❌ Cancel
+            </button>
 
-</button>
+        </div>
 
-<button id="cancelPlayersBtn">
-
-❌ Cancel
-
-</button>
-
-</div>
+    </div>
 
 </div>
 
+<!-- ================= BOWLER CHANGE MODAL ================= -->
+
+<div id="bowlerModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>🏏 Select New Bowler</h2>
+
+        <div class="input-group">
+
+            <label>New Bowler</label>
+
+            <select id="newBowlerSelect">
+
+                <option value="">Select Bowler</option>
+
+            </select>
+
+        </div>
+
+        <div class="modal-buttons">
+
+            <button id="confirmBowlerBtn">
+                ✅ Confirm Bowler
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
+
+<!-- ================= CURRENT PLAYERS ================= -->
 
 <section class="players-card">
 
-<h2>🏏 Current Players</h2>
+    <h2>🏏 Current Players</h2>
 
-<div class="players-grid">
+    <div class="players-grid">
 
-<div class="player-box">
+        <div class="player-box">
 
-<h4>Striker</h4>
+            <h4>Striker</h4>
 
-<p id="currentStriker">--</p>
+            <p id="currentStriker">--</p>
 
-<h5 id="strikerScore">
-0 (0)
-</h5>
+            <h5 id="strikerScore">
+                0 (0)
+            </h5>
 
-<h6 id="strikerBoundary">
-4s : 0 | 6s : 0
-</h6>
+            <h6 id="strikerBoundary">
+                4s : 0 | 6s : 0
+            </h6>
 
-</div>
+        </div>
 
-<div class="player-box">
+        <div class="player-box">
 
-<h4>Non-Striker</h4>
+            <h4>Non-Striker</h4>
 
-<p id="currentNonStriker">--</p>
+            <p id="currentNonStriker">--</p>
 
-<h5 id="nonStrikerScore">
-0 (0)
-</h5>
+            <h5 id="nonStrikerScore">
+                0 (0)
+            </h5>
 
-</div>
+        </div>
 
-<div class="player-box">
+        <div class="player-box">
 
-<h4>Bowler</h4>
+            <h4>Bowler</h4>
 
-<p id="currentBowler">--</p>
+            <p id="currentBowler">--</p>
 
-<h5 id="bowlerFigure">
-0-0 (0.0)
-</h5>
+            <h5 id="bowlerFigure">
+                0-0 (0.0)
+            </h5>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
 </section>
-
 <!-- ================= BALL HISTORY ================= -->
 
 <section class="ball-history-card">
