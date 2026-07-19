@@ -552,3 +552,159 @@ confirmPlayersBtn.onclick = () => {
 
 };
 
+// =====================================================
+// PART 4A
+// COMPLETE SCORING ENGINE
+// =====================================================
+
+// ---------------- Score Buttons ----------------
+
+document.getElementById("btn0").onclick = () => addRuns(0);
+
+document.getElementById("btn1").onclick = () => addRuns(1);
+
+document.getElementById("btn2").onclick = () => addRuns(2);
+
+document.getElementById("btn3").onclick = () => addRuns(3);
+
+document.getElementById("btn4").onclick = () => addRuns(4);
+
+document.getElementById("btn6").onclick = () => addRuns(6);
+
+// ---------------- Main Function ----------------
+
+function addRuns(run){
+
+    // Team Score
+
+    totalRuns += run;
+
+    // Legal Ball
+
+    balls++;
+    bowlerBalls++;
+
+    // Batsman
+
+    strikerRuns += run;
+    strikerBalls++;
+
+    if(run===4) strikerFours++;
+
+    if(run===6) strikerSixes++;
+
+    // Bowler
+
+    bowlerRuns += run;
+
+    // Odd Runs → Strike Change
+
+    if(run % 2 === 1){
+
+        rotateStrike();
+
+    }
+
+    updateScoreBoard();
+
+    updatePlayerBoard();
+
+    checkOverFinish();
+
+}
+
+// ---------------- Strike Rotate ----------------
+
+function rotateStrike(){
+
+    [strikerName,nonStrikerName]=
+    [nonStrikerName,strikerName];
+
+    [strikerRuns,nonStrikerRuns]=
+    [nonStrikerRuns,strikerRuns];
+
+    [strikerBalls,nonStrikerBalls]=
+    [nonStrikerBalls,strikerBalls];
+
+    [strikerFours]=[strikerFours];
+
+    [strikerSixes]=[strikerSixes];
+
+}
+
+// =====================================================
+// PART 4B
+// SCOREBOARD + PLAYER BOARD + OVER CHECK
+// =====================================================
+
+// ---------------- SCOREBOARD ----------------
+
+function updateScoreBoard(){
+
+    liveScore.innerText = `${totalRuns} / ${wickets}`;
+
+    let over = Math.floor(balls / 6);
+
+    let ball = balls % 6;
+
+    overs.innerText = `${over}.${ball} / 15`;
+
+    let currentOvers = balls / 6;
+
+    let currentRate = 0;
+
+    if(currentOvers > 0){
+
+        currentRate = totalRuns / currentOvers;
+
+    }
+
+    crr.innerText = currentRate.toFixed(2);
+
+}
+
+// ---------------- PLAYER BOARD ----------------
+
+function updatePlayerBoard(){
+
+    currentStriker.innerText = strikerName;
+
+    currentNonStriker.innerText = nonStrikerName;
+
+    currentBowler.innerText = bowlerName;
+
+    strikerScore.innerText =
+    `${strikerRuns} (${strikerBalls})`;
+
+    nonStrikerScore.innerText =
+    `${nonStrikerRuns} (${nonStrikerBalls})`;
+
+    strikerBoundary.innerText =
+    `4s : ${strikerFours} | 6s : ${strikerSixes}`;
+
+    let over = Math.floor(bowlerBalls / 6);
+
+    let ball = bowlerBalls % 6;
+
+    bowlerFigure.innerText =
+    `${bowlerWickets}-${bowlerRuns} (${over}.${ball})`;
+
+}
+
+// ---------------- OVER FINISH ----------------
+
+function checkOverFinish(){
+
+    if(balls % 6 !== 0) return;
+
+    // Change Strike
+
+    rotateStrike();
+
+    updatePlayerBoard();
+
+    alert("Over Completed.\nSelect New Bowler.");
+
+    // Part 4C lo modal open chestham
+
+}
