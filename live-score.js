@@ -575,6 +575,46 @@ document.getElementById("btn6").onclick = () => addRuns(6);
 
 function addRuns(run){
 
+    // ---------- WIDE ----------
+
+if(isWide){
+
+    totalRuns += run;
+
+    bowlerRuns += run;
+
+    updateScoreBoard();
+    updatePlayerBoard();
+
+    isWide = false;
+
+    return;
+
+}
+
+// ---------- NO BALL ----------
+
+if(isNoBall){
+
+    totalRuns += run;
+
+    strikerRuns += run;
+    strikerBalls++;
+
+    if(run==4) strikerFours++;
+    if(run==6) strikerSixes++;
+
+    bowlerRuns += run;
+
+    updateScoreBoard();
+    updatePlayerBoard();
+
+    isNoBall = false;
+
+    return;
+
+}
+
     // Team Score
 
     totalRuns += run;
@@ -708,3 +748,101 @@ function checkOverFinish(){
     // Part 4C lo modal open chestham
 
 }
+
+// =====================================================
+// PART 4C
+// EXTRAS + WICKET ENGINE
+// =====================================================
+
+// ---------------- BUTTONS ----------------
+
+document.getElementById("btnWide").onclick = addWide;
+document.getElementById("btnNoBall").onclick = addNoBall;
+document.getElementById("btnBye").onclick = addBye;
+document.getElementById("btnLegBye").onclick = addLegBye;
+document.getElementById("btnWicket").onclick = addWicket;
+
+// ---------------- WIDE ----------------
+
+function addWide(){
+
+    totalRuns++;
+    wides++;
+    bowlerRuns++;
+
+    updateScoreBoard();
+    updatePlayerBoard();
+
+    isWide = true;
+
+}
+
+// ---------------- NO BALL ----------------
+
+function addNoBall(){
+
+    totalRuns++;
+    noBalls++;
+    bowlerRuns++;
+
+    updateScoreBoard();
+    updatePlayerBoard();
+
+    isNoBall = true;
+
+}
+
+// ---------------- BYE ----------------
+
+function addBye(){
+
+    totalRuns++;
+    byes++;
+
+    balls++;
+    bowlerBalls++;
+
+    updateScoreBoard();
+    updatePlayerBoard();
+
+    checkOverFinish();
+
+}
+
+// ---------------- LEG BYE ----------------
+
+function addLegBye(){
+
+    totalRuns++;
+    legByes++;
+
+    balls++;
+    bowlerBalls++;
+
+    updateScoreBoard();
+    updatePlayerBoard();
+
+    checkOverFinish();
+
+}
+
+// ---------------- WICKET ----------------
+
+function addWicket(){
+
+    wickets++;
+
+    balls++;
+    bowlerBalls++;
+    bowlerWickets++;
+
+    updateScoreBoard();
+    updatePlayerBoard();
+
+    alert("Select New Batsman");
+
+    playerModal.style.display = "flex";
+
+}
+
+
