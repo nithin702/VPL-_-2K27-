@@ -700,3 +700,125 @@ function updatePlayerBoard(){
 
 }
 
+// =====================================================
+// PART 5A
+// EXTRAS BUTTONS
+// =====================================================
+
+document.getElementById("btnWide").onclick = addWide;
+
+document.getElementById("btnNoBall").onclick = addNoBall;
+
+document.getElementById("btnBye").onclick = addBye;
+
+document.getElementById("btnLegBye").onclick = addLegBye;
+
+document.getElementById("btnWicket").onclick = addWicket;
+
+// =====================================================
+// WIDE
+// =====================================================
+
+function addWide(){
+
+    totalRuns++;
+
+    wides++;
+
+    bowlerRuns++;
+
+    updateScoreBoard();
+
+    updatePlayerBoard();
+
+    isWide = true;
+
+}
+
+// =====================================================
+// NO BALL
+// =====================================================
+
+function addNoBall(){
+
+    totalRuns++;
+
+    noBalls++;
+
+    bowlerRuns++;
+
+    updateScoreBoard();
+
+    updatePlayerBoard();
+
+    isNoBall = true;
+
+}
+
+// =====================================================
+// BYE
+// =====================================================
+
+function addBye(){
+
+    totalRuns++;
+
+    byes++;
+
+    balls++;
+
+    bowlerBalls++;
+
+    updateScoreBoard();
+
+    updatePlayerBoard();
+
+}
+// =====================================================
+// LEG BYE
+// =====================================================
+
+function addLegBye(){
+
+    totalRuns++;
+
+    legByes++;
+
+    balls++;
+
+    bowlerBalls++;
+
+    updateScoreBoard();
+
+    updatePlayerBoard();
+
+}
+
+// =====================================================
+// WICKET
+// =====================================================
+
+function addWicket(){
+
+    wickets++;
+
+    balls++;
+
+    bowlerBalls++;
+
+    bowlerWickets++;
+
+    updateScoreBoard();
+
+    updatePlayerBoard();
+
+    alert("Select New Batsman");
+
+    playerModal.style.display = "flex";
+
+}
+
+
+
+
+
