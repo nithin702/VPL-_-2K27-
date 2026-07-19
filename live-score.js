@@ -472,3 +472,81 @@ async function loadPlayers() {
 
 }
 
+// =====================================================
+// PART 3B
+// CONFIRM PLAYERS
+// =====================================================
+
+confirmPlayersBtn.onclick = () => {
+
+    // Validation
+
+    if (
+        strikerSelect.value === "" ||
+        nonStrikerSelect.value === "" ||
+        bowlerSelect.value === ""
+    ) {
+
+        alert("Please Select All Players");
+
+        return;
+
+    }
+
+    if (strikerSelect.value === nonStrikerSelect.value) {
+
+        alert("Striker & Non-Striker Cannot Be Same");
+
+        return;
+
+    }
+
+    // Save Selected Players
+
+    strikerName = strikerSelect.value;
+
+    nonStrikerName = nonStrikerSelect.value;
+
+    bowlerName = bowlerSelect.value;
+
+    // Reset Batsman Stats
+
+    strikerRuns = 0;
+    strikerBalls = 0;
+    strikerFours = 0;
+    strikerSixes = 0;
+
+    nonStrikerRuns = 0;
+    nonStrikerBalls = 0;
+
+    // Reset Bowler Stats
+
+    bowlerRuns = 0;
+    bowlerBalls = 0;
+    bowlerWickets = 0;
+
+    // Update Current Players
+
+    currentStriker.innerText = strikerName;
+
+    currentNonStriker.innerText = nonStrikerName;
+
+    currentBowler.innerText = bowlerName;
+
+    // Update Score Cards
+
+    strikerScore.innerText = "0 (0)";
+
+    nonStrikerScore.innerText = "0 (0)";
+
+    strikerBoundary.innerText = "4s : 0 | 6s : 0";
+
+    bowlerFigure.innerText = "0-0 (0.0)";
+
+    // Close Popup
+
+    playerModal.style.display = "none";
+
+    console.log("✅ Players Confirmed");
+
+};
