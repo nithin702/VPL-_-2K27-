@@ -192,3 +192,196 @@ const bowlerFigure =
 document.getElementById("bowlerFigure");
 
 console.log("✅ PART 1 LOADED");
+// =====================================================
+// PART 2
+// MATCH LOADING + TOSS + START MATCH
+// =====================================================
+
+// ================= LOAD MATCHES =================
+
+async function loadMatches() {
+
+    try {
+
+        matchSelect.innerHTML =
+        `<option value="">Select Match</option>`;
+
+        matches = [];
+
+        const snapshot = await getDocs(
+            collection(db, "matches")
+        );
+
+        snapshot.forEach(docSnap => {
+
+            const match = docSnap.data();
+
+            // Only Not Started Matches
+
+            if (match.status !== "Not Started") return;
+
+            match.id = docSnap.id;
+
+            matches.push(match);
+
+            matchSelect.innerHTML += `
+            <option value="${match.id}">
+            Match ${match.matchNumber}
+            | ${match.team1}
+            vs
+            ${match.team2}
+            </option>
+            `;
+
+        });
+
+        console.log("✅ Matches Loaded :", matches.length);
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+        alert("Unable to load matches.");
+
+    }
+
+}
+
+// ================= MATCH CHANGE =================
+
+matchSelect.addEventListener("change", () => {
+
+    selectedMatch =
+    matches.find(
+        x => x.id === matchSelect.value
+    );
+
+    tossWinner.innerHTML =
+    `<option value="">Select Toss Winner</option>`;
+
+    if(!selectedMatch) return;
+
+    tossWinner.innerHTML +=
+    `<option value="${selectedMatch.team1}">
+    ${selectedMatch.team1}
+    </option>`;
+
+    tossWinner.innerHTML +=
+    `<option value="${selectedMatch.team2}">
+    ${selectedMatch.team2}
+    </option>`;
+
+});
+
+// ================= START MATCH =================
+
+startMatchBtn.onclick = startMatch;
+
+function startMatch(){
+
+    if(!selectedMatch){
+
+        alert("Select Match");
+
+        return;
+
+    }
+
+    if(tossWinner.value==""){
+
+        alert("Select Toss Winner");
+
+        return;
+
+    }
+
+    const tossWin = tossWinner.value;
+
+    const decision = tossDecision.value;
+
+    if(decision==="bat"){
+
+        battingTeamName = tossWin;
+
+        bowlingTeamName =
+        tossWin===selectedMatch.team1
+        ? selectedMatch.team2
+        : selectedMatch.team1;
+
+    }
+
+    else{
+
+        bowlingTeamName = tossWin;
+
+        battingTeamName =
+        tossWin===selectedMatch.team1
+        ? selectedMatch.team2
+        : selectedMatch.team1;
+
+    }
+
+    // Reset Score
+
+    totalRuns = 0;
+
+    wickets = 0;
+
+    balls = 0;
+
+    wides = 0;
+
+    noBalls = 0;
+
+    byes = 0;
+
+    legByes = 0;
+
+    // Reset Players
+
+    strikerName = "";
+
+    nonStrikerName = "";
+
+    bowlerName = "";
+
+    // Update Scoreboard
+
+    battingTeam.innerText = battingTeamName;
+
+    inningsText.innerText = "1st Innings";
+
+    liveScore.innerText = "0 / 0";
+
+    overs.innerText = "0.0 / 15";
+
+    crr.innerText = "0.00";
+
+    target.innerText = "--";
+
+    needRuns.innerText = "--";
+
+    rrr.innerText = "--";
+
+    console.log("🏏 Match Started");
+
+    console.log("Batting :", battingTeamName);
+
+    console.log("Bowling :", bowlingTeamName);
+
+    // Open Player Selection
+
+    playerModal.style.display = "flex";
+
+    loadPlayers();
+
+}
+
+// ================= INITIAL LOAD =================
+
+loadMatches();
+
+console.log("✅ PART 2 LOADED");
+
