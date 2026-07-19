@@ -552,3 +552,152 @@ confirmPlayersBtn.onclick = () => {
     console.log("✅ Players Confirmed");
 
 };
+
+// =====================================================
+// PART 4A
+// SCORE BUTTON CONNECTIONS
+// =====================================================
+
+document.getElementById("btn0").onclick = () => addRuns(0);
+
+document.getElementById("btn1").onclick = () => addRuns(1);
+
+document.getElementById("btn2").onclick = () => addRuns(2);
+
+document.getElementById("btn3").onclick = () => addRuns(3);
+
+document.getElementById("btn4").onclick = () => addRuns(4);
+
+document.getElementById("btn6").onclick = () => addRuns(6);
+
+
+// =====================================================
+// PART 4B
+// MAIN SCORING ENGINE
+// =====================================================
+
+function addRuns(run){
+
+    // Team Score
+
+    totalRuns += run;
+
+    // Legal Ball
+
+    balls++;
+
+    // Batsman
+
+    strikerRuns += run;
+
+    strikerBalls++;
+
+    if(run===4) strikerFours++;
+
+    if(run===6) strikerSixes++;
+
+    // Bowler
+
+    bowlerRuns += run;
+
+    bowlerBalls++;
+
+    // Odd Run -> Strike Change
+
+    if(run % 2 === 1){
+
+        changeStrike();
+
+    }
+
+    updateScoreBoard();
+
+    updatePlayerBoard();
+
+}
+
+// =====================================================
+// STRIKE CHANGE
+// =====================================================
+
+function changeStrike(){
+
+    [strikerName,nonStrikerName] =
+    [nonStrikerName,strikerName];
+
+    [strikerRuns,nonStrikerRuns] =
+    [nonStrikerRuns,strikerRuns];
+
+    [strikerBalls,nonStrikerBalls] =
+    [nonStrikerBalls,strikerBalls];
+
+}
+
+// =====================================================
+// UPDATE SCOREBOARD
+// =====================================================
+
+function updateScoreBoard(){
+
+    liveScore.innerText =
+    `${totalRuns} / ${wickets}`;
+
+    const over =
+    Math.floor(balls/6);
+
+    const ball =
+    balls%6;
+
+    overs.innerText =
+    `${over}.${ball} / 15`;
+
+    let currentOver = balls/6;
+
+    let currentRate = 0;
+
+    if(currentOver>0){
+
+        currentRate = totalRuns/currentOver;
+
+    }
+
+    crr.innerText =
+    currentRate.toFixed(2);
+
+}
+
+// =====================================================
+// UPDATE PLAYER BOARD
+// =====================================================
+
+function updatePlayerBoard(){
+
+    currentStriker.innerText =
+    strikerName;
+
+    currentNonStriker.innerText =
+    nonStrikerName;
+
+    currentBowler.innerText =
+    bowlerName;
+
+    strikerScore.innerText =
+    `${strikerRuns} (${strikerBalls})`;
+
+    nonStrikerScore.innerText =
+    `${nonStrikerRuns} (${nonStrikerBalls})`;
+
+    strikerBoundary.innerText =
+    `4s : ${strikerFours} | 6s : ${strikerSixes}`;
+
+    let over =
+    Math.floor(bowlerBalls/6);
+
+    let ball =
+    bowlerBalls%6;
+
+    bowlerFigure.innerText =
+    `${bowlerRuns}-${bowlerWickets} (${over}.${ball})`;
+
+}
+
