@@ -191,6 +191,10 @@ document.getElementById("strikerBoundary");
 const bowlerFigure =
 document.getElementById("bowlerFigure");
 
+const bowlerModal = document.getElementById("bowlerModal");
+const newBowlerSelect = document.getElementById("newBowlerSelect");
+const confirmBowlerBtn = document.getElementById("confirmBowlerBtn");
+
 console.log("✅ PART 1 LOADED");
 
 // =====================================================
@@ -737,13 +741,15 @@ function checkOverFinish(){
 
     if(balls % 6 !== 0) return;
 
-    // Change Strike
-
     rotateStrike();
 
     updatePlayerBoard();
 
-    alert("Over Completed.\nSelect New Bowler.");
+    alert("Over Completed");
+
+    openBowlerChange();
+
+}
 
     // Part 4C lo modal open chestham
 
@@ -849,4 +855,67 @@ function addWicket(){
 
 }
 
+// =====================================================
+// PART 5A
+// BOWLER CHANGE SYSTEM
+// =====================================================
+
+// Open Bowler Change
+
+async function openBowlerChange(){
+
+    bowlerModal.style.display = "flex";
+
+    newBowlerSelect.innerHTML =
+    `<option value="">Select New Bowler</option>`;
+
+    const bowlingQuery = query(
+        collection(db,"registrations"),
+        where("soldTo","==",bowlingTeamName)
+    );
+
+    const snap = await getDocs(bowlingQuery);
+
+    snap.forEach(doc=>{
+
+        const p = doc.data();
+
+        // Current bowler ni list lo chupinchakunda
+
+        if(p.playerName===bowlerName) return;
+
+        newBowlerSelect.innerHTML += `
+        <option value="${p.playerName}">
+        ${p.playerName}
+        </option>`;
+
+    });
+
+}
+
+// Confirm New Bowler
+
+confirmBowlerBtn.onclick = ()=>{
+
+    if(newBowlerSelect.value===""){
+
+        alert("Select New Bowler");
+
+        return;
+
+    }
+
+    bowlerName = newBowlerSelect.value;
+
+    bowlerRuns = 0;
+
+    bowlerBalls = 0;
+
+    currentBowler.innerText = bowlerName;
+
+    bowlerFigure.innerText = "0-0 (0.0)";
+
+    bowlerModal.style.display = "none";
+
+};
 
