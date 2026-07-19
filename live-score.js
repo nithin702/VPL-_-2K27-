@@ -479,6 +479,8 @@ async function loadPlayers() {
 
 confirmPlayersBtn.onclick = () => {
 
+    alert("Confirm Button Clicked");
+
     // Validation
 
     if (
