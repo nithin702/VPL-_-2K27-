@@ -766,6 +766,8 @@ document.getElementById("btnWicket").onclick = addWicket;
 
 function addWide(){
 
+    alert("Wide Clicked");
+    
     totalRuns++;
     wides++;
     bowlerRuns++;
@@ -780,7 +782,9 @@ function addWide(){
 // ---------------- NO BALL ----------------
 
 function addNoBall(){
-
+    
+    alert("No Ball Clicked");
+    
     totalRuns++;
     noBalls++;
     bowlerRuns++;
