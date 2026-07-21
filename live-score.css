@@ -1,1 +1,227 @@
 
+/* =====================================================
+   VPL 2K27 LIVE SCORE
+   PART 2A
+   GLOBAL THEME
+===================================================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#08141f;
+
+color:#fff;
+
+padding:15px;
+
+}
+
+.container{
+
+max-width:1400px;
+
+margin:auto;
+
+}
+
+/* ================= HEADER ================= */
+
+.header{
+
+text-align:center;
+
+padding:20px;
+
+margin-bottom:20px;
+
+background:#10263d;
+
+border-radius:15px;
+
+box-shadow:0 0 15px rgba(0,255,170,.15);
+
+}
+
+.header h1{
+
+font-size:32px;
+
+color:#ffd54f;
+
+margin-bottom:8px;
+
+}
+
+.header p{
+
+color:#bdbdbd;
+
+}
+
+/* ================= MATCH SETUP ================= */
+
+.match-setup{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.input-group{
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+.input-group label{
+
+margin-bottom:6px;
+
+font-weight:bold;
+
+color:#90caf9;
+
+}
+
+.input-group select{
+
+padding:12px;
+
+border:none;
+
+border-radius:10px;
+
+background:#17324d;
+
+color:#fff;
+
+font-size:15px;
+
+}
+
+.start-btn{
+
+background:#00c853;
+
+color:#fff;
+
+border:none;
+
+border-radius:10px;
+
+font-size:17px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+padding:12px;
+
+transition:.3s;
+
+}
+
+.start-btn:hover{
+
+background:#00e676;
+
+transform:scale(1.03);
+
+}
+
+/* ================= SCOREBOARD ================= */
+
+.scoreboard{
+
+background:#10263d;
+
+padding:20px;
+
+border-radius:15px;
+
+text-align:center;
+
+margin-bottom:20px;
+
+box-shadow:0 0 15px rgba(255,215,64,.12);
+
+}
+
+.scoreboard h2{
+
+font-size:30px;
+
+margin-bottom:10px;
+
+color:#4fc3f7;
+
+}
+
+.scoreboard h1{
+
+font-size:60px;
+
+color:#00e676;
+
+margin:10px 0;
+
+}
+
+.scoreboard h3{
+
+color:#e0e0e0;
+
+margin-bottom:20px;
+
+}
+
+.score-info{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:15px;
+
+}
+
+.info-box{
+
+background:#17324d;
+
+padding:15px;
+
+border-radius:12px;
+
+}
+
+.info-box h4{
+
+color:#ffd54f;
+
+margin-bottom:8px;
+
+}
+
+.info-box p{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#ffffff;
+
+}
