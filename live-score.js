@@ -585,59 +585,57 @@ document.getElementById("btn3").onclick = () => scoreRuns(3);
 document.getElementById("btn4").onclick = () => scoreRuns(4);
 document.getElementById("btn6").onclick = () => scoreRuns(6);
 
+// =====================================================
+
 function scoreRuns(run){
 
-    // Team Score
+    // ---------------- TEAM ----------------
 
     totalRuns += run;
     balls++;
 
-    // Striker
+    // ---------------- STRIKER ----------------
 
-    striker.runs = (striker.runs || 0) + run;
-    striker.balls = (striker.balls || 0) + 1;
+    strikerStats.runs += run;
+    strikerStats.balls++;
 
-    if(run==4)
-        striker.fours = (striker.fours || 0) + 1;
+    if(run === 4)
+        strikerStats.fours++;
 
-    if(run==6)
-        striker.sixes = (striker.sixes || 0) + 1;
+    if(run === 6)
+        strikerStats.sixes++;
 
-    striker.strikeRate =
-    ((striker.runs / striker.balls) * 100).toFixed(2);
+    // ---------------- BOWLER ----------------
 
-    // Bowler
+    bowlerStats.runs += run;
+    bowlerStats.balls++;
 
-    currentBowler.runs =
-    (currentBowler.runs || 0) + run;
-
-    currentBowler.balls =
-    (currentBowler.balls || 0) + 1;
-
-    currentBowler.overs =
-    `${Math.floor(currentBowler.balls/6)}.${currentBowler.balls%6}`;
-
-    currentBowler.economy =
-    (currentBowler.runs / (currentBowler.balls/6 || 1)).toFixed(2);
-
-    // Partnership
+    // ---------------- PARTNERSHIP ----------------
 
     partnershipRuns += run;
     partnershipBalls++;
 
-    // Ball History
+    // ---------------- BALL HISTORY ----------------
 
     ballHistory.push(run);
 
-    // Odd Runs → Strike Change
+    // ---------------- STRIKE CHANGE ----------------
 
-    if(run==1 || run==3){
+    if(run === 1 || run === 3){
 
-        let temp = striker;
-        striker = nonStriker;
-        nonStriker = temp;
+        // Swap Players
+
+        [striker, nonStriker] =
+        [nonStriker, striker];
+
+        // Swap Stats
+
+        [strikerStats, nonStrikerStats] =
+        [nonStrikerStats, strikerStats];
 
     }
+
+    // ---------------- UPDATE SCREEN ----------------
 
     updateLiveScore();
 
