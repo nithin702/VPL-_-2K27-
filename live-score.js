@@ -154,3 +154,94 @@ const confirmPlayersBtn = document.getElementById("confirmPlayersBtn");
 const confirmBowlerBtn = document.getElementById("confirmBowlerBtn");
 
 console.log("✅ PART 3A LOADED");
+
+// =====================================================
+// PART 3B
+// MATCH LOADING ENGINE
+// =====================================================
+
+// Load Matches from Firestore
+
+async function loadMatches() {
+
+    try {
+
+        matchSelect.innerHTML =
+        `<option value="">Select Match</option>`;
+
+        matches = [];
+
+        const snapshot = await getDocs(
+            collection(db, "matches")
+        );
+
+        snapshot.forEach(docSnap => {
+
+            const match = docSnap.data();
+
+            match.id = docSnap.id;
+
+            // Only Not Started Matches
+
+            if (match.status !== "Not Started") return;
+
+            matches.push(match);
+
+            matchSelect.innerHTML += `
+            <option value="${match.id}">
+            Match ${match.matchNumber}
+            | ${match.team1} vs ${match.team2}
+            </option>
+            `;
+
+        });
+
+        console.log("✅ Matches Loaded :", matches.length);
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert("Unable to load matches.");
+
+    }
+
+}
+
+// =====================================================
+// MATCH SELECT EVENT
+// =====================================================
+
+matchSelect.addEventListener("change", () => {
+
+    selectedMatch =
+    matches.find(
+        m => m.id === matchSelect.value
+    );
+
+    tossWinner.innerHTML =
+    `<option value="">Select Toss Winner</option>`;
+
+    if(!selectedMatch) return;
+
+    tossWinner.innerHTML +=
+    `<option value="${selectedMatch.team1}">
+    ${selectedMatch.team1}
+    </option>`;
+
+    tossWinner.innerHTML +=
+    `<option value="${selectedMatch.team2}">
+    ${selectedMatch.team2}
+    </option>`;
+
+});
+
+// =====================================================
+// AUTO LOAD MATCHES
+// =====================================================
+
+loadMatches();
+
+console.log("✅ PART 3B LOADED");
