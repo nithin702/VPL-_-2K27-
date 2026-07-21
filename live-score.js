@@ -522,3 +522,75 @@ confirmPlayersBtn.onclick = function () {
     console.log("✅ Players Confirmed");
 
 };
+
+// =====================================================
+// PART 4C
+// NORMAL SCORING ENGINE
+// =====================================================
+
+// Score Buttons
+
+document.getElementById("btn0").onclick = () => scoreRuns(0);
+document.getElementById("btn1").onclick = () => scoreRuns(1);
+document.getElementById("btn2").onclick = () => scoreRuns(2);
+document.getElementById("btn3").onclick = () => scoreRuns(3);
+document.getElementById("btn4").onclick = () => scoreRuns(4);
+document.getElementById("btn6").onclick = () => scoreRuns(6);
+
+function scoreRuns(run){
+
+    // Team Score
+
+    totalRuns += run;
+    balls++;
+
+    // Striker
+
+    striker.runs = (striker.runs || 0) + run;
+    striker.balls = (striker.balls || 0) + 1;
+
+    if(run==4)
+        striker.fours = (striker.fours || 0) + 1;
+
+    if(run==6)
+        striker.sixes = (striker.sixes || 0) + 1;
+
+    striker.strikeRate =
+    ((striker.runs / striker.balls) * 100).toFixed(2);
+
+    // Bowler
+
+    currentBowler.runs =
+    (currentBowler.runs || 0) + run;
+
+    currentBowler.balls =
+    (currentBowler.balls || 0) + 1;
+
+    currentBowler.overs =
+    `${Math.floor(currentBowler.balls/6)}.${currentBowler.balls%6}`;
+
+    currentBowler.economy =
+    (currentBowler.runs / (currentBowler.balls/6 || 1)).toFixed(2);
+
+    // Partnership
+
+    partnershipRuns += run;
+    partnershipBalls++;
+
+    // Ball History
+
+    ballHistory.push(run);
+
+    // Odd Runs → Strike Change
+
+    if(run==1 || run==3){
+
+        let temp = striker;
+        striker = nonStriker;
+        nonStriker = temp;
+
+    }
+
+    updateLiveScore();
+
+}
