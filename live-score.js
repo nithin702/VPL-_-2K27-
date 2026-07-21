@@ -245,3 +245,119 @@ matchSelect.addEventListener("change", () => {
 loadMatches();
 
 console.log("✅ PART 3B LOADED");
+
+// =====================================================
+// PART 3C
+// START MATCH ENGINE
+// =====================================================
+
+startMatchBtn.onclick = startMatch;
+
+function startMatch(){
+
+    if(!selectedMatch){
+
+        alert("Please Select Match");
+        return;
+
+    }
+
+    if(tossWinner.value===""){
+
+        alert("Select Toss Winner");
+        return;
+
+    }
+
+    const winner = tossWinner.value;
+    const decision = tossDecision.value;
+
+    if(decision==="bat"){
+
+        battingTeam =
+        winner;
+
+        bowlingTeam =
+        winner===selectedMatch.team1
+        ? selectedMatch.team2
+        : selectedMatch.team1;
+
+    }
+
+    else{
+
+        bowlingTeam =
+        winner;
+
+        battingTeam =
+        winner===selectedMatch.team1
+        ? selectedMatch.team2
+        : selectedMatch.team1;
+
+    }
+
+    // Reset Score
+
+    totalRuns = 0;
+    wickets = 0;
+    balls = 0;
+
+    target = 0;
+
+    extras = {
+
+        wide:0,
+        noBall:0,
+        bye:0,
+        legBye:0
+
+    };
+
+    partnershipRuns = 0;
+    partnershipBalls = 0;
+
+    ballHistory = [];
+    fallOfWickets = [];
+
+    // Update Scoreboard
+
+    battingTeamText.innerText = battingTeam;
+
+    liveScore.innerText = "0 / 0";
+
+    overs.innerText = "0.0 / 15";
+
+    crr.innerText = "0.00";
+
+    targetText.innerText = "--";
+
+    needRuns.innerText = "--";
+
+    rrr.innerText = "--";
+
+    partnershipRunsText.innerText = "0 Runs";
+
+    partnershipBallsText.innerText = "0 Balls";
+
+    wideCount.innerText = "0";
+    noBallCount.innerText = "0";
+    byeCount.innerText = "0";
+    legByeCount.innerText = "0";
+    totalExtras.innerText = "0";
+
+    ballHistoryBox.innerHTML = "-";
+
+    fallOfWicketsBox.innerHTML =
+    "No Wickets";
+
+    // Open Player Selection
+
+    playerModal.style.display = "flex";
+
+    console.log("🏏 Match Started");
+
+    console.log("Batting :", battingTeam);
+
+    console.log("Bowling :", bowlingTeam);
+
+}
