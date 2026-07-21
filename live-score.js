@@ -516,28 +516,28 @@ confirmPlayersBtn.onclick = function () {
         p => p.playerName === bowlerSelect.value
     );
 
-// =======================
-// RESET MATCH STATS
-// =======================
+// Reset Live Match Stats
 
-    striker.runs = 0;
-    striker.balls = 0;
-    striker.fours = 0;
-    striker.sixes = 0;
-    striker.strikeRate = "0.00";
+strikerStats = {
+    runs: 0,
+    balls: 0,
+    fours: 0,
+    sixes: 0
+};
 
-    nonStriker.runs = 0;
-    nonStriker.balls = 0;
-    nonStriker.fours = 0;
-    nonStriker.sixes = 0;
-    nonStriker.strikeRate = "0.00";
+nonStrikerStats = {
+    runs: 0,
+    balls: 0,
+    fours: 0,
+    sixes: 0
+};
 
-    currentBowler.runs = 0;
-    currentBowler.balls = 0;
-    currentBowler.wickets = 0;
-    currentBowler.maidens = 0;
-    currentBowler.overs = "0.0";
-    currentBowler.economy = "0.00";
+bowlerStats = {
+    balls: 0,
+    runs: 0,
+    wickets: 0,
+    maidens: 0
+};
 
 // Update Scoreboard
 
