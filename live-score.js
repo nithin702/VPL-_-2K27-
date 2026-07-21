@@ -253,7 +253,7 @@ console.log("✅ PART 3B LOADED");
 
 startMatchBtn.onclick = startMatch;
 
-function startMatch(){
+ async function startMatch(){
 
     if(!selectedMatch){
 
@@ -351,6 +351,8 @@ function startMatch(){
     "No Wickets";
 
     // Open Player Selection
+
+    await loadPlayers();
 
     playerModal.style.display = "flex";
 
