@@ -749,10 +749,6 @@ function checkOverFinish(){
 
 }
 
-    // Part 4C lo modal open chestham
-
-}
-
 // =====================================================
 // PART 4C
 // EXTRAS + WICKET ENGINE
