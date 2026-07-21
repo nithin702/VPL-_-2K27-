@@ -594,3 +594,80 @@ function scoreRuns(run){
     updateLiveScore();
 
 }
+
+// =====================================================
+// UPDATE LIVE SCORE
+// =====================================================
+
+function updateLiveScore(){
+
+    liveScore.innerText =
+    `${totalRuns} / ${wickets}`;
+
+    overs.innerText =
+    `${Math.floor(balls/6)}.${balls%6} / 15`;
+
+    let overPlayed = balls/6;
+
+    crr.innerText =
+    overPlayed==0
+    ? "0.00"
+    : (totalRuns/overPlayed).toFixed(2);
+
+    // Batters
+
+    currentStriker.innerText = striker.playerName;
+    currentNonStriker.innerText = nonStriker.playerName;
+
+    strikerScore.innerText =
+    `${striker.runs} (${striker.balls})`;
+
+    nonStrikerScore.innerText =
+    `${nonStriker.runs||0} (${nonStriker.balls||0})`;
+
+    strikerSR.innerText =
+    striker.strikeRate;
+
+    nonStrikerSR.innerText =
+    nonStriker.strikeRate || "0.00";
+
+    strikerFours.innerText =
+    striker.fours || 0;
+
+    strikerSixes.innerText =
+    striker.sixes || 0;
+
+    nonStrikerFours.innerText =
+    nonStriker.fours || 0;
+
+    nonStrikerSixes.innerText =
+    nonStriker.sixes || 0;
+
+    // Bowler
+
+    currentBowlerText.innerText =
+    currentBowler.playerName;
+
+    bowlerOvers.innerText =
+    currentBowler.overs;
+
+    bowlerRuns.innerText =
+    currentBowler.runs;
+
+    bowlerEconomy.innerText =
+    currentBowler.economy;
+
+    // Partnership
+
+    partnershipRunsText.innerText =
+    `${partnershipRuns} Runs`;
+
+    partnershipBallsText.innerText =
+    `${partnershipBalls} Balls`;
+
+    // Ball History
+
+    ballHistoryBox.innerHTML =
+    ballHistory.join(" | ");
+
+}
