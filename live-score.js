@@ -361,3 +361,95 @@ function startMatch(){
     console.log("Bowling :", bowlingTeam);
 
 }
+
+// =====================================================
+// PART 4A
+// LOAD PLAYERS FROM FIRESTORE
+// =====================================================
+
+async function loadPlayers(){
+
+    try{
+
+        // Reset Dropdowns
+
+        strikerSelect.innerHTML =
+        `<option value="">Select Striker</option>`;
+
+        nonStrikerSelect.innerHTML =
+        `<option value="">Select Non-Striker</option>`;
+
+        bowlerSelect.innerHTML =
+        `<option value="">Select Bowler</option>`;
+
+        battingPlayers = [];
+        bowlingPlayers = [];
+
+        // --------------------------
+        // Batting Team Players
+        // --------------------------
+
+        const battingQuery = query(
+            collection(db,"registrations"),
+            where("soldTo","==",battingTeam)
+        );
+
+        const battingSnap =
+        await getDocs(battingQuery);
+
+        battingSnap.forEach(docSnap=>{
+
+            const player = docSnap.data();
+
+            battingPlayers.push(player);
+
+            strikerSelect.innerHTML +=
+            `<option value="${player.playerName}">
+                ${player.playerName}
+            </option>`;
+
+            nonStrikerSelect.innerHTML +=
+            `<option value="${player.playerName}">
+                ${player.playerName}
+            </option>`;
+
+        });
+
+        // --------------------------
+        // Bowling Team Players
+        // --------------------------
+
+        const bowlingQuery = query(
+            collection(db,"registrations"),
+            where("soldTo","==",bowlingTeam)
+        );
+
+        const bowlingSnap =
+        await getDocs(bowlingQuery);
+
+        bowlingSnap.forEach(docSnap=>{
+
+            const player = docSnap.data();
+
+            bowlingPlayers.push(player);
+
+            bowlerSelect.innerHTML +=
+            `<option value="${player.playerName}">
+                ${player.playerName}
+            </option>`;
+
+        });
+
+        console.log("✅ Players Loaded");
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert("Unable to load players.");
+
+    }
+
+}
