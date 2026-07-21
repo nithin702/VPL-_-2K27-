@@ -455,3 +455,70 @@ async function loadPlayers(){
     }
 
 }
+
+// =====================================================
+// PART 4B
+// CONFIRM PLAYERS ENGINE
+// =====================================================
+
+confirmPlayersBtn.onclick = function () {
+
+    if (
+        strikerSelect.value === "" ||
+        nonStrikerSelect.value === "" ||
+        bowlerSelect.value === ""
+    ) {
+        alert("Please select all players.");
+        return;
+    }
+
+    if (strikerSelect.value === nonStrikerSelect.value) {
+        alert("Striker and Non-Striker cannot be same.");
+        return;
+    }
+
+    // Current Players
+
+    striker = battingPlayers.find(
+        p => p.playerName === strikerSelect.value
+    );
+
+    nonStriker = battingPlayers.find(
+        p => p.playerName === nonStrikerSelect.value
+    );
+
+    currentBowler = bowlingPlayers.find(
+        p => p.playerName === bowlerSelect.value
+    );
+
+    // Update Scoreboard
+
+    currentStriker.innerText = striker.playerName;
+    currentNonStriker.innerText = nonStriker.playerName;
+    currentBowlerText.innerText = currentBowler.playerName;
+
+    strikerScore.innerText = "0 (0)";
+    nonStrikerScore.innerText = "0 (0)";
+
+    strikerSR.innerText = "0.00";
+    nonStrikerSR.innerText = "0.00";
+
+    strikerFours.innerText = "0";
+    strikerSixes.innerText = "0";
+
+    nonStrikerFours.innerText = "0";
+    nonStrikerSixes.innerText = "0";
+
+    bowlerOvers.innerText = "0.0";
+    bowlerMaidens.innerText = "0";
+    bowlerRuns.innerText = "0";
+    bowlerWickets.innerText = "0";
+    bowlerEconomy.innerText = "0.00";
+
+    // Close Modal
+
+    playerModal.style.display = "none";
+
+    console.log("✅ Players Confirmed");
+
+};
