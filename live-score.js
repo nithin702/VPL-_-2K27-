@@ -136,6 +136,31 @@ const byeCount = document.getElementById("byeCount");
 const legByeCount = document.getElementById("legByeCount");
 const totalExtras = document.getElementById("totalExtras");
 
+// ================================
+// LIVE MATCH STATS
+// ================================
+
+let strikerStats = {
+    runs: 0,
+    balls: 0,
+    fours: 0,
+    sixes: 0
+};
+
+let nonStrikerStats = {
+    runs: 0,
+    balls: 0,
+    fours: 0,
+    sixes: 0
+};
+
+let bowlerStats = {
+    balls: 0,
+    runs: 0,
+    wickets: 0,
+    maidens: 0
+};
+
 // Others
 const fallOfWicketsBox = document.getElementById("fallOfWickets");
 const ballHistoryBox = document.getElementById("ballHistory");
