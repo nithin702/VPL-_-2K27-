@@ -849,33 +849,3 @@ function addWicket(){
 
 }
 
-// =====================================================
-// PART 5A
-// BOWLER CHANGE SYSTEM
-// =====================================================
-
-// Confirm New Bowler
-
-
-    if(newBowlerSelect.value===""){
-
-        alert("Select New Bowler");
-
-        return;
-
-    }
-
-    bowlerName = newBowlerSelect.value;
-
-    bowlerRuns = 0;
-
-    bowlerBalls = 0;
-
-    currentBowler.innerText = bowlerName;
-
-    bowlerFigure.innerText = "0-0 (0.0)";
-
-    bowlerModal.style.display = "none";
-
-};
-
