@@ -1,4 +1,3 @@
-
 // =====================================================
 // VPL 2K27 LIVE SCORE v3.0
 // PART 3A
@@ -25,12 +24,19 @@ import {
 
 const firebaseConfig = {
 
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBdEQU9fNNjzfo-OGV5o9p_CiS_PA_NJNw",
+
+    authDomain: "vpl-2k27.firebaseapp.com",
+
+    projectId: "vpl-2k27",
+
+    storageBucket: "vpl-2k27.firebasestorage.app",
+
+    messagingSenderId: "919265368604",
+
+    appId: "1:919265368604:web:41587c7dd08f4c5d991dd9",
+
+    measurementId: "G-YL6CQ36HV6"
 
 };
 
